@@ -5,7 +5,7 @@ import EventCards from '@/components/events/EventCards';
 
 export default function EventsPage() {
   return (
-    <main className="min-h-screen bg-background-light dark:bg-background-dark transition-colors duration-300 pt-24 pb-20">
+    <main id="main-content" className="min-h-screen bg-background-light dark:bg-background-dark transition-colors duration-300 pt-24 pb-20">
       <div className="container mx-auto px-4">
         <RevealElement direction="up">
           <h1 className="font-heading text-5xl md:text-6xl font-bold text-center mb-6 text-optica-blue dark:text-quantum-violet">

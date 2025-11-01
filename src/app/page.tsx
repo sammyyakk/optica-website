@@ -10,7 +10,7 @@ const Hero3D = dynamic(() => import('@/components/three/Hero3D'), {
 
 export default function HomePage() {
   return (
-    <main className="min-h-screen bg-background-light dark:bg-background-dark transition-colors duration-300">
+    <main id="main-content" className="min-h-screen bg-background-light dark:bg-background-dark transition-colors duration-300">
       {/* Scroll Progress Bar */}
       <ScrollProgress />
       

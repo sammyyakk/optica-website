@@ -77,11 +77,11 @@ export default function Navbar() {
   };
 
   const navItems = [
-    { name: 'Home', href: '#home' },
-    { name: 'About', href: '#about' },
-    { name: 'Events', href: '#events' },
-    { name: 'Team', href: '#team' },
-    { name: 'Join', href: '#join' },
+    { name: 'Home', href: '/', isRoute: true },
+    { name: 'About', href: '/about', isRoute: true },
+    { name: 'Events', href: '/events', isRoute: true },
+    { name: 'Team', href: '/team', isRoute: true },
+    { name: 'Join', href: '#join', isRoute: false },
   ];
 
   return (
@@ -156,29 +156,45 @@ export default function Navbar() {
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-1 lg:space-x-2">
             {navItems.map((item) => (
-              <motion.a
-                key={item.name}
-                href={item.href}
-                onClick={(e) => handleNavClick(e, item.href)}
-                className={`relative px-4 py-2 font-accent text-sm lg:text-base transition-colors ${
-                  activeSection === item.href.slice(1)
-                    ? 'text-photon-gold'
-                    : isScrolled
-                    ? 'text-text-primary dark:text-white hover:text-optica-blue dark:hover:text-quantum-violet'
-                    : 'text-white hover:text-photon-gold'
-                }`}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                {item.name}
-                {activeSection === item.href.slice(1) && (
-                  <motion.div
-                    className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-photon-gold to-laser-magenta"
-                    layoutId="activeSection"
-                    transition={{ type: 'spring', stiffness: 380, damping: 30 }}
-                  />
-                )}
-              </motion.a>
+              item.isRoute ? (
+                <Link key={item.name} href={item.href}>
+                  <motion.span
+                    className={`relative px-4 py-2 font-accent text-sm lg:text-base transition-colors cursor-pointer ${
+                      isScrolled
+                        ? 'text-text-primary dark:text-white hover:text-optica-blue dark:hover:text-quantum-violet'
+                        : 'text-white hover:text-photon-gold'
+                    }`}
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    {item.name}
+                  </motion.span>
+                </Link>
+              ) : (
+                <motion.a
+                  key={item.name}
+                  href={item.href}
+                  onClick={(e) => handleNavClick(e, item.href)}
+                  className={`relative px-4 py-2 font-accent text-sm lg:text-base transition-colors ${
+                    activeSection === item.href.slice(1)
+                      ? 'text-photon-gold'
+                      : isScrolled
+                      ? 'text-text-primary dark:text-white hover:text-optica-blue dark:hover:text-quantum-violet'
+                      : 'text-white hover:text-photon-gold'
+                  }`}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  {item.name}
+                  {activeSection === item.href.slice(1) && (
+                    <motion.div
+                      className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-photon-gold to-laser-magenta"
+                      layoutId="activeSection"
+                      transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+                    />
+                  )}
+                </motion.a>
+              )
             ))}
             
             {/* Theme Toggle */}
@@ -192,6 +208,9 @@ export default function Navbar() {
             className="md:hidden relative w-12 h-12 flex items-center justify-center"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             whileTap={{ scale: 0.9 }}
+            aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+            aria-expanded={isMenuOpen}
+            aria-controls="mobile-menu"
           >
             <motion.div
               className={`w-10 h-10 rounded-full flex items-center justify-center ${
@@ -247,11 +266,14 @@ export default function Navbar() {
       <AnimatePresence>
         {isMenuOpen && (
           <motion.div
+            id="mobile-menu"
             className="md:hidden fixed inset-0 z-40 flex items-center justify-center"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
+            role="dialog"
+            aria-label="Mobile navigation menu"
           >
             {/* Backdrop */}
             <motion.div
