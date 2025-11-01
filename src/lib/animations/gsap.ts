@@ -136,13 +136,13 @@ export function smoothScrollTo(target: string | HTMLElement, offset = 0) {
 export function createParallax(
   element: gsap.TweenTarget,
   speed: number = 0.5,
-  trigger?: string
+  trigger?: string | gsap.DOMTarget
 ) {
   return gsap.to(element, {
     y: () => window.innerHeight * speed,
     ease: 'none',
     scrollTrigger: {
-      trigger: trigger || element,
+      trigger: (trigger || element) as gsap.DOMTarget,
       start: 'top bottom',
       end: 'bottom top',
       scrub: true,

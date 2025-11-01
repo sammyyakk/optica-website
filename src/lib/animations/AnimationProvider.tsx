@@ -3,8 +3,12 @@
 import { createContext, useContext, useEffect, ReactNode } from 'react';
 import { initGSAP } from './gsap';
 
-const AnimationContext = createContext<{ reducedMotion: boolean }>({
+const AnimationContext = createContext<{ 
+  reducedMotion: boolean;
+  shouldAnimate: boolean;
+}>({
   reducedMotion: false,
+  shouldAnimate: true,
 });
 
 export function useAnimationContext() {
@@ -17,12 +21,14 @@ export function AnimationProvider({ children }: { children: ReactNode }) {
       ? window.matchMedia('(prefers-reduced-motion: reduce)').matches
       : false;
 
+  const shouldAnimate = !reducedMotion;
+
   useEffect(() => {
     initGSAP();
   }, []);
 
   return (
-    <AnimationContext.Provider value={{ reducedMotion }}>
+    <AnimationContext.Provider value={{ reducedMotion, shouldAnimate }}>
       {children}
     </AnimationContext.Provider>
   );
