@@ -1,6 +1,6 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 import { RevealElement, StaggerReveal } from '@/lib/animations/ScrollAnimations';
 
 interface TeamMember {
