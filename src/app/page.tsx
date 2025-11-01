@@ -1,25 +1,25 @@
 export default function HomePage() {
   return (
-    <main className="min-h-screen">
+    <main className="min-h-screen bg-background-light dark:bg-background-dark transition-colors duration-300">
       {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-optica-blue via-quantum-violet to-background-dark">
+      <section id="home" className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-optica-blue via-quantum-violet to-background-dark dark:from-quantum-violet dark:via-optica-blue dark:to-background-dark">
         <div className="container mx-auto px-4 text-center text-white z-10">
-          <h1 className="font-heading text-5xl md:text-7xl font-bold mb-6">
+          <h1 className="font-heading text-5xl md:text-7xl font-bold mb-6 drop-shadow-lg">
             BVP OPTICA
           </h1>
-          <p className="font-body text-xl md:text-2xl mb-8 max-w-3xl mx-auto">
+          <p className="font-body text-xl md:text-2xl mb-8 max-w-3xl mx-auto drop-shadow-md">
             Igniting passion for optics and photonics through innovation, education, and global collaboration
           </p>
-          <div className="flex gap-4 justify-center">
+          <div className="flex gap-4 justify-center flex-wrap">
             <a
               href="#about"
-              className="px-8 py-3 bg-photon-gold text-text-primary font-accent rounded-button hover:bg-opacity-90 transition-all"
+              className="px-8 py-3 bg-photon-gold text-text-primary font-accent rounded-button hover:bg-photon-gold/90 hover:scale-105 transition-all shadow-lg hover:shadow-xl"
             >
               Learn More
             </a>
             <a
-              href="/join"
-              className="px-8 py-3 border-2 border-white text-white font-accent rounded-button hover:bg-white hover:text-optica-blue transition-all"
+              href="#join"
+              className="px-8 py-3 border-2 border-white text-white font-accent rounded-button hover:bg-white hover:text-optica-blue hover:scale-105 transition-all shadow-lg"
             >
               Join Us
             </a>
@@ -28,12 +28,12 @@ export default function HomePage() {
       </section>
 
       {/* WHO WE ARE Section */}
-      <section id="about" className="py-20 bg-background-light">
+      <section id="about" className="py-20 bg-white dark:bg-background-dark/50">
         <div className="container mx-auto px-4">
-          <h2 className="font-heading text-4xl md:text-5xl font-bold text-center mb-12 text-optica-blue">
+          <h2 className="font-heading text-4xl md:text-5xl font-bold text-center mb-12 text-optica-blue dark:text-quantum-violet">
             WHO WE ARE
           </h2>
-          <p className="font-body text-lg text-text-secondary max-w-4xl mx-auto text-center leading-relaxed">
+          <p className="font-body text-lg text-text-secondary dark:text-gray-300 max-w-4xl mx-auto text-center leading-relaxed">
             BVP-OPTICA is a vibrant student chapter at Bharati Vidyapeeth's College of Engineering, 
             committed to advancing optics and photonics. By joining us, you become part of a global 
             network with international research opportunities, exclusive access to journals, and exciting 
@@ -46,12 +46,12 @@ export default function HomePage() {
       </section>
 
       {/* LIFE AS A MEMBER Section */}
-      <section className="py-20 bg-white">
+      <section id="events" className="py-20 bg-background-light dark:bg-background-dark">
         <div className="container mx-auto px-4">
-          <h2 className="font-heading text-4xl md:text-5xl font-bold text-center mb-12 text-quantum-violet">
+          <h2 className="font-heading text-4xl md:text-5xl font-bold text-center mb-12 text-quantum-violet dark:text-photon-gold">
             LIFE AS A MEMBER
           </h2>
-          <p className="font-body text-lg text-text-secondary max-w-4xl mx-auto text-center leading-relaxed mb-12">
+          <p className="font-body text-lg text-text-secondary dark:text-gray-300 max-w-4xl mx-auto text-center leading-relaxed mb-12">
             Joining BVP-OPTICA means becoming part of a global network with a strong international presence, 
             offering exciting research opportunities and exclusive access to journals and monthly magazines. 
             Members can benefit from scholarships and travel grants for international conferences and 
@@ -63,22 +63,22 @@ export default function HomePage() {
       </section>
 
       {/* Faculty Advisor Section */}
-      <section className="py-20 bg-background-light">
+      <section id="team" className="py-20 bg-white dark:bg-background-dark/50">
         <div className="container mx-auto px-4">
-          <h2 className="font-heading text-4xl md:text-5xl font-bold text-center mb-12 text-optica-blue">
+          <h2 className="font-heading text-4xl md:text-5xl font-bold text-center mb-12 text-optica-blue dark:text-quantum-violet">
             OUR FACULTY ADVISOR
           </h2>
-          <div className="max-w-4xl mx-auto bg-white rounded-card shadow-card p-8">
-            <h3 className="font-heading text-3xl font-bold text-center mb-4 text-quantum-violet">
+          <div className="max-w-4xl mx-auto bg-white dark:bg-background-dark/80 rounded-card shadow-card p-8 border border-transparent dark:border-quantum-violet/20">
+            <h3 className="font-heading text-3xl font-bold text-center mb-4 text-quantum-violet dark:text-photon-gold">
               Dr. Yugnanda Puri
             </h3>
-            <p className="font-body text-text-secondary leading-relaxed">
+            <p className="font-body text-text-secondary dark:text-gray-300 leading-relaxed">
               Having founded this club in 2019, Dr. Puri has been key in establishing and nurturing it 
               ever since. With a Ph.D. in Optical Communication from Thapar Institute of Engineering & 
               Technology, and both a Master's and bachelor's degree in Electronics & Communication 
               Engineering, Dr. Puri has been a driving force behind BVP Optica's growth and success.
             </p>
-            <p className="font-body text-text-secondary leading-relaxed mt-4">
+            <p className="font-body text-text-secondary dark:text-gray-300 leading-relaxed mt-4">
               Currently serving as the Dean of Research and Development and an Associate Professor at 
               BVCOE, Dr. Puri ensures that the subchapter thrives by providing valuable resources, 
               guidance, and encouragement to our members.
@@ -88,33 +88,63 @@ export default function HomePage() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-background-dark text-white py-12">
+      <footer id="join" className="bg-background-dark text-white py-12">
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-3 gap-8 mb-8">
             <div>
-              <h3 className="font-heading text-xl font-bold mb-4">BVP OPTICA</h3>
-              <p className="font-body text-sm">
-                Bharati Vidyapeeth's College of Engineering<br />
+              <h3 className="font-heading text-xl font-bold mb-4 text-photon-gold">
+                BVP OPTICA
+              </h3>
+              <p className="font-body text-sm text-gray-300">
+                Bharati Vidyapeeth's College of Engineering
+                <br />
                 A-4, Paschim Vihar, New Delhi - 110063
               </p>
             </div>
             <div>
-              <h3 className="font-heading text-xl font-bold mb-4">Contact</h3>
-              <p className="font-body text-sm">
-                Email: <a href="mailto:bvpoptica@gmail.com" className="hover:text-photon-gold">bvpoptica@gmail.com</a>
+              <h3 className="font-heading text-xl font-bold mb-4 text-photon-gold">Contact</h3>
+              <p className="font-body text-sm text-gray-300">
+                Email:{" "}
+                <a
+                  href="mailto:bvpoptica@gmail.com"
+                  className="hover:text-photon-gold transition-colors"
+                >
+                  bvpoptica@gmail.com
+                </a>
               </p>
             </div>
             <div>
-              <h3 className="font-heading text-xl font-bold mb-4">Follow Us</h3>
-              <div className="flex gap-4">
-                <a href="https://instagram.com/bvpoptica" target="_blank" rel="noopener noreferrer" className="hover:text-photon-gold">Instagram</a>
-                <a href="https://www.linkedin.com/company/bvp-optica/" target="_blank" rel="noopener noreferrer" className="hover:text-photon-gold">LinkedIn</a>
-                <a href="https://twitter.com/bvpoptica" target="_blank" rel="noopener noreferrer" className="hover:text-photon-gold">Twitter</a>
+              <h3 className="font-heading text-xl font-bold mb-4 text-photon-gold">Follow Us</h3>
+              <div className="flex gap-4 flex-wrap">
+                <a
+                  href="https://instagram.com/bvpoptica"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-photon-gold transition-colors text-gray-300"
+                >
+                  Instagram
+                </a>
+                <a
+                  href="https://www.linkedin.com/company/bvp-optica/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-photon-gold transition-colors text-gray-300"
+                >
+                  LinkedIn
+                </a>
+                <a
+                  href="https://twitter.com/bvpoptica"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-photon-gold transition-colors text-gray-300"
+                >
+                  Twitter
+                </a>
               </div>
             </div>
           </div>
           <div className="text-center text-sm border-t border-gray-700 pt-8">
-            <p>&copy; 2025 BVP Optica. All rights reserved.</p>
+            <p className="text-gray-400">&copy; 2025 BVP Optica. All rights reserved.</p>
           </div>
         </div>
       </footer>

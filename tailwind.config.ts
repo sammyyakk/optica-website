@@ -6,6 +6,7 @@ const config: Config = {
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
+  darkMode: 'class',
   theme: {
     extend: {
       colors: {
@@ -17,6 +18,7 @@ const config: Config = {
         "background-dark": "#0E1A2B",
         "text-primary": "#1E1E1E",
         "text-secondary": "#4B5563",
+        "white-elements": "#FFFFFF",
       },
       fontFamily: {
         heading: ["var(--font-poppins)", "sans-serif"],
