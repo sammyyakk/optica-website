@@ -132,47 +132,6 @@ export function useAriaLiveAnnouncer() {
 }
 
 /**
- * Hook to manage skip links visibility
- */
-export function useSkipLink() {
-  useEffect(() => {
-    const skipLink = document.getElementById("skip-to-main");
-    if (!skipLink) return;
-
-    const handleFocus = () => {
-      skipLink.classList.add("focus:not-sr-only");
-    };
-
-    const handleBlur = () => {
-      skipLink.classList.remove("focus:not-sr-only");
-    };
-
-    skipLink.addEventListener("focus", handleFocus);
-    skipLink.addEventListener("blur", handleBlur);
-
-    return () => {
-      skipLink.removeEventListener("focus", handleFocus);
-      skipLink.removeEventListener("blur", handleBlur);
-    };
-  }, []);
-}
-
-/**
- * Component for skip navigation link
- */
-export function SkipLink() {
-  return (
-    <a
-      id="skip-to-main"
-      href="#main-content"
-      className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-optica-blue focus:text-white focus:rounded-button focus:shadow-lg focus:outline-none focus:ring-2 focus:ring-photon-gold"
-    >
-      Skip to main content
-    </a>
-  );
-}
-
-/**
  * Hook to detect reduced motion preference
  */
 export function useReducedMotion() {

@@ -6,8 +6,6 @@ import Image from "next/image";
 import { motion, AnimatePresence } from "motion/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useTheme } from "@/lib/theme/ThemeProvider";
-import ThemeToggle from "@/components/ui/ThemeToggle";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -16,8 +14,6 @@ export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
-  const [isLogoHovered, setIsLogoHovered] = useState(false);
-  const { theme } = useTheme();
 
   useEffect(() => {
     // Glass morphism on scroll
@@ -92,68 +88,25 @@ export default function Navbar() {
       ref={navRef}
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         isScrolled
-          ? "bg-white/80 dark:bg-background-dark/80 backdrop-blur-xl border-b border-gray-200 dark:border-white/10 shadow-lg"
+          ? "bg-optica-black/85 backdrop-blur-xl border-b border-optica-purple/20 shadow-lg"
           : "bg-transparent"
       }`}
     >
       <div className="container mx-auto px-4 md:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
-          {/* Logo with particle animation */}
-          <Link href="/" className="relative group">
-            <motion.div
-              className="relative h-12 w-auto flex items-center"
-              onHoverStart={() => setIsLogoHovered(true)}
-              onHoverEnd={() => setIsLogoHovered(false)}
-              whileHover={{ scale: 1.05 }}
-              transition={{ duration: 0.3 }}
-            >
-              {/* Logo Image - switches based on scroll state and theme */}
+          {/* Logo */}
+          <Link href="/" className="relative">
+            <div className="relative h-12 w-auto flex items-center">
               <Image
-                src={
-                  theme === "dark" || !isScrolled
-                    ? "/navbar_logo_light.png"
-                    : "/navbar_logo_dark.png"
-                }
+                src="/navbar_logo_light.png"
                 alt="BVP Optica Logo"
                 width={180}
                 height={48}
-                className="h-12 w-auto object-contain transition-opacity duration-300"
+                className="h-6 w-auto object-contain"
+                quality={100}
                 priority
               />
-
-              {/* Particle effect on hover */}
-              {isLogoHovered && (
-                <motion.div
-                  className="absolute inset-0 pointer-events-none"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                >
-                  {[...Array(12)].map((_, i) => (
-                    <motion.div
-                      key={i}
-                      className="absolute w-1 h-1 bg-photon-gold rounded-full"
-                      initial={{
-                        x: "50%",
-                        y: "50%",
-                      }}
-                      animate={{
-                        x: `${50 + Math.cos((i * Math.PI) / 6) * 100}%`,
-                        y: `${50 + Math.sin((i * Math.PI) / 6) * 100}%`,
-                        opacity: [0, 1, 0],
-                        scale: [0, 1.5, 0],
-                      }}
-                      transition={{
-                        duration: 1,
-                        repeat: Infinity,
-                        delay: i * 0.05,
-                        ease: "easeOut",
-                      }}
-                    />
-                  ))}
-                </motion.div>
-              )}
-            </motion.div>
+            </div>
           </Link>
 
           {/* Desktop Navigation */}
@@ -164,8 +117,8 @@ export default function Navbar() {
                   <motion.span
                     className={`relative px-4 py-2 font-accent text-sm lg:text-base transition-colors cursor-pointer ${
                       isScrolled
-                        ? "text-text-primary dark:text-white hover:text-optica-blue dark:hover:text-quantum-violet"
-                        : "text-white hover:text-photon-gold"
+                        ? "text-text-primary hover:text-quantum-violet"
+                        : "text-white hover:text-quantum-violet"
                     }`}
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
@@ -180,10 +133,10 @@ export default function Navbar() {
                   onClick={(e) => handleNavClick(e, item.href)}
                   className={`relative px-4 py-2 font-accent text-sm lg:text-base transition-colors ${
                     activeSection === item.href.slice(1)
-                      ? "text-photon-gold"
+                      ? "text-quantum-violet"
                       : isScrolled
-                      ? "text-text-primary dark:text-white hover:text-optica-blue dark:hover:text-quantum-violet"
-                      : "text-white hover:text-photon-gold"
+                      ? "text-text-primary hover:text-quantum-violet"
+                      : "text-white hover:text-quantum-violet"
                   }`}
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
@@ -191,7 +144,7 @@ export default function Navbar() {
                   {item.name}
                   {activeSection === item.href.slice(1) && (
                     <motion.div
-                      className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-photon-gold to-laser-magenta"
+                      className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-optica-purple to-quantum-violet"
                       layoutId="activeSection"
                       transition={{
                         type: "spring",
@@ -203,11 +156,6 @@ export default function Navbar() {
                 </motion.a>
               )
             )}
-
-            {/* Theme Toggle */}
-            <div className="ml-4">
-              <ThemeToggle />
-            </div>
           </div>
 
           {/* Mobile Menu Button - Circular Radial */}
@@ -221,18 +169,14 @@ export default function Navbar() {
           >
             <motion.div
               className={`w-10 h-10 rounded-full flex items-center justify-center ${
-                isScrolled
-                  ? "bg-optica-blue/20 dark:bg-quantum-violet/20"
-                  : "bg-white/20"
+                isScrolled ? "bg-optica-purple/30" : "bg-white/20"
               } backdrop-blur-md`}
               animate={isMenuOpen ? { scale: 1.1 } : { scale: 1 }}
             >
               <div className="relative w-6 h-5">
                 <motion.span
                   className={`absolute left-0 w-full h-0.5 rounded-full ${
-                    isScrolled
-                      ? "bg-optica-blue dark:bg-quantum-violet"
-                      : "bg-white"
+                    isScrolled ? "bg-quantum-violet" : "bg-white"
                   }`}
                   animate={
                     isMenuOpen
@@ -243,18 +187,14 @@ export default function Navbar() {
                 />
                 <motion.span
                   className={`absolute left-0 top-1/2 -translate-y-1/2 w-full h-0.5 rounded-full ${
-                    isScrolled
-                      ? "bg-optica-blue dark:bg-quantum-violet"
-                      : "bg-white"
+                    isScrolled ? "bg-quantum-violet" : "bg-white"
                   }`}
                   animate={isMenuOpen ? { opacity: 0 } : { opacity: 1 }}
                   transition={{ duration: 0.2 }}
                 />
                 <motion.span
                   className={`absolute left-0 bottom-0 w-full h-0.5 rounded-full ${
-                    isScrolled
-                      ? "bg-optica-blue dark:bg-quantum-violet"
-                      : "bg-white"
+                    isScrolled ? "bg-quantum-violet" : "bg-white"
                   }`}
                   animate={
                     isMenuOpen
@@ -284,7 +224,7 @@ export default function Navbar() {
           >
             {/* Backdrop */}
             <motion.div
-              className="absolute inset-0 bg-gradient-to-br from-optica-blue/95 via-quantum-violet/95 to-background-dark/95 backdrop-blur-2xl"
+              className="absolute inset-0 bg-gradient-to-br from-optica-purple/95 via-quantum-violet/95 to-optica-black/95 backdrop-blur-2xl"
               initial={{ scale: 0, borderRadius: "100%" }}
               animate={{ scale: 2, borderRadius: "0%" }}
               exit={{ scale: 0, borderRadius: "100%" }}
@@ -304,7 +244,7 @@ export default function Navbar() {
                   key={item.name}
                   href={item.href}
                   onClick={(e) => handleNavClick(e, item.href)}
-                  className="font-heading text-4xl font-bold text-white hover:text-photon-gold transition-colors"
+                  className="font-heading text-4xl font-bold text-white hover:text-quantum-violet transition-colors"
                   variants={{
                     closed: { opacity: 0, y: 20, scale: 0.8 },
                     open: { opacity: 1, y: 0, scale: 1 },

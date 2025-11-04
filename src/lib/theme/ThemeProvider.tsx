@@ -1,65 +1,33 @@
 "use client";
 
-import {
-  createContext,
-  useContext,
-  useEffect,
-  useState,
-  ReactNode,
-} from "react";
+import { createContext, useContext, useEffect, ReactNode } from "react";
 
-type Theme = "light" | "dark";
+type Theme = "dark";
 
 interface ThemeContextType {
   theme: Theme;
   toggleTheme: () => void;
 }
 
-const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
+const defaultContext: ThemeContextType = {
+  theme: "dark",
+  toggleTheme: () => {},
+};
+
+const ThemeContext = createContext<ThemeContextType>(defaultContext);
 
 export function useTheme() {
-  const context = useContext(ThemeContext);
-  if (!context) {
-    throw new Error("useTheme must be used within ThemeProvider");
-  }
-  return context;
+  return useContext(ThemeContext);
 }
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
-  const [theme, setTheme] = useState<Theme>("light");
-  const [mounted, setMounted] = useState(false);
-
   useEffect(() => {
-    setMounted(true);
-    // Check localStorage for saved theme
-    const savedTheme = localStorage.getItem("theme") as Theme | null;
-    // Check system preference
-    const prefersDark = window.matchMedia(
-      "(prefers-color-scheme: dark)"
-    ).matches;
-
-    if (savedTheme) {
-      setTheme(savedTheme);
-      document.documentElement.classList.toggle("dark", savedTheme === "dark");
-    } else if (prefersDark) {
-      setTheme("dark");
-      document.documentElement.classList.add("dark");
-    }
+    document.documentElement.classList.add("dark");
+    return () => document.documentElement.classList.remove("dark");
   }, []);
 
-  const toggleTheme = () => {
-    const newTheme = theme === "light" ? "dark" : "light";
-    setTheme(newTheme);
-    localStorage.setItem("theme", newTheme);
-    document.documentElement.classList.toggle("dark", newTheme === "dark");
-  };
-
-  if (!mounted) {
-    return null;
-  }
-
   return (
-    <ThemeContext.Provider value={{ theme, toggleTheme }}>
+    <ThemeContext.Provider value={defaultContext}>
       {children}
     </ThemeContext.Provider>
   );

@@ -18,17 +18,15 @@
 
 ## Color Palette
 
-| Purpose          | Color          | Hex     |
-| ---------------- | -------------- | ------- |
-| Primary          | Optica Blue    | #0072CE |
-| Secondary        | Quantum Violet | #6C63FF |
-| Accent 1         | Photon Gold    | #FFC300 |
-| Accent 2         | Laser Magenta  | #E91E63 |
-| Background Light | #F5F7FA        |
-| Background Dark  | #0E1A2B        |
-| Text Primary     | #1E1E1E        |
-| Text Secondary   | #4B5563        |
-| White Elements   | #FFFFFF        |
+| Purpose        | Color           | Hex     |
+| -------------- | --------------- | ------- |
+| Primary        | Optica Purple   | #541388 |
+| Secondary      | Quantum Violet  | #6C63FF |
+| Background     | Optica Black    | #05040A |
+| Surface Glow   | Deep Surface    | #121123 |
+| Text Primary   | Polar White     | #F5F5F8 |
+| Text Secondary | Soft Lilac Gray | #ACAFCA |
+| White Elements | Pure White      | #FFFFFF |
 
 ---
 
@@ -38,7 +36,7 @@
 - **Body Text**: Inter (400)
 - **Accents / Event Titles**: Montserrat (500)
 
-_All fonts are Google Fonts_
+All fonts are Google Fonts.
 
 ---
 
@@ -71,7 +69,7 @@ _All fonts are Google Fonts_
 
 ## Contact
 
-**Email:** bvpoptica@gmail.com  
+**Email:** [bvpoptica@gmail.com](mailto:bvpoptica@gmail.com)  
 **Address:** A-4, Paschim Vihar, New Delhi – 110063  
 **Socials:** Instagram & LinkedIn
 

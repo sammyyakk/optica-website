@@ -4,7 +4,6 @@ import { useRef, useMemo, useEffect } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { OrbitControls, Sphere } from "@react-three/drei";
 import * as THREE from "three";
-import { useTheme } from "@/lib/theme/ThemeProvider";
 
 // Custom particle shader material
 const particleVertexShader = `
@@ -51,7 +50,6 @@ interface ParticleFieldProps {
 }
 
 function ParticleField({ count = 5000 }: ParticleFieldProps) {
-  const { theme } = useTheme();
   const particlesRef = useRef<THREE.Points>(null);
   const { viewport } = useThree();
 
@@ -88,19 +86,13 @@ function ParticleField({ count = 5000 }: ParticleFieldProps) {
       uTime: { value: 0 },
       uSize: { value: 3.0 },
       uColor1: {
-        value:
-          theme === "dark"
-            ? new THREE.Color("#6C63FF") // Quantum Violet
-            : new THREE.Color("#0072CE"), // Optica Blue
+        value: new THREE.Color("#6C63FF"),
       },
       uColor2: {
-        value:
-          theme === "dark"
-            ? new THREE.Color("#FFC300") // Photon Gold
-            : new THREE.Color("#E91E63"), // Laser Magenta
+        value: new THREE.Color("#541388"),
       },
     }),
-    [theme]
+    []
   );
 
   // Animate particles
@@ -116,32 +108,11 @@ function ParticleField({ count = 5000 }: ParticleFieldProps) {
     }
   });
 
-  // Update colors on theme change
-  useEffect(() => {
-    if (particlesRef.current) {
-      const material = particlesRef.current.material as THREE.ShaderMaterial;
-      material.uniforms.uColor1.value =
-        theme === "dark"
-          ? new THREE.Color("#6C63FF")
-          : new THREE.Color("#0072CE");
-      material.uniforms.uColor2.value =
-        theme === "dark"
-          ? new THREE.Color("#FFC300")
-          : new THREE.Color("#E91E63");
-    }
-  }, [theme]);
-
   return (
     <points ref={particlesRef}>
       <bufferGeometry>
-        <bufferAttribute
-          attach="attributes-position"
-          args={[positions, 3]}
-        />
-        <bufferAttribute
-          attach="attributes-aScale"
-          args={[scales, 1]}
-        />
+        <bufferAttribute attach="attributes-position" args={[positions, 3]} />
+        <bufferAttribute attach="attributes-aScale" args={[scales, 1]} />
         <bufferAttribute
           attach="attributes-aRandomness"
           args={[randomness, 3]}
@@ -161,7 +132,6 @@ function ParticleField({ count = 5000 }: ParticleFieldProps) {
 
 // Floating geometry shapes
 function FloatingShapes() {
-  const { theme } = useTheme();
   const sphere1Ref = useRef<THREE.Mesh>(null);
   const sphere2Ref = useRef<THREE.Mesh>(null);
   const sphere3Ref = useRef<THREE.Mesh>(null);
@@ -188,9 +158,9 @@ function FloatingShapes() {
     }
   });
 
-  const color1 = theme === "dark" ? "#6C63FF" : "#0072CE";
-  const color2 = theme === "dark" ? "#FFC300" : "#E91E63";
-  const color3 = theme === "dark" ? "#E91E63" : "#6C63FF";
+  const color1 = "#6C63FF";
+  const color2 = "#541388";
+  const color3 = "#4630A3";
 
   return (
     <>

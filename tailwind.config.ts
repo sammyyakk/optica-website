@@ -10,14 +10,13 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        "optica-blue": "#0072CE",
+        "optica-purple": "#541388",
         "quantum-violet": "#6C63FF",
-        "photon-gold": "#FFC300",
-        "laser-magenta": "#E91E63",
-        "background-light": "#F5F7FA",
-        "background-dark": "#0E1A2B",
-        "text-primary": "#1E1E1E",
-        "text-secondary": "#4B5563",
+        "optica-black": "#05040A",
+        "surface-deep": "#0B0A14",
+        "surface": "#121123",
+        "text-primary": "#F5F5F8",
+        "text-secondary": "#ACAFCA",
         "white-elements": "#FFFFFF",
       },
       fontFamily: {

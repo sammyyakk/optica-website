@@ -217,7 +217,7 @@ export function ScrollProgress({ className = "" }: ScrollProgressProps) {
 
   return (
     <div
-      className={`fixed top-0 left-0 w-full h-1 bg-gradient-to-r from-optica-blue via-quantum-violet to-photon-gold z-50 origin-left scale-x-0 ${className}`}
+      className={`fixed top-0 left-0 w-full h-1 bg-gradient-to-r from-optica-purple via-quantum-violet to-optica-purple z-50 origin-left scale-x-0 ${className}`}
       ref={progressRef}
     />
   );

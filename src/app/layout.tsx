@@ -1,10 +1,9 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Poppins, Inter, Montserrat } from "next/font/google";
 import "./globals.css";
 import { AnimationProvider } from "@/lib/animations/AnimationProvider";
 import { ThemeProvider } from "@/lib/theme/ThemeProvider";
 import Navbar from "@/components/layout/Navbar";
-import { SkipLink } from "@/lib/accessibility/hooks";
 
 const poppins = Poppins({
   weight: ["600", "700"],
@@ -56,11 +55,12 @@ export const metadata: Metadata = {
     index: true,
     follow: true,
   },
-  viewport: {
-    width: "device-width",
-    initialScale: 1,
-    maximumScale: 5,
-  },
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
 };
 
 export default function RootLayout({
@@ -71,10 +71,9 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${poppins.variable} ${inter.variable} ${montserrat.variable}`}
+      className={`dark ${poppins.variable} ${inter.variable} ${montserrat.variable}`}
     >
-      <body className="font-body antialiased bg-background-light dark:bg-background-dark text-text-primary dark:text-white-elements transition-colors duration-300">
-        <SkipLink />
+      <body className="font-body antialiased bg-optica-black text-text-primary transition-colors duration-300">
         <ThemeProvider>
           <AnimationProvider>
             <Navbar />

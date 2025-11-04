@@ -103,8 +103,8 @@ export default function EventCards() {
             onClick={() => setSelectedCategory(category.value)}
             className={`px-6 py-2 rounded-button font-accent transition-all ${
               selectedCategory === category.value
-                ? "bg-gradient-to-r from-optica-blue to-quantum-violet text-white shadow-lg"
-                : "bg-white dark:bg-background-dark/80 text-text-secondary dark:text-gray-300 border border-gray-300 dark:border-quantum-violet/20 hover:border-optica-blue dark:hover:border-quantum-violet"
+                ? "bg-gradient-to-r from-optica-purple to-quantum-violet text-white shadow-lg"
+                : "bg-surface text-text-secondary border border-optica-purple/30 hover:border-quantum-violet"
             }`}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
@@ -130,9 +130,9 @@ export default function EventCards() {
               transition={{ duration: 0.5, type: "spring" }}
               className="group"
             >
-              <div className="bg-white dark:bg-background-dark/80 rounded-card shadow-card overflow-hidden border border-transparent dark:border-quantum-violet/20 hover:shadow-2xl hover:scale-105 transition-all duration-300">
+              <div className="bg-surface rounded-card shadow-card overflow-hidden border border-optica-purple/10 hover:border-quantum-violet/40 hover:shadow-2xl hover:scale-105 transition-all duration-300">
                 {/* Event Image */}
-                <div className="relative h-48 bg-gradient-to-br from-optica-blue to-quantum-violet overflow-hidden">
+                <div className="relative h-48 bg-gradient-to-br from-optica-purple to-quantum-violet overflow-hidden">
                   <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-all duration-300" />
                   <div className="absolute inset-0 flex items-center justify-center">
                     <span className="text-white font-heading text-2xl">
@@ -143,14 +143,14 @@ export default function EventCards() {
 
                 {/* Event Content */}
                 <div className="p-6">
-                  <div className="text-sm font-accent text-quantum-violet dark:text-photon-gold mb-2">
+                  <div className="text-sm font-accent text-quantum-violet mb-2">
                     {new Date(event.date).toLocaleDateString("en-US", {
                       year: "numeric",
                       month: "long",
                       day: "numeric",
                     })}
                   </div>
-                  <h3 className="font-heading text-xl font-bold text-text-primary dark:text-white mb-3 group-hover:text-optica-blue dark:group-hover:text-quantum-violet transition-colors">
+                  <h3 className="font-heading text-xl font-bold text-text-primary mb-3 group-hover:text-quantum-violet transition-colors">
                     {event.title}
                   </h3>
                   <p className="font-body text-text-secondary dark:text-gray-300 text-sm leading-relaxed">
@@ -159,7 +159,7 @@ export default function EventCards() {
                 </div>
 
                 {/* Hover Accent */}
-                <div className="h-1 bg-gradient-to-r from-optica-blue via-quantum-violet to-photon-gold transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
+                <div className="h-1 bg-gradient-to-r from-optica-purple via-quantum-violet to-optica-purple transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
               </div>
             </motion.div>
           ))}
