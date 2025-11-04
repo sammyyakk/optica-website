@@ -20,8 +20,8 @@
 
 | Purpose        | Color           | Hex     |
 | -------------- | --------------- | ------- |
-| Primary        | Optica Purple   | #541388 |
-| Secondary      | Quantum Violet  | #6C63FF |
+| Primary        | Optica Purple   | #A890FF |
+| Secondary      | Quantum Violet  | #A890FF |
 | Background     | Optica Black    | #05040A |
 | Surface Glow   | Deep Surface    | #121123 |
 | Text Primary   | Polar White     | #F5F5F8 |

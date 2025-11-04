@@ -10,8 +10,8 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        "optica-purple": "#541388",
-        "quantum-violet": "#6C63FF",
+  "optica-purple": "#A890FF",
+  "quantum-violet": "#A890FF",
         "optica-black": "#05040A",
         "surface-deep": "#0B0A14",
         "surface": "#121123",

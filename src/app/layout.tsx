@@ -38,6 +38,20 @@ export const metadata: Metadata = {
     "Delhi",
   ],
   authors: [{ name: "BVP Optica Team" }],
+  icons: {
+    icon: [
+      {
+        url: "/favicon_light.ico",
+        media: "(prefers-color-scheme: light)",
+      },
+      {
+        url: "/favicon_dark.ico",
+        media: "(prefers-color-scheme: dark)",
+      },
+    ],
+    shortcut: "/favicon_dark.ico",
+    apple: "/favicon_dark.ico",
+  },
   openGraph: {
     title: "BVP Optica - Student Chapter",
     description:

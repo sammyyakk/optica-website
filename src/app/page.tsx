@@ -9,7 +9,9 @@ import {
 const Hero3D = dynamic(() => import("@/components/three/Hero3D"), {
   ssr: false,
   loading: () => (
-    <div className="absolute inset-0 bg-gradient-to-br from-optica-purple via-quantum-violet to-optica-black" />
+    <section className="relative isolate flex min-h-screen w-full items-center justify-center overflow-hidden bg-[#0E1A2B]">
+      <div className="absolute inset-0 bg-gradient-to-br from-optica-purple/40 via-[#0E1A2B] to-optica-black" />
+    </section>
   ),
 });
 
@@ -23,37 +25,7 @@ export default function HomePage() {
       <ScrollProgress />
 
       {/* Hero Section */}
-      <section
-        id="home"
-        className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-optica-purple via-quantum-violet to-optica-black overflow-hidden"
-      >
-        {/* 3D Background */}
-        <Hero3D />
-
-        <div className="container mx-auto px-4 text-center text-white z-10 relative">
-          <h1 className="font-heading text-5xl md:text-7xl font-bold mb-6 drop-shadow-lg">
-            BVP OPTICA
-          </h1>
-          <p className="font-body text-xl md:text-2xl mb-8 max-w-3xl mx-auto drop-shadow-md">
-            Igniting passion for optics and photonics through innovation,
-            education, and global collaboration
-          </p>
-          <div className="flex gap-4 justify-center flex-wrap">
-            <a
-              href="#about"
-              className="px-8 py-3 bg-quantum-violet text-white font-accent rounded-button hover:bg-optica-purple hover:scale-105 transition-all shadow-lg hover:shadow-xl"
-            >
-              Learn More
-            </a>
-            <a
-              href="#join"
-              className="px-8 py-3 border-2 border-white text-white font-accent rounded-button hover:bg-white hover:text-optica-purple hover:scale-105 transition-all shadow-lg"
-            >
-              Join Us
-            </a>
-          </div>
-        </div>
-      </section>
+      <Hero3D />
 
       {/* WHO WE ARE Section */}
       <section id="about" className="py-20 bg-surface">

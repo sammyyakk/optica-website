@@ -166,7 +166,7 @@ p:  clamp(1rem, 1.5vw + 0.25rem, 1.25rem)
 ### Color Palette (from README)
 All 9 colors implemented in Tailwind config:
 - **Optica Blue**: `#0072CE` - Primary brand color
-- **Quantum Violet**: `#6C63FF` - Secondary accent
+- **Quantum Violet**: `#A890FF` - Secondary accent
 - **Photon Gold**: `#FFC300` - CTA highlights
 - **Laser Magenta**: `#E91E63` - Accent color
 - **Background Light**: `#F5F7FA` - Light mode background
