@@ -13,9 +13,8 @@ import { cubicBezier } from "motion";
 import { motion } from "motion/react";
 import { useMemo, useRef } from "react";
 import * as THREE from "three";
-import { useControls } from "leva";
 
-const SPECTRUM_COLORS = ["#4330FF", "#A890FF", "#6F4CFF", "#E91E63"] as const;
+const SPECTRUM_COLORS = ["#A48FF5", "#6F4CFF", "#E91E63"] as const;
 
 const heroEase = cubicBezier(0.22, 1, 0.36, 1);
 
@@ -110,16 +109,14 @@ const quantumFoamVertexShader = `
 
 const quantumFoamFragmentShader = `
   void main() {
-    gl_FragColor = vec4(0.5, 0.4, 1.0, 0.15);
+    gl_FragColor = vec4(0.07, 0.01, 0.21, 0.15); // Corresponds to #120339
   }
 `;
 
 function QuantumFoam() {
   const meshRef = useRef<THREE.Mesh>(null);
-  const { uNoiseDensity, uNoiseStrength } = useControls("Quantum Foam", {
-    uNoiseDensity: { value: 1.5, min: 0.1, max: 5 },
-    uNoiseStrength: { value: 0.1, min: 0.01, max: 1 },
-  });
+  const uNoiseDensity = 2.5;
+  const uNoiseStrength = 0.25;
 
   const uniforms = useMemo(
     () => ({
@@ -139,7 +136,7 @@ function QuantumFoam() {
 
   return (
     <mesh ref={meshRef}>
-      <icosahedronGeometry args={[8, 20]} />
+      <icosahedronGeometry args={[7, 20]} />
       <shaderMaterial
         vertexShader={quantumFoamVertexShader}
         fragmentShader={quantumFoamFragmentShader}
@@ -150,74 +147,94 @@ function QuantumFoam() {
   );
 }
 
-// New "Entangled Ribbons"
-function EntangledRibbon({
+// Simple rotating circles on different planes
+function RotatingCircle({
   color,
-  seed,
+  planeIndex,
 }: {
   color: THREE.ColorRepresentation;
-  seed: number;
+  planeIndex: number;
 }) {
   const curve = useMemo(() => {
     const points = [];
-    const path = new THREE.CatmullRomCurve3();
-    const speed = seed * 0.1 + 0.2;
-    const amplitude = seed * 1.5 + 2;
-    const frequency = seed * 0.2 + 0.1;
+    // Different radius for each circle: small (4), bigger (5.5), biggest (7)
+    const radius = planeIndex === 0 ? 4 : planeIndex === 1 ? 5.5 : 7;
 
-    for (let i = 0; i < 100; i++) {
-      const t = i / 99;
-      const x = Math.sin(t * Math.PI * 2 + seed) * amplitude;
-      const y = Math.cos(t * Math.PI * 2 + seed) * amplitude;
-      const z = Math.sin(t * Math.PI * 4 * frequency) * (amplitude / 2);
-      points.push(new THREE.Vector3(x, y, z));
+    // Create a simple circle with 64 points
+    for (let i = 0; i <= 64; i++) {
+      const angle = (i / 64) * Math.PI * 2;
+      const x = Math.cos(angle) * radius;
+      const y = Math.sin(angle) * radius;
+      points.push(new THREE.Vector3(x, y, 0));
     }
-    path.points = points;
-    path.curveType = "catmullrom";
+
+    const path = new THREE.CatmullRomCurve3(points);
     path.closed = true;
     return path;
-  }, [seed]);
+  }, [planeIndex]);
 
-  const tubeRef = useRef<THREE.Mesh>(null);
+  const groupRef = useRef<THREE.Group>(null);
+
   useFrame(({ clock }) => {
-    if (tubeRef.current) {
-      tubeRef.current.rotation.x = clock.elapsedTime * (seed * 0.05);
-      tubeRef.current.rotation.y = clock.elapsedTime * (seed * 0.08);
+    if (groupRef.current) {
+      const time = clock.elapsedTime;
+      // All circles rotate simultaneously on all axes for a cool gyroscope effect
+      groupRef.current.rotation.x =
+        time * 0.3 * (planeIndex === 0 ? 1 : planeIndex === 1 ? 0.7 : 0.5);
+      groupRef.current.rotation.y =
+        time * 0.25 * (planeIndex === 0 ? 0.5 : planeIndex === 1 ? 1 : 0.7);
+      groupRef.current.rotation.z =
+        time * 0.35 * (planeIndex === 0 ? 0.7 : planeIndex === 1 ? 0.5 : 1);
     }
   });
 
+  // Set initial rotation to orient the circle on the correct plane
+  const initialRotation = useMemo(() => {
+    if (planeIndex === 0) {
+      return [0, 0, 0]; // XY plane (horizontal)
+    } else if (planeIndex === 1) {
+      return [Math.PI / 2, 0, 0]; // XZ plane (vertical, front-back)
+    } else {
+      return [0, Math.PI / 2, 0]; // YZ plane (vertical, left-right)
+    }
+  }, [planeIndex]);
+
   return (
-    <Tube ref={tubeRef} args={[curve, 128, 0.01, 16, false]}>
-      <meshStandardMaterial emissive={color} emissiveIntensity={4} toneMapped={false} />
-    </Tube>
+    <group ref={groupRef} rotation={initialRotation as any}>
+      <Tube args={[curve, 128, 0.03, 16, true]}>
+        <meshStandardMaterial
+          emissive={color}
+          emissiveIntensity={5}
+          toneMapped={false}
+        />
+      </Tube>
+    </group>
   );
 }
 
 function CrystalCluster() {
-  const { roughness, transmission, thickness } = useControls("Crystals", {
-    roughness: { value: 0.05, min: 0, max: 0.2 },
-    transmission: { value: 1.0, min: 0.8, max: 1.0 },
-    thickness: { value: 1.5, min: 0.5, max: 5 },
-  });
+  const roughness = 0.02;
+  const transmission = 1.0;
+  const thickness = 2.5;
 
   const crystals = useMemo(() => {
-    return new Array(20).fill(0).map((_, i) => ({
+    return new Array(25).fill(0).map((_, i) => ({
       position: new THREE.Vector3(
-        (Math.random() - 0.5) * 4,
-        (Math.random() - 0.5) * 4,
-        (Math.random() - 0.5) * 4
+        (Math.random() - 0.5) * 5,
+        (Math.random() - 0.5) * 5,
+        (Math.random() - 0.5) * 5
       ),
       rotation: new THREE.Euler(
         Math.random() * Math.PI,
         Math.random() * Math.PI,
         Math.random() * Math.PI
       ),
-      scale: Math.random() * 0.3 + 0.1,
+      scale: Math.random() * 0.4 + 0.15,
     }));
   }, []);
 
   return (
-    <Float speed={0.5} rotationIntensity={2} floatIntensity={2}>
+    <Float speed={0.8} rotationIntensity={2.5} floatIntensity={2.5}>
       <group>
         {crystals.map((crystal, i) => (
           <mesh
@@ -231,8 +248,10 @@ function CrystalCluster() {
               roughness={roughness}
               transmission={transmission}
               thickness={thickness}
-              ior={1.7}
-              color="#A890FF"
+              ior={2.33}
+              color="#A48FF5"
+              emissive="#A48FF5"
+              emissiveIntensity={0.2}
             />
           </mesh>
         ))}
@@ -244,9 +263,9 @@ function CrystalCluster() {
 function CameraRig() {
   useFrame(({ camera, clock }) => {
     const t = clock.getElapsedTime();
-    camera.position.x = Math.sin(t * 0.1) * 8;
-    camera.position.z = Math.cos(t * 0.1) * 8;
-    camera.position.y = 2 + Math.sin(t * 0.2) * 1;
+    camera.position.x = Math.sin(t * 0.15) * 9;
+    camera.position.z = Math.cos(t * 0.15) * 9;
+    camera.position.y = 2.5 + Math.sin(t * 0.25) * 1.5;
     camera.lookAt(0, 0, 0);
   });
   return null;
@@ -269,12 +288,12 @@ export default function Hero3D() {
           <fog attach="fog" args={["#0E1A2B", 8, 20]} />
 
           <CameraRig />
-          
+
           <QuantumFoam />
           <CrystalCluster />
 
           {SPECTRUM_COLORS.map((color, i) => (
-            <EntangledRibbon key={i} color={color} seed={i + 1} />
+            <RotatingCircle key={i} color={color} planeIndex={i} />
           ))}
 
           <ContactShadows
@@ -322,7 +341,8 @@ export default function Hero3D() {
           variants={itemVariants}
           className="mt-6 max-w-3xl text-base text-text-secondary sm:text-lg md:text-xl"
         >
-          Explore the world of optics, photonics, and quantum technology with the BVP Optica student chapter.
+          Explore the world of optics, photonics, and quantum technology with
+          the BVP Optica student chapter.
         </motion.p>
         <motion.div
           variants={itemVariants}

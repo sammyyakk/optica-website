@@ -10,14 +10,14 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-  "optica-purple": "#A890FF",
-  "quantum-violet": "#A890FF",
-        "optica-black": "#05040A",
-        "surface-deep": "#0B0A14",
-        "surface": "#121123",
-        "text-primary": "#F5F5F8",
-        "text-secondary": "#ACAFCA",
-        "white-elements": "#FFFFFF",
+        "primary-purple": "#A48FF5",
+        "dark-purple": "#120339",
+        "black": "#000000",
+        "white": "#FFFFFF",
+        "text-primary": "#FFFFFF",
+        "text-secondary": "#A48FF5",
+        "background-primary": "#120339",
+        "background-secondary": "#000000",
       },
       fontFamily: {
         heading: ["var(--font-poppins)", "sans-serif"],

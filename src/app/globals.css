@@ -3,23 +3,13 @@
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 30, 30, 30; /* #1E1E1E - Text Primary */
-  --background-start-rgb: 245, 247, 250; /* #F5F7FA - Background Light */
-  --background-end-rgb: 255, 255, 255; /* #FFFFFF - White Elements */
+  --foreground-rgb: 255, 255, 255;
+  --background-start-rgb: 18, 3, 57; /* dark-purple */
+  --background-end-rgb: 0, 0, 0; /* black */
   
   /* Brand Colors */
-  --optica-blue: 0, 114, 206; /* #0072CE */
-  --quantum-violet: 108, 99, 255; /* #6C63FF */
-  --photon-gold: 255, 195, 0; /* #FFC300 */
-  --laser-magenta: 233, 30, 99; /* #E91E63 */
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255; /* White Elements */
-    --background-start-rgb: 14, 26, 43; /* #0E1A2B - Background Dark */
-    --background-end-rgb: 14, 26, 43;
-  }
+  --primary-purple: 164, 143, 245;
+  --dark-purple: 18, 3, 57;
 }
 
 body {
@@ -33,11 +23,14 @@ body {
   font-size: clamp(14px, 1vw + 0.5rem, 18px);
 }
 
-/* Responsive typography scaling */
+/* Remove dark mode specific overrides as we are now dark-by-default */
+/* @media (prefers-color-scheme: dark) { ... } */
+
 h1, .text-5xl, .text-6xl, .text-7xl {
   font-size: clamp(2rem, 5vw + 1rem, 4.5rem);
   line-height: 1.2;
 }
+
 
 h2, .text-4xl {
   font-size: clamp(1.75rem, 4vw + 0.5rem, 3rem);
@@ -66,7 +59,7 @@ p, .text-lg {
   
   /* Gradient text utilities */
   .text-gradient-primary {
-    @apply bg-gradient-to-r from-optica-blue via-quantum-violet to-laser-magenta bg-clip-text text-transparent;
+    @apply bg-gradient-to-r from-primary-purple via-dark-purple to-primary-purple bg-clip-text text-transparent;
   }
   
   /* Glass morphism utility */
@@ -78,10 +71,8 @@ p, .text-lg {
   .animated-gradient {
     background: linear-gradient(
       -45deg,
-      rgb(var(--optica-blue)),
-      rgb(var(--quantum-violet)),
-      rgb(var(--laser-magenta)),
-      rgb(var(--photon-gold))
+      rgb(var(--primary-purple)),
+      rgb(var(--dark-purple))
     );
     background-size: 400% 400%;
     animation: gradient 15s ease infinite;

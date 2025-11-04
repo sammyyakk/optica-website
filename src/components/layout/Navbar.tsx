@@ -88,21 +88,32 @@ export default function Navbar() {
       ref={navRef}
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         isScrolled
-          ? "bg-optica-black/85 backdrop-blur-xl border-b border-optica-purple/20 shadow-lg"
+          ? "bg-black/85 backdrop-blur-xl border-b border-primary-purple/20 shadow-lg"
           : "bg-transparent"
       }`}
     >
       <div className="container mx-auto px-4 md:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
-          <Link href="/" className="relative">
-            <div className="relative h-12 w-auto flex items-center">
+          <Link href="/" className="relative group">
+            <div className="relative h-16 w-auto flex items-center transition-transform duration-300 group-hover:scale-105">
+              {/* Light mode logo */}
+              <Image
+                src="/navbar_logo_dark.png"
+                alt="BVP Optica Logo"
+                width={220}
+                height={58}
+                className="h-10 w-auto object-contain dark:hidden"
+                quality={100}
+                priority
+              />
+              {/* Dark mode logo */}
               <Image
                 src="/navbar_logo_light.png"
                 alt="BVP Optica Logo"
-                width={180}
-                height={48}
-                className="h-6 w-auto object-contain"
+                width={220}
+                height={58}
+                className="h-10 w-auto object-contain hidden dark:block"
                 quality={100}
                 priority
               />
@@ -117,8 +128,8 @@ export default function Navbar() {
                   <motion.span
                     className={`relative px-4 py-2 font-accent text-sm lg:text-base transition-colors cursor-pointer ${
                       isScrolled
-                        ? "text-text-primary hover:text-quantum-violet"
-                        : "text-white hover:text-quantum-violet"
+                        ? "text-text-primary hover:text-primary-purple"
+                        : "text-white hover:text-primary-purple"
                     }`}
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
@@ -133,10 +144,10 @@ export default function Navbar() {
                   onClick={(e) => handleNavClick(e, item.href)}
                   className={`relative px-4 py-2 font-accent text-sm lg:text-base transition-colors ${
                     activeSection === item.href.slice(1)
-                      ? "text-quantum-violet"
+                      ? "text-primary-purple"
                       : isScrolled
-                      ? "text-text-primary hover:text-quantum-violet"
-                      : "text-white hover:text-quantum-violet"
+                      ? "text-text-primary hover:text-primary-purple"
+                      : "text-white hover:text-primary-purple"
                   }`}
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
@@ -144,7 +155,7 @@ export default function Navbar() {
                   {item.name}
                   {activeSection === item.href.slice(1) && (
                     <motion.div
-                      className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-optica-purple to-quantum-violet"
+                      className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-primary-purple to-dark-purple"
                       layoutId="activeSection"
                       transition={{
                         type: "spring",
@@ -169,14 +180,14 @@ export default function Navbar() {
           >
             <motion.div
               className={`w-10 h-10 rounded-full flex items-center justify-center ${
-                isScrolled ? "bg-optica-purple/30" : "bg-white/20"
+                isScrolled ? "bg-primary-purple/30" : "bg-white/20"
               } backdrop-blur-md`}
               animate={isMenuOpen ? { scale: 1.1 } : { scale: 1 }}
             >
               <div className="relative w-6 h-5">
                 <motion.span
                   className={`absolute left-0 w-full h-0.5 rounded-full ${
-                    isScrolled ? "bg-quantum-violet" : "bg-white"
+                    isScrolled ? "bg-primary-purple" : "bg-white"
                   }`}
                   animate={
                     isMenuOpen
@@ -187,14 +198,14 @@ export default function Navbar() {
                 />
                 <motion.span
                   className={`absolute left-0 top-1/2 -translate-y-1/2 w-full h-0.5 rounded-full ${
-                    isScrolled ? "bg-quantum-violet" : "bg-white"
+                    isScrolled ? "bg-primary-purple" : "bg-white"
                   }`}
                   animate={isMenuOpen ? { opacity: 0 } : { opacity: 1 }}
                   transition={{ duration: 0.2 }}
                 />
                 <motion.span
                   className={`absolute left-0 bottom-0 w-full h-0.5 rounded-full ${
-                    isScrolled ? "bg-quantum-violet" : "bg-white"
+                    isScrolled ? "bg-primary-purple" : "bg-white"
                   }`}
                   animate={
                     isMenuOpen
@@ -224,7 +235,7 @@ export default function Navbar() {
           >
             {/* Backdrop */}
             <motion.div
-              className="absolute inset-0 bg-gradient-to-br from-optica-purple/95 via-quantum-violet/95 to-optica-black/95 backdrop-blur-2xl"
+              className="absolute inset-0 bg-gradient-to-br from-primary-purple/95 via-dark-purple/95 to-black/95 backdrop-blur-2xl"
               initial={{ scale: 0, borderRadius: "100%" }}
               animate={{ scale: 2, borderRadius: "0%" }}
               exit={{ scale: 0, borderRadius: "100%" }}
@@ -244,7 +255,7 @@ export default function Navbar() {
                   key={item.name}
                   href={item.href}
                   onClick={(e) => handleNavClick(e, item.href)}
-                  className="font-heading text-4xl font-bold text-white hover:text-quantum-violet transition-colors"
+                  className="font-heading text-4xl font-bold text-white hover:text-primary-purple transition-colors"
                   variants={{
                     closed: { opacity: 0, y: 20, scale: 0.8 },
                     open: { opacity: 1, y: 0, scale: 1 },
