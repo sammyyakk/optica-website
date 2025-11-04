@@ -1,17 +1,17 @@
-'use client';
+"use client";
 
-import { useEffect } from 'react';
-import { useAnimationContext } from '@/lib/animations/AnimationProvider';
+import { useEffect } from "react";
+import { useAnimationContext } from "@/lib/animations/AnimationProvider";
 
 /**
  * Hook to announce route changes to screen readers
  */
 export function useRouteAnnouncer() {
   useEffect(() => {
-    const announcer = document.createElement('div');
-    announcer.setAttribute('aria-live', 'polite');
-    announcer.setAttribute('aria-atomic', 'true');
-    announcer.className = 'sr-only';
+    const announcer = document.createElement("div");
+    announcer.setAttribute("aria-live", "polite");
+    announcer.setAttribute("aria-atomic", "true");
+    announcer.className = "sr-only";
     document.body.appendChild(announcer);
 
     const handleRouteChange = () => {
@@ -20,10 +20,10 @@ export function useRouteAnnouncer() {
     };
 
     // Listen for Next.js route changes
-    window.addEventListener('popstate', handleRouteChange);
+    window.addEventListener("popstate", handleRouteChange);
 
     return () => {
-      window.removeEventListener('popstate', handleRouteChange);
+      window.removeEventListener("popstate", handleRouteChange);
       if (document.body.contains(announcer)) {
         document.body.removeChild(announcer);
       }
@@ -34,7 +34,10 @@ export function useRouteAnnouncer() {
 /**
  * Hook to manage focus trap for modals
  */
-export function useFocusTrap(isOpen: boolean, containerRef: React.RefObject<HTMLElement>) {
+export function useFocusTrap(
+  isOpen: boolean,
+  containerRef: React.RefObject<HTMLElement>
+) {
   useEffect(() => {
     if (!isOpen || !containerRef.current) return;
 
@@ -47,7 +50,7 @@ export function useFocusTrap(isOpen: boolean, containerRef: React.RefObject<HTML
     const lastElement = focusableElements[focusableElements.length - 1];
 
     const handleTabKey = (e: KeyboardEvent) => {
-      if (e.key !== 'Tab') return;
+      if (e.key !== "Tab") return;
 
       if (e.shiftKey) {
         if (document.activeElement === firstElement) {
@@ -65,10 +68,10 @@ export function useFocusTrap(isOpen: boolean, containerRef: React.RefObject<HTML
     // Focus first element when opened
     firstElement?.focus();
 
-    document.addEventListener('keydown', handleTabKey);
+    document.addEventListener("keydown", handleTabKey);
 
     return () => {
-      document.removeEventListener('keydown', handleTabKey);
+      document.removeEventListener("keydown", handleTabKey);
     };
   }, [isOpen, containerRef]);
 }
@@ -81,15 +84,15 @@ export function useEscapeKey(callback: () => void, isActive: boolean = true) {
     if (!isActive) return;
 
     const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') {
+      if (e.key === "Escape") {
         callback();
       }
     };
 
-    document.addEventListener('keydown', handleEscape);
+    document.addEventListener("keydown", handleEscape);
 
     return () => {
-      document.removeEventListener('keydown', handleEscape);
+      document.removeEventListener("keydown", handleEscape);
     };
   }, [callback, isActive]);
 }
@@ -99,16 +102,16 @@ export function useEscapeKey(callback: () => void, isActive: boolean = true) {
  */
 export function useAriaLiveAnnouncer() {
   useEffect(() => {
-    const announcer = document.createElement('div');
-    announcer.setAttribute('role', 'status');
-    announcer.setAttribute('aria-live', 'polite');
-    announcer.setAttribute('aria-atomic', 'true');
-    announcer.className = 'sr-only';
-    announcer.id = 'aria-live-announcer';
+    const announcer = document.createElement("div");
+    announcer.setAttribute("role", "status");
+    announcer.setAttribute("aria-live", "polite");
+    announcer.setAttribute("aria-atomic", "true");
+    announcer.className = "sr-only";
+    announcer.id = "aria-live-announcer";
     document.body.appendChild(announcer);
 
     return () => {
-      const existingAnnouncer = document.getElementById('aria-live-announcer');
+      const existingAnnouncer = document.getElementById("aria-live-announcer");
       if (existingAnnouncer) {
         document.body.removeChild(existingAnnouncer);
       }
@@ -116,11 +119,11 @@ export function useAriaLiveAnnouncer() {
   }, []);
 
   const announce = (message: string) => {
-    const announcer = document.getElementById('aria-live-announcer');
+    const announcer = document.getElementById("aria-live-announcer");
     if (announcer) {
       announcer.textContent = message;
       setTimeout(() => {
-        announcer.textContent = '';
+        announcer.textContent = "";
       }, 1000);
     }
   };
@@ -133,23 +136,23 @@ export function useAriaLiveAnnouncer() {
  */
 export function useSkipLink() {
   useEffect(() => {
-    const skipLink = document.getElementById('skip-to-main');
+    const skipLink = document.getElementById("skip-to-main");
     if (!skipLink) return;
 
     const handleFocus = () => {
-      skipLink.classList.add('focus:not-sr-only');
+      skipLink.classList.add("focus:not-sr-only");
     };
 
     const handleBlur = () => {
-      skipLink.classList.remove('focus:not-sr-only');
+      skipLink.classList.remove("focus:not-sr-only");
     };
 
-    skipLink.addEventListener('focus', handleFocus);
-    skipLink.addEventListener('blur', handleBlur);
+    skipLink.addEventListener("focus", handleFocus);
+    skipLink.addEventListener("blur", handleBlur);
 
     return () => {
-      skipLink.removeEventListener('focus', handleFocus);
-      skipLink.removeEventListener('blur', handleBlur);
+      skipLink.removeEventListener("focus", handleFocus);
+      skipLink.removeEventListener("blur", handleBlur);
     };
   }, []);
 }
@@ -180,7 +183,8 @@ export function useReducedMotion() {
 /**
  * Accessible button with loading and disabled states
  */
-interface AccessibleButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+interface AccessibleButtonProps
+  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   loading?: boolean;
   loadingText?: string;
   children: React.ReactNode;
@@ -188,7 +192,7 @@ interface AccessibleButtonProps extends React.ButtonHTMLAttributes<HTMLButtonEle
 
 export function AccessibleButton({
   loading = false,
-  loadingText = 'Loading...',
+  loadingText = "Loading...",
   children,
   disabled,
   ...props

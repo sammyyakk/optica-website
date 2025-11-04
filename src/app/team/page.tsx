@@ -1,7 +1,10 @@
-'use client';
+"use client";
 
-import { motion } from 'motion/react';
-import { RevealElement, StaggerReveal } from '@/lib/animations/ScrollAnimations';
+import { motion } from "motion/react";
+import {
+  RevealElement,
+  StaggerReveal,
+} from "@/lib/animations/ScrollAnimations";
 
 interface TeamMember {
   name: string;
@@ -12,25 +15,25 @@ interface TeamMember {
 }
 
 const coreTeam: TeamMember[] = [
-  { name: 'President', role: 'President', linkedin: '#' },
-  { name: 'Vice President', role: 'Vice President', linkedin: '#' },
-  { name: 'Secretary', role: 'Secretary', linkedin: '#' },
-  { name: 'Treasurer', role: 'Treasurer', linkedin: '#' },
+  { name: "President", role: "President", linkedin: "#" },
+  { name: "Vice President", role: "Vice President", linkedin: "#" },
+  { name: "Secretary", role: "Secretary", linkedin: "#" },
+  { name: "Treasurer", role: "Treasurer", linkedin: "#" },
 ];
 
 const departmentHeads: TeamMember[] = [
-  { name: 'Content Head', role: 'Content Department', linkedin: '#' },
-  { name: 'Design Head', role: 'Design Department', linkedin: '#' },
-  { name: 'Logistics Head', role: 'Logistics Department', linkedin: '#' },
-  { name: 'Outreach Head', role: 'Outreach Department', linkedin: '#' },
-  { name: 'Social Media Head', role: 'Social Media Department', linkedin: '#' },
+  { name: "Content Head", role: "Content Department", linkedin: "#" },
+  { name: "Design Head", role: "Design Department", linkedin: "#" },
+  { name: "Logistics Head", role: "Logistics Department", linkedin: "#" },
+  { name: "Outreach Head", role: "Outreach Department", linkedin: "#" },
+  { name: "Social Media Head", role: "Social Media Department", linkedin: "#" },
 ];
 
 function TeamMemberCard({ member }: { member: TeamMember }) {
   return (
     <motion.div
       whileHover={{ y: -10, scale: 1.02 }}
-      transition={{ type: 'spring', stiffness: 300 }}
+      transition={{ type: "spring", stiffness: 300 }}
       className="group"
     >
       <div className="bg-white dark:bg-background-dark/80 rounded-card shadow-card p-6 border border-transparent dark:border-quantum-violet/20 hover:shadow-2xl transition-all duration-300">
@@ -90,7 +93,10 @@ function TeamMemberCard({ member }: { member: TeamMember }) {
 
 export default function TeamPage() {
   return (
-    <main id="main-content" className="min-h-screen bg-background-light dark:bg-background-dark transition-colors duration-300 pt-24 pb-20">
+    <main
+      id="main-content"
+      className="min-h-screen bg-background-light dark:bg-background-dark transition-colors duration-300 pt-24 pb-20"
+    >
       <div className="container mx-auto px-4">
         <RevealElement direction="up">
           <h1 className="font-heading text-5xl md:text-6xl font-bold text-center mb-6 text-optica-blue dark:text-quantum-violet">
@@ -100,7 +106,8 @@ export default function TeamPage() {
 
         <RevealElement direction="up" delay={0.2}>
           <p className="font-body text-lg text-text-secondary dark:text-gray-300 max-w-3xl mx-auto text-center mb-16 leading-relaxed">
-            The passionate individuals driving BVP Optica forward through innovation and collaboration.
+            The passionate individuals driving BVP Optica forward through
+            innovation and collaboration.
           </p>
         </RevealElement>
 
@@ -111,7 +118,10 @@ export default function TeamPage() {
           </h2>
         </RevealElement>
 
-        <StaggerReveal staggerDelay={0.15} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-20">
+        <StaggerReveal
+          staggerDelay={0.15}
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-20"
+        >
           {coreTeam.map((member, index) => (
             <TeamMemberCard key={index} member={member} />
           ))}
@@ -124,7 +134,10 @@ export default function TeamPage() {
           </h2>
         </RevealElement>
 
-        <StaggerReveal staggerDelay={0.1} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <StaggerReveal
+          staggerDelay={0.1}
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+        >
           {departmentHeads.map((member, index) => (
             <TeamMemberCard key={index} member={member} />
           ))}

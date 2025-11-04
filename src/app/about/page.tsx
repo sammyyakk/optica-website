@@ -1,11 +1,14 @@
-'use client';
+"use client";
 
-import { RevealElement } from '@/lib/animations/ScrollAnimations';
-import Image from 'next/image';
+import { RevealElement } from "@/lib/animations/ScrollAnimations";
+import Image from "next/image";
 
 export default function AboutPage() {
   return (
-    <main id="main-content" className="min-h-screen bg-background-light dark:bg-background-dark transition-colors duration-300 pt-24 pb-20">
+    <main
+      id="main-content"
+      className="min-h-screen bg-background-light dark:bg-background-dark transition-colors duration-300 pt-24 pb-20"
+    >
       <div className="container mx-auto px-4">
         {/* Header */}
         <RevealElement direction="up">
@@ -16,7 +19,8 @@ export default function AboutPage() {
 
         <RevealElement direction="up" delay={0.2}>
           <p className="font-body text-lg text-text-secondary dark:text-gray-300 max-w-3xl mx-auto text-center mb-16 leading-relaxed">
-            Igniting passion for optics and photonics through education, innovation, and global collaboration.
+            Igniting passion for optics and photonics through education,
+            innovation, and global collaboration.
           </p>
         </RevealElement>
 
@@ -28,9 +32,10 @@ export default function AboutPage() {
                 Our Mission
               </h2>
               <p className="font-body text-text-secondary dark:text-gray-300 leading-relaxed">
-                To advance the fields of optics and photonics by providing students with opportunities
-                for learning, research, and collaboration. We strive to create a community where
-                innovation thrives and members can explore cutting-edge technologies.
+                To advance the fields of optics and photonics by providing
+                students with opportunities for learning, research, and
+                collaboration. We strive to create a community where innovation
+                thrives and members can explore cutting-edge technologies.
               </p>
             </div>
           </RevealElement>
@@ -41,9 +46,10 @@ export default function AboutPage() {
                 Our Vision
               </h2>
               <p className="font-body text-text-secondary dark:text-gray-300 leading-relaxed">
-                To establish BVP Optica as a leading student chapter that empowers the next generation
-                of scientists and engineers. We envision a future where our members contribute
-                significantly to technological advancements in optics and photonics globally.
+                To establish BVP Optica as a leading student chapter that
+                empowers the next generation of scientists and engineers. We
+                envision a future where our members contribute significantly to
+                technological advancements in optics and photonics globally.
               </p>
             </div>
           </RevealElement>
@@ -59,34 +65,40 @@ export default function AboutPage() {
         <div className="grid md:grid-cols-3 gap-8 mb-20">
           {[
             {
-              title: 'Workshops & Seminars',
-              description: 'Interactive sessions with industry experts and researchers covering the latest advancements in optics and photonics.',
-              icon: '🎓',
+              title: "Workshops & Seminars",
+              description:
+                "Interactive sessions with industry experts and researchers covering the latest advancements in optics and photonics.",
+              icon: "🎓",
             },
             {
-              title: 'Research Opportunities',
-              description: 'Access to cutting-edge research projects and collaborations with leading institutions worldwide.',
-              icon: '🔬',
+              title: "Research Opportunities",
+              description:
+                "Access to cutting-edge research projects and collaborations with leading institutions worldwide.",
+              icon: "🔬",
             },
             {
-              title: 'Networking Events',
-              description: 'Connect with professionals, alumni, and peers through our extensive global network.',
-              icon: '🌐',
+              title: "Networking Events",
+              description:
+                "Connect with professionals, alumni, and peers through our extensive global network.",
+              icon: "🌐",
             },
             {
-              title: 'Competitions',
-              description: 'Participate in ideathons, quizzes, and technical competitions to showcase your skills.',
-              icon: '🏆',
+              title: "Competitions",
+              description:
+                "Participate in ideathons, quizzes, and technical competitions to showcase your skills.",
+              icon: "🏆",
             },
             {
-              title: 'Publications',
-              description: 'Exclusive access to journals, magazines, and research papers in the field.',
-              icon: '📚',
+              title: "Publications",
+              description:
+                "Exclusive access to journals, magazines, and research papers in the field.",
+              icon: "📚",
             },
             {
-              title: 'Community',
-              description: 'Join a close-knit community of passionate individuals driving innovation together.',
-              icon: '🤝',
+              title: "Community",
+              description:
+                "Join a close-knit community of passionate individuals driving innovation together.",
+              icon: "🤝",
             },
           ].map((item, index) => (
             <RevealElement key={index} direction="up" delay={0.5 + index * 0.1}>
@@ -121,16 +133,18 @@ export default function AboutPage() {
                   Dr. Yugnanda Puri
                 </h3>
                 <p className="font-body text-text-secondary dark:text-gray-300 leading-relaxed mb-4">
-                  Having founded this club in 2019, Dr. Puri has been key in establishing and nurturing
-                  it ever since. With a Ph.D. in Optical Communication from Thapar Institute of
-                  Engineering & Technology, and both a Master's and bachelor's degree in Electronics &
-                  Communication Engineering, Dr. Puri has been a driving force behind BVP Optica's
-                  growth and success.
+                  Having founded this club in 2019, Dr. Puri has been key in
+                  establishing and nurturing it ever since. With a Ph.D. in
+                  Optical Communication from Thapar Institute of Engineering &
+                  Technology, and both a Master's and bachelor's degree in
+                  Electronics & Communication Engineering, Dr. Puri has been a
+                  driving force behind BVP Optica's growth and success.
                 </p>
                 <p className="font-body text-text-secondary dark:text-gray-300 leading-relaxed">
-                  Currently serving as the Dean of Research and Development and an Associate Professor
-                  at BVCOE, Dr. Puri ensures that the subchapter thrives by providing valuable
-                  resources, guidance, and encouragement to our members.
+                  Currently serving as the Dean of Research and Development and
+                  an Associate Professor at BVCOE, Dr. Puri ensures that the
+                  subchapter thrives by providing valuable resources, guidance,
+                  and encouragement to our members.
                 </p>
               </div>
             </div>

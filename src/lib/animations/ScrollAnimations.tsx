@@ -1,15 +1,15 @@
-'use client';
+"use client";
 
-import { useEffect, useRef } from 'react';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { useAnimationContext } from './AnimationProvider';
+import { useEffect, useRef } from "react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useAnimationContext } from "./AnimationProvider";
 
 gsap.registerPlugin(ScrollTrigger);
 
 interface RevealElementProps {
   children: React.ReactNode;
-  direction?: 'up' | 'down' | 'left' | 'right' | 'fade';
+  direction?: "up" | "down" | "left" | "right" | "fade";
   delay?: number;
   duration?: number;
   className?: string;
@@ -17,10 +17,10 @@ interface RevealElementProps {
 
 export function RevealElement({
   children,
-  direction = 'up',
+  direction = "up",
   delay = 0,
   duration = 1,
-  className = '',
+  className = "",
 }: RevealElementProps) {
   const { shouldAnimate } = useAnimationContext();
   const elementRef = useRef<HTMLDivElement>(null);
@@ -36,19 +36,19 @@ export function RevealElement({
     };
 
     switch (direction) {
-      case 'up':
+      case "up":
         initialState.y = 60;
         break;
-      case 'down':
+      case "down":
         initialState.y = -60;
         break;
-      case 'left':
+      case "left":
         initialState.x = 60;
         break;
-      case 'right':
+      case "right":
         initialState.x = -60;
         break;
-      case 'fade':
+      case "fade":
         // Only opacity
         break;
     }
@@ -59,9 +59,9 @@ export function RevealElement({
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: element,
-        start: 'top 85%',
-        end: 'top 50%',
-        toggleActions: 'play none none reverse',
+        start: "top 85%",
+        end: "top 50%",
+        toggleActions: "play none none reverse",
       },
     });
 
@@ -71,7 +71,7 @@ export function RevealElement({
       y: 0,
       duration,
       delay,
-      ease: 'power3.out',
+      ease: "power3.out",
     });
 
     return () => {
@@ -95,7 +95,7 @@ interface StaggerRevealProps {
 export function StaggerReveal({
   children,
   staggerDelay = 0.1,
-  className = '',
+  className = "",
 }: StaggerRevealProps) {
   const { shouldAnimate } = useAnimationContext();
   const containerRef = useRef<HTMLDivElement>(null);
@@ -113,9 +113,9 @@ export function StaggerReveal({
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: containerRef.current,
-        start: 'top 80%',
-        end: 'top 40%',
-        toggleActions: 'play none none reverse',
+        start: "top 80%",
+        end: "top 40%",
+        toggleActions: "play none none reverse",
       },
     });
 
@@ -124,7 +124,7 @@ export function StaggerReveal({
       y: 0,
       duration: 0.8,
       stagger: staggerDelay,
-      ease: 'power3.out',
+      ease: "power3.out",
     });
 
     return () => {
@@ -148,7 +148,7 @@ interface ParallaxElementProps {
 export function ParallaxElement({
   children,
   speed = 0.5,
-  className = '',
+  className = "",
 }: ParallaxElementProps) {
   const { shouldAnimate } = useAnimationContext();
   const elementRef = useRef<HTMLDivElement>(null);
@@ -160,11 +160,11 @@ export function ParallaxElement({
 
     gsap.to(element, {
       yPercent: -50 * speed,
-      ease: 'none',
+      ease: "none",
       scrollTrigger: {
         trigger: element,
-        start: 'top bottom',
-        end: 'bottom top',
+        start: "top bottom",
+        end: "bottom top",
         scrub: true,
       },
     });
@@ -189,7 +189,7 @@ interface ScrollProgressProps {
   className?: string;
 }
 
-export function ScrollProgress({ className = '' }: ScrollProgressProps) {
+export function ScrollProgress({ className = "" }: ScrollProgressProps) {
   const progressRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -197,17 +197,17 @@ export function ScrollProgress({ className = '' }: ScrollProgressProps) {
 
     const tl = gsap.timeline({
       scrollTrigger: {
-        trigger: 'body',
-        start: 'top top',
-        end: 'bottom bottom',
+        trigger: "body",
+        start: "top top",
+        end: "bottom bottom",
         scrub: 0.3,
       },
     });
 
     tl.to(progressRef.current, {
       scaleX: 1,
-      transformOrigin: 'left',
-      ease: 'none',
+      transformOrigin: "left",
+      ease: "none",
     });
 
     return () => {

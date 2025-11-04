@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import { createContext, useContext, useEffect, ReactNode } from 'react';
-import { initGSAP } from './gsap';
+import { createContext, useContext, useEffect, ReactNode } from "react";
+import { initGSAP } from "./gsap";
 
-const AnimationContext = createContext<{ 
+const AnimationContext = createContext<{
   reducedMotion: boolean;
   shouldAnimate: boolean;
 }>({
@@ -17,8 +17,8 @@ export function useAnimationContext() {
 
 export function AnimationProvider({ children }: { children: ReactNode }) {
   const reducedMotion =
-    typeof window !== 'undefined'
-      ? window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    typeof window !== "undefined"
+      ? window.matchMedia("(prefers-reduced-motion: reduce)").matches
       : false;
 
   const shouldAnimate = !reducedMotion;

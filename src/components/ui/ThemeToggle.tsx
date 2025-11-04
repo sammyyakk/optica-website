@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import { motion } from 'motion/react';
-import { useTheme } from '@/lib/theme/ThemeProvider';
+import { motion } from "motion/react";
+import { useTheme } from "@/lib/theme/ThemeProvider";
 
 export default function ThemeToggle() {
   const { theme, toggleTheme } = useTheme();
@@ -17,11 +17,11 @@ export default function ThemeToggle() {
       <motion.div
         className="w-5 h-5 rounded-full bg-white shadow-md flex items-center justify-center"
         animate={{
-          x: theme === 'dark' ? 26 : 0,
+          x: theme === "dark" ? 26 : 0,
         }}
-        transition={{ type: 'spring', stiffness: 500, damping: 30 }}
+        transition={{ type: "spring", stiffness: 500, damping: 30 }}
       >
-        {theme === 'light' ? (
+        {theme === "light" ? (
           <svg
             className="w-3 h-3 text-photon-gold"
             fill="currentColor"

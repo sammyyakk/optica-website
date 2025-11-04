@@ -1,30 +1,42 @@
-'use client';
+"use client";
 
-import dynamic from 'next/dynamic';
-import { RevealElement, ScrollProgress } from '@/lib/animations/ScrollAnimations';
+import dynamic from "next/dynamic";
+import {
+  RevealElement,
+  ScrollProgress,
+} from "@/lib/animations/ScrollAnimations";
 
-const Hero3D = dynamic(() => import('@/components/three/Hero3D'), {
+const Hero3D = dynamic(() => import("@/components/three/Hero3D"), {
   ssr: false,
-  loading: () => <div className="absolute inset-0 bg-gradient-to-br from-optica-blue via-quantum-violet to-background-dark" />
+  loading: () => (
+    <div className="absolute inset-0 bg-gradient-to-br from-optica-blue via-quantum-violet to-background-dark" />
+  ),
 });
 
 export default function HomePage() {
   return (
-    <main id="main-content" className="min-h-screen bg-background-light dark:bg-background-dark transition-colors duration-300">
+    <main
+      id="main-content"
+      className="min-h-screen bg-background-light dark:bg-background-dark transition-colors duration-300"
+    >
       {/* Scroll Progress Bar */}
       <ScrollProgress />
-      
+
       {/* Hero Section */}
-      <section id="home" className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-optica-blue via-quantum-violet to-background-dark dark:from-quantum-violet dark:via-optica-blue dark:to-background-dark overflow-hidden">
+      <section
+        id="home"
+        className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-optica-blue via-quantum-violet to-background-dark dark:from-quantum-violet dark:via-optica-blue dark:to-background-dark overflow-hidden"
+      >
         {/* 3D Background */}
         <Hero3D />
-        
+
         <div className="container mx-auto px-4 text-center text-white z-10 relative">
           <h1 className="font-heading text-5xl md:text-7xl font-bold mb-6 drop-shadow-lg">
             BVP OPTICA
           </h1>
           <p className="font-body text-xl md:text-2xl mb-8 max-w-3xl mx-auto drop-shadow-md">
-            Igniting passion for optics and photonics through innovation, education, and global collaboration
+            Igniting passion for optics and photonics through innovation,
+            education, and global collaboration
           </p>
           <div className="flex gap-4 justify-center flex-wrap">
             <a
@@ -53,20 +65,26 @@ export default function HomePage() {
           </RevealElement>
           <RevealElement direction="up" delay={0.2}>
             <p className="font-body text-lg text-text-secondary dark:text-gray-300 max-w-4xl mx-auto text-center leading-relaxed">
-              BVP-OPTICA is a vibrant student chapter at Bharati Vidyapeeth's College of Engineering, 
-              committed to advancing optics and photonics. By joining us, you become part of a global 
-              network with international research opportunities, exclusive access to journals, and exciting 
-              events. Our mission is to ignite a passion for these fields through education, innovation, 
-              and global collaboration. We offer unique chances for scholarships, travel grants, and 
-              engaging activities like quizzes and ideathons. At BVP Optica, we nurture a close-knit 
-              community where collaboration drives both personal and collective growth.
+              BVP-OPTICA is a vibrant student chapter at Bharati Vidyapeeth's
+              College of Engineering, committed to advancing optics and
+              photonics. By joining us, you become part of a global network with
+              international research opportunities, exclusive access to
+              journals, and exciting events. Our mission is to ignite a passion
+              for these fields through education, innovation, and global
+              collaboration. We offer unique chances for scholarships, travel
+              grants, and engaging activities like quizzes and ideathons. At BVP
+              Optica, we nurture a close-knit community where collaboration
+              drives both personal and collective growth.
             </p>
           </RevealElement>
         </div>
       </section>
 
       {/* LIFE AS A MEMBER Section */}
-      <section id="events" className="py-20 bg-background-light dark:bg-background-dark">
+      <section
+        id="events"
+        className="py-20 bg-background-light dark:bg-background-dark"
+      >
         <div className="container mx-auto px-4">
           <RevealElement direction="up">
             <h2 className="font-heading text-4xl md:text-5xl font-bold text-center mb-12 text-quantum-violet dark:text-photon-gold">
@@ -75,12 +93,14 @@ export default function HomePage() {
           </RevealElement>
           <RevealElement direction="up" delay={0.2}>
             <p className="font-body text-lg text-text-secondary dark:text-gray-300 max-w-4xl mx-auto text-center leading-relaxed mb-12">
-              Joining BVP-OPTICA means becoming part of a global network with a strong international presence, 
-              offering exciting research opportunities and exclusive access to journals and monthly magazines. 
-              Members can benefit from scholarships and travel grants for international conferences and 
-              participate in webinars led by global experts. Beyond academics, the community thrives through 
-              close-knit interactions, lab visits, and engaging activities like quizzes, photography 
-              competitions and ideathons.
+              Joining BVP-OPTICA means becoming part of a global network with a
+              strong international presence, offering exciting research
+              opportunities and exclusive access to journals and monthly
+              magazines. Members can benefit from scholarships and travel grants
+              for international conferences and participate in webinars led by
+              global experts. Beyond academics, the community thrives through
+              close-knit interactions, lab visits, and engaging activities like
+              quizzes, photography competitions and ideathons.
             </p>
           </RevealElement>
         </div>
@@ -100,15 +120,18 @@ export default function HomePage() {
                 Dr. Yugnanda Puri
               </h3>
               <p className="font-body text-text-secondary dark:text-gray-300 leading-relaxed">
-                Having founded this club in 2019, Dr. Puri has been key in establishing and nurturing it 
-                ever since. With a Ph.D. in Optical Communication from Thapar Institute of Engineering & 
-                Technology, and both a Master's and bachelor's degree in Electronics & Communication 
-                Engineering, Dr. Puri has been a driving force behind BVP Optica's growth and success.
+                Having founded this club in 2019, Dr. Puri has been key in
+                establishing and nurturing it ever since. With a Ph.D. in
+                Optical Communication from Thapar Institute of Engineering &
+                Technology, and both a Master's and bachelor's degree in
+                Electronics & Communication Engineering, Dr. Puri has been a
+                driving force behind BVP Optica's growth and success.
               </p>
               <p className="font-body text-text-secondary dark:text-gray-300 leading-relaxed mt-4">
-                Currently serving as the Dean of Research and Development and an Associate Professor at 
-                BVCOE, Dr. Puri ensures that the subchapter thrives by providing valuable resources, 
-                guidance, and encouragement to our members.
+                Currently serving as the Dean of Research and Development and an
+                Associate Professor at BVCOE, Dr. Puri ensures that the
+                subchapter thrives by providing valuable resources, guidance,
+                and encouragement to our members.
               </p>
             </div>
           </RevealElement>
@@ -130,7 +153,9 @@ export default function HomePage() {
               </p>
             </div>
             <div>
-              <h3 className="font-heading text-xl font-bold mb-4 text-photon-gold">Contact</h3>
+              <h3 className="font-heading text-xl font-bold mb-4 text-photon-gold">
+                Contact
+              </h3>
               <p className="font-body text-sm text-gray-300">
                 Email:{" "}
                 <a
@@ -142,7 +167,9 @@ export default function HomePage() {
               </p>
             </div>
             <div>
-              <h3 className="font-heading text-xl font-bold mb-4 text-photon-gold">Follow Us</h3>
+              <h3 className="font-heading text-xl font-bold mb-4 text-photon-gold">
+                Follow Us
+              </h3>
               <div className="flex gap-4 flex-wrap">
                 <a
                   href="https://instagram.com/bvpoptica"
@@ -172,7 +199,9 @@ export default function HomePage() {
             </div>
           </div>
           <div className="text-center text-sm border-t border-gray-700 pt-8">
-            <p className="text-gray-400">&copy; 2025 BVP Optica. All rights reserved.</p>
+            <p className="text-gray-400">
+              &copy; 2025 BVP Optica. All rights reserved.
+            </p>
           </div>
         </div>
       </footer>

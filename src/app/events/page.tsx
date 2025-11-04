@@ -1,23 +1,27 @@
-'use client';
+"use client";
 
-import { RevealElement } from '@/lib/animations/ScrollAnimations';
-import EventCards from '@/components/events/EventCards';
+import { RevealElement } from "@/lib/animations/ScrollAnimations";
+import EventCards from "@/components/events/EventCards";
 
 export default function EventsPage() {
   return (
-    <main id="main-content" className="min-h-screen bg-background-light dark:bg-background-dark transition-colors duration-300 pt-24 pb-20">
+    <main
+      id="main-content"
+      className="min-h-screen bg-background-light dark:bg-background-dark transition-colors duration-300 pt-24 pb-20"
+    >
       <div className="container mx-auto px-4">
         <RevealElement direction="up">
           <h1 className="font-heading text-5xl md:text-6xl font-bold text-center mb-6 text-optica-blue dark:text-quantum-violet">
             Our Events
           </h1>
         </RevealElement>
-        
+
         <RevealElement direction="up" delay={0.2}>
           <p className="font-body text-lg text-text-secondary dark:text-gray-300 max-w-3xl mx-auto text-center mb-16 leading-relaxed">
             "Perfect execution? Check. Awesome time? Double check."
             <br />
-            Explore our diverse range of events from ideathons to research visits.
+            Explore our diverse range of events from ideathons to research
+            visits.
           </p>
         </RevealElement>
 

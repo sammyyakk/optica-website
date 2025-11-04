@@ -41,14 +41,16 @@ export const metadata: Metadata = {
   authors: [{ name: "BVP Optica Team" }],
   openGraph: {
     title: "BVP Optica - Student Chapter",
-    description: "Advancing optics and photonics through education, innovation, and global collaboration",
+    description:
+      "Advancing optics and photonics through education, innovation, and global collaboration",
     type: "website",
     locale: "en_US",
   },
   twitter: {
     card: "summary_large_image",
     title: "BVP Optica - Student Chapter",
-    description: "Advancing optics and photonics through education, innovation, and global collaboration",
+    description:
+      "Advancing optics and photonics through education, innovation, and global collaboration",
   },
   robots: {
     index: true,
@@ -76,9 +78,7 @@ export default function RootLayout({
         <ThemeProvider>
           <AnimationProvider>
             <Navbar />
-            <div id="main-content">
-              {children}
-            </div>
+            <div id="main-content">{children}</div>
           </AnimationProvider>
         </ThemeProvider>
       </body>
