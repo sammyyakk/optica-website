@@ -3,19 +3,17 @@
 import Link from "next/link";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import {
-  Caustics,
   ContactShadows,
   Environment,
   Float,
   Lightformer,
-  Line,
-  MeshTransmissionMaterial,
+  Tube,
 } from "@react-three/drei";
 import { cubicBezier } from "motion";
 import { motion } from "motion/react";
-import { useEffect, useMemo, useRef } from "react";
+import { useMemo, useRef } from "react";
 import * as THREE from "three";
-import { Line2 } from "three-stdlib";
+import { useControls } from "leva";
 
 const SPECTRUM_COLORS = ["#4330FF", "#A890FF", "#6F4CFF", "#E91E63"] as const;
 
@@ -44,325 +42,213 @@ const itemVariants = {
   },
 };
 
-function AnimatedLightRig() {
-  const lights = useRef<(THREE.SpotLight | null)[]>(
-    new Array(SPECTRUM_COLORS.length).fill(null)
-  );
-
-  useFrame(({ clock }) => {
-    const t = clock.elapsedTime;
-
-    lights.current.forEach((light, index) => {
-      if (!light) return;
-
-      const phase = index * (Math.PI / 2);
-      const radius = 5.6 + Math.sin(t * 0.45 + phase) * 0.55;
-      light.position.x = Math.cos(t * 0.38 + phase) * radius;
-      light.position.y = 2.5 + Math.sin(t * 0.55 + phase) * 2.0;
-      light.position.z = Math.sin(t * 0.38 + phase) * radius;
-      light.intensity = 1.05 + Math.sin(t * 1.1 + phase) * 0.32;
-      light.target.position.set(0, 0.9, 0);
-      light.target.updateMatrixWorld();
-    });
-  });
-
-  const register = (index: number) => (light: THREE.SpotLight | null) => {
-    lights.current[index] = light;
-  };
-
-  return (
-    <>
-      {SPECTRUM_COLORS.map((color, index) => (
-        <spotLight
-          key={color}
-          ref={register(index)}
-          color={color}
-          intensity={1.35}
-          angle={Math.PI / 6.2}
-          penumbra={0.75}
-          distance={28}
-          decay={1.4}
-          castShadow
-          shadow-mapSize={[1024, 1024]}
-        />
-      ))}
-      <ambientLight intensity={0.28} color="#A890FF" />
-    </>
-  );
-}
-
-function GlassPrism() {
-  const prismRef = useRef<THREE.Mesh>(null);
-
-  const prismGeometry = useMemo(() => {
-    const shape = new THREE.Shape();
-    const size = 0.82;
-    for (let i = 0; i < 3; i++) {
-      const angle = (i / 3) * Math.PI * 2 + Math.PI / 2;
-      const x = Math.cos(angle) * size;
-      const y = Math.sin(angle) * size;
-      if (i === 0) shape.moveTo(x, y);
-      else shape.lineTo(x, y);
-    }
-    shape.closePath();
-
-    const extrudeSettings: THREE.ExtrudeGeometryOptions = {
-      steps: 64,
-      depth: 2.6,
-      bevelEnabled: true,
-      bevelThickness: 0.12,
-      bevelSize: 0.1,
-      bevelSegments: 16,
-      curveSegments: 48,
-    };
-
-    const geometry = new THREE.ExtrudeGeometry(shape, extrudeSettings);
-    geometry.center();
-    geometry.rotateX(Math.PI / 2);
-    geometry.computeVertexNormals();
-    return geometry;
-  }, []);
-
-  useEffect(() => {
-    return () => prismGeometry.dispose();
-  }, [prismGeometry]);
-
-  useFrame(({ clock }) => {
-    if (!prismRef.current) return;
-    const t = clock.elapsedTime;
-    prismRef.current.rotation.y = t * 0.24;
-    prismRef.current.rotation.x = Math.sin(t * 0.18) * 0.15;
-    prismRef.current.rotation.z = Math.sin(t * 0.35) * 0.15;
-    prismRef.current.position.y = 0.85 + Math.sin(t * 0.7) * 0.18;
-  });
-
-  return (
-    <Caustics
-      causticsOnly={false}
-      backside
-      ior={1.45}
-      backsideIOR={1.12}
-      intensity={0.65}
-      worldRadius={0.4}
-      lightSource={[4.5, 5.6, -2.5]}
-      resolution={1024}
-      color="#BCA8FF"
-    >
-      <mesh ref={prismRef} geometry={prismGeometry} castShadow receiveShadow>
-        <MeshTransmissionMaterial
-          color="#C6B6FF"
-          thickness={1.5}
-          anisotropy={0.35}
-          chromaticAberration={0.2}
-          temporalDistortion={0.07}
-          distortion={0.18}
-          distortionScale={0.4}
-          samples={16}
-          resolution={640}
-          transmission={1}
-          ior={1.52}
-          roughness={0.07}
-          attenuationColor="#BCA8FF"
-          attenuationDistance={0.6}
-        />
-      </mesh>
-    </Caustics>
-  );
-}
-
-function SpectralRibbons({
-  count = 3,
-  segments = 160,
-}: {
-  count?: number;
-  segments?: number;
-}) {
-  const { size } = useThree();
-  const detailFactor = size.width < 768 ? 0.7 : size.width < 1280 ? 0.85 : 1;
-  const activeSegments = Math.max(48, Math.floor(segments * detailFactor));
-  const lineRefs = useRef<(Line2 | null)[]>(new Array(count).fill(null));
-  const buffers = useMemo(
-    () => new Array(count).fill(0).map(() => new Float32Array(activeSegments * 3)),
-    [count, activeSegments]
-  );
-  const seeds = useMemo(
-    () => new Array(count).fill(0).map(() => Math.random() * Math.PI * 2),
-    [count]
-  );
-  const basePoints = useMemo(
-    () => new Array(activeSegments).fill(0).map(() => new THREE.Vector3()),
-    [activeSegments]
-  );
-
-  const register = (index: number) => (line: Line2 | null) => {
-    lineRefs.current[index] = line;
-    if (line) {
-      const material = line.material as any;
-      material.transparent = true;
-      material.opacity = 0.7;
-      material.blending = THREE.AdditiveBlending;
-      material.toneMapped = false;
-      material.dashed = true;
-      material.dashScale = 6;
-      material.dashSize = 0.35;
-      material.gapSize = 0.2;
-      material.needsUpdate = true;
-    }
-  };
-
-  useFrame(({ clock }) => {
-    const t = clock.elapsedTime;
-    lineRefs.current.forEach((line, idx) => {
-      if (!line) return;
-      const positions = buffers[idx];
-      const segCount = positions.length / 3;
-      const seed = seeds[idx];
-      const swirlInfluence = 0.9 + idx * 0.1;
-      const heightScale = size.width < 768 ? 1.8 : 2.3;
-      
-      for (let i = 0; i < segCount; i++) {
-        const u = i / (segCount - 1);
-        const swirl = u * Math.PI * 2 * swirlInfluence + t * 0.8 + idx * 0.85 + seed;
-        const radiusBase = 1.15 + idx * 0.08;
-        const radius = radiusBase + Math.sin(u * Math.PI * 3 + t * 0.6 + seed) * 0.4;
-        const height = -0.6 + u * heightScale + Math.sin(t * 0.7 + u * 7.2 + seed) * 0.28;
-
-        positions[i * 3 + 0] = Math.cos(swirl) * radius;
-        positions[i * 3 + 1] = height;
-        positions[i * 3 + 2] = Math.sin(swirl) * radius;
-      }
-
-      (line.geometry as any).setPositions(positions);
-      const material = line.material as any;
-      material.color = new THREE.Color(SPECTRUM_COLORS[idx % SPECTRUM_COLORS.length]);
-      material.opacity = 0.45 + Math.sin(t * 0.5 + idx) * 0.12;
-      material.dashOffset = (material.dashOffset ?? 0) - 0.0022;
-    });
-  });
-
-  return (
-    <>
-      {new Array(count).fill(0).map((_, idx) => (
-        <Line
-          key={idx}
-          ref={register(idx)}
-          points={basePoints}
-          color={SPECTRUM_COLORS[idx % SPECTRUM_COLORS.length]}
-          lineWidth={size.width < 768 ? 1.6 : 2.2}
-        />
-      ))}
-    </>
-  );
-}
-
-const photonVertexShader = `
+// New "Quantum Foam" background
+const quantumFoamVertexShader = `
   uniform float uTime;
-  attribute float aScale;
-  varying float vScale;
+  uniform float uNoiseDensity;
+  uniform float uNoiseStrength;
+  
+  // 3D Simplex noise
+  vec3 mod289(vec3 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
+  vec4 mod289(vec4 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
+  vec4 permute(vec4 x) { return mod289(((x*34.0)+1.0)*x); }
+  vec4 taylorInvSqrt(vec4 r) { return 1.79284291400159 - 0.85373472095314 * r; }
+  
+  float snoise(vec3 v) {
+    const vec2 C = vec2(1.0/6.0, 1.0/3.0);
+    const vec4 D = vec4(0.0, 0.5, 1.0, 2.0);
+    vec3 i = floor(v + dot(v, C.yyy));
+    vec3 x0 = v - i + dot(i, C.xxx);
+    vec3 g = step(x0.yzx, x0.xyz);
+    vec3 l = 1.0 - g;
+    vec3 i1 = min(g.xyz, l.zxy);
+    vec3 i2 = max(g.xyz, l.zxy);
+    vec3 x1 = x0 - i1 + C.xxx;
+    vec3 x2 = x0 - i2 + C.yyy;
+    vec3 x3 = x0 - D.yyy;
+    i = mod289(i);
+    vec4 p = permute(permute(permute(
+      i.z + vec4(0.0, i1.z, i2.z, 1.0))
+      + i.y + vec4(0.0, i1.y, i2.y, 1.0))
+      + i.x + vec4(0.0, i1.x, i2.x, 1.0));
+    float n_ = 0.142857142857;
+    vec3 ns = n_ * D.wyz - D.xzx;
+    vec4 j = p - 49.0 * floor(p * ns.z * ns.z);
+    vec4 x_ = floor(j * ns.z);
+    vec4 y_ = floor(j - 7.0 * x_);
+    vec4 x = x_ * ns.x + ns.yyyy;
+    vec4 y = y_ * ns.x + ns.yyyy;
+    vec4 h = 1.0 - abs(x) - abs(y);
+    vec4 b0 = vec4(x.xy, y.xy);
+    vec4 b1 = vec4(x.zw, y.zw);
+    vec4 s0 = floor(b0)*2.0 + 1.0;
+    vec4 s1 = floor(b1)*2.0 + 1.0;
+    vec4 sh = -step(h, vec4(0.0));
+    vec4 a0 = b0.xzyw + s0.xzyw*sh.xxyy;
+    vec4 a1 = b1.xzyw + s1.xzyw*sh.zzww;
+    vec3 p0 = vec3(a0.xy,h.x);
+    vec3 p1 = vec3(a0.zw,h.y);
+    vec3 p2 = vec3(a1.xy,h.z);
+    vec3 p3 = vec3(a1.zw,h.w);
+    vec4 norm = taylorInvSqrt(vec4(dot(p0,p0), dot(p1,p1), dot(p2,p2), dot(p3,p3)));
+    p0 *= norm.x;
+    p1 *= norm.y;
+    p2 *= norm.z;
+    p3 *= norm.w;
+    vec4 m = max(0.6 - vec4(dot(x0,x0), dot(x1,x1), dot(x2,x2), dot(x3,x3)), 0.0);
+    m = m * m;
+    return 42.0 * dot(m*m, vec4(dot(p0,x0), dot(p1,x1), dot(p2,x2), dot(p3,x3)));
+  }
 
   void main() {
-    vec3 transformed = position;
-    float wave = sin(position.x * 1.3 + uTime * 0.85) * 0.18;
-    wave += cos(position.z * 1.05 - uTime * 0.95) * 0.16;
-    float swirl = sin((position.x + position.z) * 0.6 + uTime * 0.5) * 0.12;
-    transformed.y += wave + swirl;
-    vec4 mvPosition = modelViewMatrix * vec4(transformed, 1.0);
-    float size = clamp(aScale * 32.0, 5.0, 38.0);
-    gl_PointSize = size * (1.0 / -mvPosition.z);
-    gl_Position = projectionMatrix * mvPosition;
-    vScale = aScale;
+    vec3 pos = position;
+    float noise = snoise(pos * uNoiseDensity + uTime * 0.2);
+    pos += normal * noise * uNoiseStrength;
+    gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);
   }
 `;
 
-const photonFragmentShader = `
-  varying float vScale;
-
+const quantumFoamFragmentShader = `
   void main() {
-    vec2 coord = gl_PointCoord - vec2(0.5);
-    float dist = dot(coord, coord);
-    float falloff = smoothstep(0.28, 0.0, dist);
-    vec3 color = mix(vec3(0.14, 0.11, 0.32), vec3(0.9, 0.84, 1.0), clamp(vScale * 1.4, 0.0, 1.0));
-    gl_FragColor = vec4(color, falloff * 0.82);
+    gl_FragColor = vec4(0.5, 0.4, 1.0, 0.15);
   }
 `;
 
-function PhotonCloud({ count = 1200 }: { count?: number }) {
-  const pointsRef = useRef<THREE.Points>(null);
-  const { size } = useThree();
-  const density = size.width < 768 ? 0.6 : size.width < 1280 ? 0.8 : 1;
-  const effectiveCount = Math.max(500, Math.floor(count * density));
-
-  const positions = useMemo(() => {
-    const array = new Float32Array(effectiveCount * 3);
-    for (let i = 0; i < effectiveCount; i++) {
-      const i3 = i * 3;
-      const radius = THREE.MathUtils.lerp(0.6, 4.4, Math.random());
-      const angle = Math.random() * Math.PI * 2;
-      const elevation = THREE.MathUtils.lerp(-0.7, 1.9, Math.random());
-      array[i3] = Math.cos(angle) * radius;
-      array[i3 + 1] = elevation + Math.sin(angle * 2.1) * 0.22;
-      array[i3 + 2] = Math.sin(angle) * radius;
-    }
-    return array;
-  }, [effectiveCount]);
-
-  const scales = useMemo(() => {
-    const array = new Float32Array(effectiveCount);
-    for (let i = 0; i < effectiveCount; i++) {
-      array[i] = THREE.MathUtils.lerp(0.28, 0.95, Math.random());
-    }
-    return array;
-  }, [effectiveCount]);
+function QuantumFoam() {
+  const meshRef = useRef<THREE.Mesh>(null);
+  const { uNoiseDensity, uNoiseStrength } = useControls("Quantum Foam", {
+    uNoiseDensity: { value: 1.5, min: 0.1, max: 5 },
+    uNoiseStrength: { value: 0.1, min: 0.01, max: 1 },
+  });
 
   const uniforms = useMemo(
     () => ({
       uTime: { value: 0 },
+      uNoiseDensity: { value: uNoiseDensity },
+      uNoiseStrength: { value: uNoiseStrength },
     }),
-    []
+    [uNoiseDensity, uNoiseStrength]
   );
 
   useFrame(({ clock }) => {
-    if (!pointsRef.current) return;
-    const material = pointsRef.current.material as THREE.ShaderMaterial;
-    material.uniforms.uTime.value = clock.elapsedTime;
-    pointsRef.current.rotation.y = clock.elapsedTime * 0.06;
-    pointsRef.current.rotation.x = Math.sin(clock.elapsedTime * 0.15) * 0.1;
+    if (meshRef.current) {
+      (meshRef.current.material as THREE.ShaderMaterial).uniforms.uTime.value =
+        clock.elapsedTime;
+    }
   });
 
   return (
-    <points ref={pointsRef}>
-      <bufferGeometry>
-        <bufferAttribute
-          attach="attributes-position"
-          args={[positions, 3]}
-        />
-        <bufferAttribute attach="attributes-aScale" args={[scales, 1]} />
-      </bufferGeometry>
+    <mesh ref={meshRef}>
+      <icosahedronGeometry args={[8, 20]} />
       <shaderMaterial
-        vertexShader={photonVertexShader}
-        fragmentShader={photonFragmentShader}
+        vertexShader={quantumFoamVertexShader}
+        fragmentShader={quantumFoamFragmentShader}
         uniforms={uniforms}
-        blending={THREE.AdditiveBlending}
-        transparent
-        depthWrite={false}
+        wireframe
       />
-    </points>
+    </mesh>
+  );
+}
+
+// New "Entangled Ribbons"
+function EntangledRibbon({
+  color,
+  seed,
+}: {
+  color: THREE.ColorRepresentation;
+  seed: number;
+}) {
+  const curve = useMemo(() => {
+    const points = [];
+    const path = new THREE.CatmullRomCurve3();
+    const speed = seed * 0.1 + 0.2;
+    const amplitude = seed * 1.5 + 2;
+    const frequency = seed * 0.2 + 0.1;
+
+    for (let i = 0; i < 100; i++) {
+      const t = i / 99;
+      const x = Math.sin(t * Math.PI * 2 + seed) * amplitude;
+      const y = Math.cos(t * Math.PI * 2 + seed) * amplitude;
+      const z = Math.sin(t * Math.PI * 4 * frequency) * (amplitude / 2);
+      points.push(new THREE.Vector3(x, y, z));
+    }
+    path.points = points;
+    path.curveType = "catmullrom";
+    path.closed = true;
+    return path;
+  }, [seed]);
+
+  const tubeRef = useRef<THREE.Mesh>(null);
+  useFrame(({ clock }) => {
+    if (tubeRef.current) {
+      tubeRef.current.rotation.x = clock.elapsedTime * (seed * 0.05);
+      tubeRef.current.rotation.y = clock.elapsedTime * (seed * 0.08);
+    }
+  });
+
+  return (
+    <Tube ref={tubeRef} args={[curve, 128, 0.01, 16, false]}>
+      <meshStandardMaterial emissive={color} emissiveIntensity={4} toneMapped={false} />
+    </Tube>
+  );
+}
+
+function CrystalCluster() {
+  const { roughness, transmission, thickness } = useControls("Crystals", {
+    roughness: { value: 0.05, min: 0, max: 0.2 },
+    transmission: { value: 1.0, min: 0.8, max: 1.0 },
+    thickness: { value: 1.5, min: 0.5, max: 5 },
+  });
+
+  const crystals = useMemo(() => {
+    return new Array(20).fill(0).map((_, i) => ({
+      position: new THREE.Vector3(
+        (Math.random() - 0.5) * 4,
+        (Math.random() - 0.5) * 4,
+        (Math.random() - 0.5) * 4
+      ),
+      rotation: new THREE.Euler(
+        Math.random() * Math.PI,
+        Math.random() * Math.PI,
+        Math.random() * Math.PI
+      ),
+      scale: Math.random() * 0.3 + 0.1,
+    }));
+  }, []);
+
+  return (
+    <Float speed={0.5} rotationIntensity={2} floatIntensity={2}>
+      <group>
+        {crystals.map((crystal, i) => (
+          <mesh
+            key={i}
+            position={crystal.position}
+            rotation={crystal.rotation}
+            scale={crystal.scale}
+          >
+            <icosahedronGeometry args={[1, 0]} />
+            <meshPhysicalMaterial
+              roughness={roughness}
+              transmission={transmission}
+              thickness={thickness}
+              ior={1.7}
+              color="#A890FF"
+            />
+          </mesh>
+        ))}
+      </group>
+    </Float>
   );
 }
 
 function CameraRig() {
-  const { camera } = useThree();
-
-  useFrame(({ clock }) => {
-    const t = clock.elapsedTime;
-    const targetY = 0.6 + Math.sin(t * 0.32) * 0.08;
-    const targetZ = 7.2 + Math.sin(t * 0.18) * 0.25;
-
-    camera.position.y = THREE.MathUtils.lerp(camera.position.y, targetY, 0.06);
-    camera.position.z = THREE.MathUtils.lerp(camera.position.z, targetZ, 0.045);
-    camera.lookAt(0, 0.8, 0);
+  useFrame(({ camera, clock }) => {
+    const t = clock.getElapsedTime();
+    camera.position.x = Math.sin(t * 0.1) * 8;
+    camera.position.z = Math.cos(t * 0.1) * 8;
+    camera.position.y = 2 + Math.sin(t * 0.2) * 1;
+    camera.lookAt(0, 0, 0);
   });
-
   return null;
 }
 
@@ -375,71 +261,37 @@ export default function Hero3D() {
       <div className="absolute inset-0 -z-10">
         <Canvas
           shadows
-          dpr={[1, 1.6]}
-          camera={{ position: [0, 0.6, 7.2], fov: 42 }}
+          dpr={[1, 1.5]}
+          camera={{ position: [0, 2, 8], fov: 50 }}
           gl={{ antialias: true, powerPreference: "high-performance" }}
         >
           <color attach="background" args={["#0E1A2B"]} />
-          <fog attach="fog" args={["#0E1A2B", 12, 30]} />
+          <fog attach="fog" args={["#0E1A2B", 8, 20]} />
 
           <CameraRig />
-          <AnimatedLightRig />
+          
+          <QuantumFoam />
+          <CrystalCluster />
 
-          <Float
-            speed={1.15}
-            rotationIntensity={0.35}
-            floatIntensity={0.45}
-            position={[0, 0, 0]}
-          >
-            <GlassPrism />
-          </Float>
-
-          <SpectralRibbons />
-          <PhotonCloud />
-
-          <mesh
-            rotation={[-Math.PI / 2, 0, 0]}
-            position={[0, -1.4, 0]}
-            receiveShadow
-          >
-            <planeGeometry args={[28, 28]} />
-            <meshStandardMaterial
-              color="#06050D"
-              roughness={0.92}
-              metalness={0.12}
-            />
-          </mesh>
+          {SPECTRUM_COLORS.map((color, i) => (
+            <EntangledRibbon key={i} color={color} seed={i + 1} />
+          ))}
 
           <ContactShadows
-            position={[0, -1.4, 0]}
-            opacity={0.55}
-            scale={14}
-            blur={2.6}
-            far={8}
+            position={[0, -4, 0]}
+            opacity={0.6}
+            scale={20}
+            blur={1.5}
+            far={10}
           />
 
-          <Environment resolution={256} background={false} frames={1}>
+          <Environment resolution={256}>
             <Lightformer
               form="ring"
-              intensity={3.2}
-              rotation={[0, Math.PI / 2, 0]}
-              position={[0, 2.2, -5.5]}
-              scale={[2.5, 2.5, 1]}
-              color="#0072CE"
-            />
-            <Lightformer
-              form="rect"
-              intensity={2.4}
-              position={[-4.2, 3.4, 2.8]}
-              scale={[4.5, 6, 1]}
-              color="#FFC300"
-            />
-            <Lightformer
-              form="rect"
-              intensity={2.1}
-              position={[4.6, 2.5, 3.2]}
-              scale={[3.5, 5, 1]}
-              color="#E91E63"
+              intensity={8}
+              color="#A890FF"
+              scale={10}
+              target={[0, 0, 0]}
             />
           </Environment>
         </Canvas>
