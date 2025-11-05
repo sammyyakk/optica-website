@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Canvas, useFrame, useThree } from "@react-three/fiber";
+import { Canvas, useFrame } from "@react-three/fiber";
 import {
   ContactShadows,
   Environment,
@@ -9,9 +9,10 @@ import {
   Lightformer,
   Tube,
 } from "@react-three/drei";
+import { EffectComposer, Bloom } from "@react-three/postprocessing";
 import { cubicBezier } from "motion";
 import { motion } from "motion/react";
-import { useMemo, useRef } from "react";
+import { useMemo, useRef, useState, useEffect } from "react";
 import * as THREE from "three";
 
 const SPECTRUM_COLORS = ["#A48FF5", "#6F4CFF", "#E91E63"] as const;
@@ -41,13 +42,43 @@ const itemVariants = {
   },
 };
 
-// New "Quantum Foam" background
+const chromaticAberrationVertexShader = `
+  uniform float uTime;
+  uniform vec2 uMouse;
+  varying vec2 vUv;
+  
+  void main() {
+    vUv = uv;
+    vec3 pos = position;
+    
+    float distortion = sin(pos.x * 3.0 + uTime) * 0.05 + 
+                      sin(pos.y * 2.0 + uTime * 0.7) * 0.05;
+    
+    float mouseInfluence = distance(uv, uMouse) * 0.1;
+    pos += normal * (distortion - mouseInfluence);
+    
+    gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);
+  }
+`;
+
+const chromaticAberrationFragmentShader = `
+  uniform float uTime;
+  varying vec2 vUv;
+  
+  void main() {
+    float r = sin(vUv.x * 10.0 + uTime) * 0.5 + 0.5;
+    float g = sin(vUv.y * 10.0 + uTime * 0.8) * 0.5 + 0.5;
+    float b = sin((vUv.x + vUv.y) * 10.0 + uTime * 1.2) * 0.5 + 0.5;
+    
+    gl_FragColor = vec4(r * 0.8, g * 0.6, b * 1.0, 0.3);
+  }
+`;
+
 const quantumFoamVertexShader = `
   uniform float uTime;
   uniform float uNoiseDensity;
   uniform float uNoiseStrength;
   
-  // 3D Simplex noise
   vec3 mod289(vec3 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
   vec4 mod289(vec4 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
   vec4 permute(vec4 x) { return mod289(((x*34.0)+1.0)*x); }
@@ -101,22 +132,23 @@ const quantumFoamVertexShader = `
 
   void main() {
     vec3 pos = position;
-    float noise = snoise(pos * uNoiseDensity + uTime * 0.2);
-    pos += normal * noise * uNoiseStrength;
+    float noise = snoise(pos * uNoiseDensity + uTime * 0.35);
+    float noise2 = snoise(pos * uNoiseDensity * 0.5 + uTime * 0.15);
+    pos += normal * (noise * uNoiseStrength + noise2 * uNoiseStrength * 0.5);
     gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);
   }
 `;
 
 const quantumFoamFragmentShader = `
   void main() {
-    gl_FragColor = vec4(0.07, 0.01, 0.21, 0.15); // Corresponds to #120339
+    gl_FragColor = vec4(0.12, 0.04, 0.35, 0.12);
   }
 `;
 
 function QuantumFoam() {
   const meshRef = useRef<THREE.Mesh>(null);
-  const uNoiseDensity = 2.5;
-  const uNoiseStrength = 0.25;
+  const uNoiseDensity = 3.5;
+  const uNoiseStrength = 0.4;
 
   const uniforms = useMemo(
     () => ({
@@ -136,7 +168,7 @@ function QuantumFoam() {
 
   return (
     <mesh ref={meshRef}>
-      <icosahedronGeometry args={[7, 20]} />
+      <icosahedronGeometry args={[8, 24]} />
       <shaderMaterial
         vertexShader={quantumFoamVertexShader}
         fragmentShader={quantumFoamFragmentShader}
@@ -147,7 +179,6 @@ function QuantumFoam() {
   );
 }
 
-// Simple rotating circles on different planes
 function RotatingCircle({
   color,
   planeIndex,
@@ -157,12 +188,10 @@ function RotatingCircle({
 }) {
   const curve = useMemo(() => {
     const points = [];
-    // Different radius for each circle: small (4), bigger (5.5), biggest (7)
-    const radius = planeIndex === 0 ? 4 : planeIndex === 1 ? 5.5 : 7;
+    const radius = planeIndex === 0 ? 4.5 : planeIndex === 1 ? 6 : 7.5;
 
-    // Create a simple circle with 64 points
-    for (let i = 0; i <= 64; i++) {
-      const angle = (i / 64) * Math.PI * 2;
+    for (let i = 0; i <= 128; i++) {
+      const angle = (i / 128) * Math.PI * 2;
       const x = Math.cos(angle) * radius;
       const y = Math.sin(angle) * radius;
       points.push(new THREE.Vector3(x, y, 0));
@@ -178,33 +207,31 @@ function RotatingCircle({
   useFrame(({ clock }) => {
     if (groupRef.current) {
       const time = clock.elapsedTime;
-      // All circles rotate simultaneously on all axes for a cool gyroscope effect
       groupRef.current.rotation.x =
-        time * 0.3 * (planeIndex === 0 ? 1 : planeIndex === 1 ? 0.7 : 0.5);
+        time * 0.45 * (planeIndex === 0 ? 1.2 : planeIndex === 1 ? 0.8 : 0.6);
       groupRef.current.rotation.y =
-        time * 0.25 * (planeIndex === 0 ? 0.5 : planeIndex === 1 ? 1 : 0.7);
+        time * 0.35 * (planeIndex === 0 ? 0.7 : planeIndex === 1 ? 1.3 : 0.9);
       groupRef.current.rotation.z =
-        time * 0.35 * (planeIndex === 0 ? 0.7 : planeIndex === 1 ? 0.5 : 1);
+        time * 0.5 * (planeIndex === 0 ? 0.9 : planeIndex === 1 ? 0.6 : 1.2);
     }
   });
 
-  // Set initial rotation to orient the circle on the correct plane
   const initialRotation = useMemo(() => {
     if (planeIndex === 0) {
-      return [0, 0, 0]; // XY plane (horizontal)
+      return [0, 0, 0];
     } else if (planeIndex === 1) {
-      return [Math.PI / 2, 0, 0]; // XZ plane (vertical, front-back)
+      return [Math.PI / 2, 0, 0];
     } else {
-      return [0, Math.PI / 2, 0]; // YZ plane (vertical, left-right)
+      return [0, Math.PI / 2, 0];
     }
   }, [planeIndex]);
 
   return (
     <group ref={groupRef} rotation={initialRotation as any}>
-      <Tube args={[curve, 128, 0.03, 16, true]}>
+      <Tube args={[curve, 256, 0.05, 24, true]}>
         <meshStandardMaterial
           emissive={color}
-          emissiveIntensity={5}
+          emissiveIntensity={8}
           toneMapped={false}
         />
       </Tube>
@@ -212,30 +239,119 @@ function RotatingCircle({
   );
 }
 
-function CrystalCluster() {
-  const roughness = 0.02;
-  const transmission = 1.0;
-  const thickness = 2.5;
+function ParticleSwarm() {
+  const pointsRef = useRef<THREE.Points>(null);
+  const particleCount = 2000;
 
+  const { positions, velocities } = useMemo(() => {
+    const positions = new Float32Array(particleCount * 3);
+    const velocities = new Float32Array(particleCount * 3);
+
+    for (let i = 0; i < particleCount; i++) {
+      const i3 = i * 3;
+      positions[i3] = (Math.random() - 0.5) * 25;
+      positions[i3 + 1] = (Math.random() - 0.5) * 25;
+      positions[i3 + 2] = (Math.random() - 0.5) * 25;
+
+      velocities[i3] = (Math.random() - 0.5) * 0.1;
+      velocities[i3 + 1] = (Math.random() - 0.5) * 0.1;
+      velocities[i3 + 2] = (Math.random() - 0.5) * 0.1;
+    }
+
+    return { positions, velocities };
+  }, []);
+
+  useFrame(({ clock }) => {
+    if (!pointsRef.current) return;
+
+    const pos = pointsRef.current.geometry.attributes.position
+      .array as Float32Array;
+    const time = clock.elapsedTime;
+
+    for (let i = 0; i < particleCount; i++) {
+      const i3 = i * 3;
+      const x = pos[i3];
+      const y = pos[i3 + 1];
+      const z = pos[i3 + 2];
+
+      // Gravity towards center with pulsing
+      const centerDist = Math.sqrt(x * x + y * y + z * z);
+      const gravityStrength = Math.sin(time * 0.5) * 0.02 + 0.01;
+
+      velocities[i3] -= (x / (centerDist + 1)) * gravityStrength;
+      velocities[i3 + 1] -= (y / (centerDist + 1)) * gravityStrength;
+      velocities[i3 + 2] -= (z / (centerDist + 1)) * gravityStrength;
+
+      // Damping
+      velocities[i3] *= 0.98;
+      velocities[i3 + 1] *= 0.98;
+      velocities[i3 + 2] *= 0.98;
+
+      // Update position
+      pos[i3] += velocities[i3];
+      pos[i3 + 1] += velocities[i3 + 1];
+      pos[i3 + 2] += velocities[i3 + 2];
+
+      // Boundary conditions
+      if (Math.abs(pos[i3]) > 15) velocities[i3] *= -0.5;
+      if (Math.abs(pos[i3 + 1]) > 15) velocities[i3 + 1] *= -0.5;
+      if (Math.abs(pos[i3 + 2]) > 15) velocities[i3 + 2] *= -0.5;
+    }
+
+    pointsRef.current.geometry.attributes.position.needsUpdate = true;
+  });
+
+  return (
+    <points ref={pointsRef}>
+      <bufferGeometry>
+        <bufferAttribute
+          attach="attributes-position"
+          count={particleCount}
+          args={[positions, 3]}
+          itemSize={3}
+        />
+      </bufferGeometry>
+      <pointsMaterial
+        size={0.08}
+        sizeAttenuation={true}
+        color="#A48FF5"
+        toneMapped={false}
+        transparent
+        opacity={0.8}
+      />
+    </points>
+  );
+}
+
+function CrystalCluster() {
   const crystals = useMemo(() => {
-    return new Array(25).fill(0).map((_, i) => ({
+    return new Array(35).fill(0).map((_, i) => ({
       position: new THREE.Vector3(
-        (Math.random() - 0.5) * 5,
-        (Math.random() - 0.5) * 5,
-        (Math.random() - 0.5) * 5
+        (Math.random() - 0.5) * 12,
+        (Math.random() - 0.5) * 12,
+        (Math.random() - 0.5) * 12
       ),
       rotation: new THREE.Euler(
         Math.random() * Math.PI,
         Math.random() * Math.PI,
         Math.random() * Math.PI
       ),
-      scale: Math.random() * 0.4 + 0.15,
+      scale: Math.random() * 0.2 + 0.1,
     }));
   }, []);
 
+  const groupRef = useRef<THREE.Group>(null);
+
+  useFrame(({ clock }) => {
+    if (groupRef.current) {
+      groupRef.current.rotation.x = clock.elapsedTime * 0.15;
+      groupRef.current.rotation.y = clock.elapsedTime * 0.1;
+    }
+  });
+
   return (
-    <Float speed={0.8} rotationIntensity={2.5} floatIntensity={2.5}>
-      <group>
+    <Float speed={1.2} rotationIntensity={3.5} floatIntensity={3.5}>
+      <group ref={groupRef}>
         {crystals.map((crystal, i) => (
           <mesh
             key={i}
@@ -243,15 +359,22 @@ function CrystalCluster() {
             rotation={crystal.rotation}
             scale={crystal.scale}
           >
-            <icosahedronGeometry args={[1, 0]} />
+            <octahedronGeometry args={[1, 2]} />
             <meshPhysicalMaterial
-              roughness={roughness}
-              transmission={transmission}
-              thickness={thickness}
-              ior={2.33}
-              color="#A48FF5"
-              emissive="#A48FF5"
+              roughness={0.02}
+              metalness={0.05}
+              transmission={0.98}
+              thickness={2}
+              ior={2.5}
+              color="#FFFFFF"
+              emissive={SPECTRUM_COLORS[i % SPECTRUM_COLORS.length]}
               emissiveIntensity={0.2}
+              clearcoat={1.0}
+              clearcoatRoughness={0.05}
+              reflectivity={0.8}
+              envMapIntensity={2}
+              transparent={true}
+              opacity={0.95}
             />
           </mesh>
         ))}
@@ -260,22 +383,71 @@ function CrystalCluster() {
   );
 }
 
+function DynamicLights() {
+  return (
+    <>
+      <pointLight
+        position={[8, 8, 8]}
+        intensity={2}
+        color="#A48FF5"
+        decay={2}
+      />
+      <pointLight
+        position={[-8, -8, 8]}
+        intensity={1.5}
+        color="#E91E63"
+        decay={2}
+      />
+      <pointLight
+        position={[0, 10, -8]}
+        intensity={1.2}
+        color="#6F4CFF"
+        decay={2}
+      />
+      <pointLight
+        position={[8, -8, -8]}
+        intensity={0.8}
+        color="#00FF88"
+        decay={2}
+      />
+      <ambientLight intensity={0.3} />
+    </>
+  );
+}
+
 function CameraRig() {
   useFrame(({ camera, clock }) => {
     const t = clock.getElapsedTime();
-    camera.position.x = Math.sin(t * 0.15) * 9;
-    camera.position.z = Math.cos(t * 0.15) * 9;
-    camera.position.y = 2.5 + Math.sin(t * 0.25) * 1.5;
+    const radius = 8 + Math.sin(t * 0.3) * 2;
+
+    camera.position.x = Math.sin(t * 0.2) * radius;
+    camera.position.z = Math.cos(t * 0.15) * radius;
+    camera.position.y = 2 + Math.sin(t * 0.25) * 1.5 + Math.cos(t * 0.35) * 1;
+
     camera.lookAt(0, 0, 0);
   });
   return null;
 }
 
 export default function Hero3D() {
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      setMousePos({
+        x: e.clientX / window.innerWidth,
+        y: e.clientY / window.innerHeight,
+      });
+    };
+
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
+  }, []);
+
   return (
     <section
       id="home"
-      className="relative isolate flex min-h-screen w-full items-center justify-center overflow-hidden bg-[#0E1A2B]"
+      className="relative isolate flex min-h-screen w-full items-center justify-center overflow-hidden bg-black"
     >
       <div className="absolute inset-0 -z-10">
         <Canvas
@@ -284,12 +456,14 @@ export default function Hero3D() {
           camera={{ position: [0, 2, 8], fov: 50 }}
           gl={{ antialias: true, powerPreference: "high-performance" }}
         >
-          <color attach="background" args={["#0E1A2B"]} />
-          <fog attach="fog" args={["#0E1A2B", 8, 20]} />
+          <color attach="background" args={["#000000"]} />
+          <fog attach="fog" args={["#000000", 10, 30]} />
 
           <CameraRig />
+          <DynamicLights />
 
           <QuantumFoam />
+          <ParticleSwarm />
           <CrystalCluster />
 
           {SPECTRUM_COLORS.map((color, i) => (
@@ -297,27 +471,44 @@ export default function Hero3D() {
           ))}
 
           <ContactShadows
-            position={[0, -4, 0]}
-            opacity={0.6}
-            scale={20}
-            blur={1.5}
-            far={10}
+            position={[0, -5, 0]}
+            opacity={0.8}
+            scale={25}
+            blur={2}
+            far={12}
           />
 
           <Environment resolution={256}>
             <Lightformer
               form="ring"
-              intensity={8}
+              intensity={12}
               color="#A890FF"
-              scale={10}
+              scale={12}
+              target={[0, 0, 0]}
+            />
+            <Lightformer
+              form="ring"
+              intensity={8}
+              color="#E91E63"
+              scale={15}
+              position={[0, -5, 0]}
               target={[0, 0, 0]}
             />
           </Environment>
+
+          <EffectComposer>
+            <Bloom
+              luminanceThreshold={0.1}
+              luminanceSmoothing={0.9}
+              intensity={2.5}
+              levels={9}
+            />
+          </EffectComposer>
         </Canvas>
       </div>
 
-      <div className="absolute inset-0 -z-0 bg-[radial-gradient(circle_at_top,_rgba(168,144,255,0.28),_transparent_55%)]" />
-      <div className="absolute inset-0 -z-0 bg-gradient-to-b from-[#0E1A2B]/15 via-[#0E1A2B]/55 to-[#0E1A2B]" />
+      <div className="absolute inset-0 -z-0 bg-[radial-gradient(circle_at_top,_rgba(168,144,255,0.35),_transparent_60%)]" />
+      <div className="absolute inset-0 -z-0 bg-gradient-to-b from-[#0E1A2B]/10 via-[#0E1A2B]/50 to-[#0E1A2B]" />
 
       <motion.div
         initial="hidden"
@@ -329,7 +520,7 @@ export default function Hero3D() {
           variants={itemVariants}
           className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-5 py-2 text-sm uppercase tracking-[0.3em] text-white/80"
         >
-          Optica Student Chapter
+          🚀 Optica Student Chapter
         </motion.span>
         <motion.h1
           variants={itemVariants}
@@ -348,20 +539,20 @@ export default function Hero3D() {
           variants={itemVariants}
           className="mt-10 flex flex-col items-center gap-4 sm:flex-row"
         >
-          <motion.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.98 }}>
+          <motion.div whileHover={{ scale: 1.08 }} whileTap={{ scale: 0.95 }}>
             <Link
               href="/join"
-              className="inline-flex items-center justify-center rounded-button bg-optica-purple px-8 py-3 font-accent text-base font-medium text-optica-black shadow-[0_24px_60px_-24px_rgba(168,144,255,0.85)] transition-colors duration-300 hover:bg-white hover:text-optica-black"
+              className="inline-flex items-center justify-center rounded-button bg-gradient-to-r from-purple-600 to-pink-600 px-8 py-3 font-accent text-base font-bold text-white shadow-[0_24px_60px_-24px_rgba(168,144,255,0.95)] transition-all duration-300 hover:shadow-[0_40px_80px_-24px_rgba(168,144,255,1.2)] hover:from-purple-500 hover:to-pink-500"
             >
-              Join Us
+              🌟 Join Us
             </Link>
           </motion.div>
-          <motion.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.98 }}>
+          <motion.div whileHover={{ scale: 1.08 }} whileTap={{ scale: 0.95 }}>
             <Link
               href="/events"
-              className="inline-flex items-center justify-center rounded-button border border-white/30 px-8 py-3 font-accent text-base font-medium text-white transition-colors duration-300 hover:border-optica-purple hover:bg-white/10"
+              className="inline-flex items-center justify-center rounded-button border border-purple-500/50 px-8 py-3 font-accent text-base font-medium text-white transition-all duration-300 hover:border-pink-500 hover:bg-white/10 hover:shadow-[0_20px_40px_-20px_rgba(168,144,255,0.5)]"
             >
-              View Our Events
+              ✨ View Our Events
             </Link>
           </motion.div>
         </motion.div>
