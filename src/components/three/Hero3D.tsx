@@ -278,27 +278,36 @@ function ParticleSwarm({ isMobile = false }: { isMobile?: boolean }) {
       // Gravity towards center with pulsing - but repel when too close
       const centerDist = Math.sqrt(x * x + y * y + z * z);
       const gravityStrength = Math.sin(time * 0.5) * 0.02 + 0.01;
-      
+
       // Slow down particles when near center
       const slowdownFactor = centerDist < 3 ? 0.85 : 1.0;
-      
+
       // Smooth transition between repulsion and attraction
       // Use a blend factor that smoothly transitions from 0 to 1
       const blendStart = 1.5;
       const blendEnd = 3.0;
-      const blendFactor = Math.min(1, Math.max(0, (centerDist - blendStart) / (blendEnd - blendStart)));
-      
+      const blendFactor = Math.min(
+        1,
+        Math.max(0, (centerDist - blendStart) / (blendEnd - blendStart))
+      );
+
       // Repulsion force (strong when close)
       const repulsionForce = (1 - blendFactor) * 0.05;
-      
+
       // Attraction force (strong when far)
       const attractionForce = blendFactor * gravityStrength;
-      
+
       // Apply blended forces
       const forceDirection = centerDist > 0 ? 1 / (centerDist + 0.1) : 0;
-      velocities[i3] += (x * forceDirection * repulsionForce) - (x / (centerDist + 1)) * attractionForce;
-      velocities[i3 + 1] += (y * forceDirection * repulsionForce) - (y / (centerDist + 1)) * attractionForce;
-      velocities[i3 + 2] += (z * forceDirection * repulsionForce) - (z / (centerDist + 1)) * attractionForce;
+      velocities[i3] +=
+        x * forceDirection * repulsionForce -
+        (x / (centerDist + 1)) * attractionForce;
+      velocities[i3 + 1] +=
+        y * forceDirection * repulsionForce -
+        (y / (centerDist + 1)) * attractionForce;
+      velocities[i3 + 2] +=
+        z * forceDirection * repulsionForce -
+        (z / (centerDist + 1)) * attractionForce;
 
       // Damping (stronger damping when near center)
       const dampingFactor = 0.98 * slowdownFactor;
@@ -455,11 +464,11 @@ export default function Hero3D() {
   useEffect(() => {
     // Detect mobile device
     const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768 || 'ontouchstart' in window);
+      setIsMobile(window.innerWidth < 768 || "ontouchstart" in window);
     };
-    
+
     checkMobile();
-    window.addEventListener('resize', checkMobile);
+    window.addEventListener("resize", checkMobile);
 
     const handleMouseMove = (e: MouseEvent) => {
       setMousePos({
@@ -471,7 +480,7 @@ export default function Hero3D() {
     window.addEventListener("mousemove", handleMouseMove);
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
-      window.removeEventListener('resize', checkMobile);
+      window.removeEventListener("resize", checkMobile);
     };
   }, []);
 
@@ -485,12 +494,12 @@ export default function Hero3D() {
           shadows={!isMobile}
           dpr={isMobile ? [0.5, 1] : [1, 1.5]}
           camera={{ position: [0, 2, 8], fov: 50 }}
-          gl={{ 
-            antialias: !isMobile, 
+          gl={{
+            antialias: !isMobile,
             powerPreference: isMobile ? "low-power" : "high-performance",
             alpha: false,
             stencil: false,
-            depth: true
+            depth: true,
           }}
           performance={{ min: 0.5 }}
         >
@@ -564,10 +573,7 @@ export default function Hero3D() {
         >
           Formerly Optical Society of America
         </motion.span>
-        <motion.div
-          variants={itemVariants}
-          className="w-full max-w-4xl px-4"
-        >
+        <motion.div variants={itemVariants} className="w-full max-w-4xl px-4">
           <Image
             src="/logo_dark.png"
             alt="BVP Optica Student Chapter"

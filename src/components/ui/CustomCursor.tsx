@@ -26,11 +26,11 @@ export default function CustomCursor() {
   useEffect(() => {
     // Check if mobile device
     const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768 || 'ontouchstart' in window);
+      setIsMobile(window.innerWidth < 768 || "ontouchstart" in window);
     };
-    
+
     checkMobile();
-    window.addEventListener('resize', checkMobile);
+    window.addEventListener("resize", checkMobile);
 
     let trailId = 0;
     let lastTrailTime = 0;
@@ -75,7 +75,7 @@ export default function CustomCursor() {
       window.removeEventListener("mousemove", handleMouseMove);
       window.removeEventListener("mousedown", handleMouseDown);
       window.removeEventListener("mouseup", handleMouseUp);
-      window.removeEventListener('resize', checkMobile);
+      window.removeEventListener("resize", checkMobile);
     };
   }, [cursorX, cursorY]);
 

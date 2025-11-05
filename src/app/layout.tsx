@@ -88,7 +88,7 @@ export default function RootLayout({
       lang="en"
       className={`dark ${poppins.variable} ${inter.variable} ${montserrat.variable}`}
     >
-            <body className="font-body antialiased bg-optica-black text-text-primary transition-colors duration-300 md:cursor-none">
+      <body className="font-body antialiased bg-optica-black text-text-primary transition-colors duration-300 md:cursor-none">
         <ThemeProvider>
           <AnimationProvider>
             <CustomCursor />
