@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { Canvas, useFrame } from "@react-three/fiber";
 import {
   ContactShadows,
@@ -147,8 +148,8 @@ const quantumFoamFragmentShader = `
 
 function QuantumFoam() {
   const meshRef = useRef<THREE.Mesh>(null);
-  const uNoiseDensity = 3.5;
-  const uNoiseStrength = 0.4;
+  const uNoiseDensity = 2.5;
+  const uNoiseStrength = 0.25;
 
   const uniforms = useMemo(
     () => ({
@@ -231,7 +232,7 @@ function RotatingCircle({
       <Tube args={[curve, 256, 0.05, 24, true]}>
         <meshStandardMaterial
           emissive={color}
-          emissiveIntensity={8}
+          emissiveIntensity={5}
           toneMapped={false}
         />
       </Tube>
@@ -239,9 +240,9 @@ function RotatingCircle({
   );
 }
 
-function ParticleSwarm() {
+function ParticleSwarm({ isMobile = false }: { isMobile?: boolean }) {
   const pointsRef = useRef<THREE.Points>(null);
-  const particleCount = 2000;
+  const particleCount = isMobile ? 500 : 2000;
 
   const { positions, velocities } = useMemo(() => {
     const positions = new Float32Array(particleCount * 3);
@@ -259,7 +260,7 @@ function ParticleSwarm() {
     }
 
     return { positions, velocities };
-  }, []);
+  }, [particleCount]);
 
   useFrame(({ clock }) => {
     if (!pointsRef.current) return;
@@ -274,18 +275,36 @@ function ParticleSwarm() {
       const y = pos[i3 + 1];
       const z = pos[i3 + 2];
 
-      // Gravity towards center with pulsing
+      // Gravity towards center with pulsing - but repel when too close
       const centerDist = Math.sqrt(x * x + y * y + z * z);
       const gravityStrength = Math.sin(time * 0.5) * 0.02 + 0.01;
+      
+      // Slow down particles when near center
+      const slowdownFactor = centerDist < 3 ? 0.85 : 1.0;
+      
+      // Smooth transition between repulsion and attraction
+      // Use a blend factor that smoothly transitions from 0 to 1
+      const blendStart = 1.5;
+      const blendEnd = 3.0;
+      const blendFactor = Math.min(1, Math.max(0, (centerDist - blendStart) / (blendEnd - blendStart)));
+      
+      // Repulsion force (strong when close)
+      const repulsionForce = (1 - blendFactor) * 0.05;
+      
+      // Attraction force (strong when far)
+      const attractionForce = blendFactor * gravityStrength;
+      
+      // Apply blended forces
+      const forceDirection = centerDist > 0 ? 1 / (centerDist + 0.1) : 0;
+      velocities[i3] += (x * forceDirection * repulsionForce) - (x / (centerDist + 1)) * attractionForce;
+      velocities[i3 + 1] += (y * forceDirection * repulsionForce) - (y / (centerDist + 1)) * attractionForce;
+      velocities[i3 + 2] += (z * forceDirection * repulsionForce) - (z / (centerDist + 1)) * attractionForce;
 
-      velocities[i3] -= (x / (centerDist + 1)) * gravityStrength;
-      velocities[i3 + 1] -= (y / (centerDist + 1)) * gravityStrength;
-      velocities[i3 + 2] -= (z / (centerDist + 1)) * gravityStrength;
-
-      // Damping
-      velocities[i3] *= 0.98;
-      velocities[i3 + 1] *= 0.98;
-      velocities[i3 + 2] *= 0.98;
+      // Damping (stronger damping when near center)
+      const dampingFactor = 0.98 * slowdownFactor;
+      velocities[i3] *= dampingFactor;
+      velocities[i3 + 1] *= dampingFactor;
+      velocities[i3 + 2] *= dampingFactor;
 
       // Update position
       pos[i3] += velocities[i3];
@@ -431,8 +450,17 @@ function CameraRig() {
 
 export default function Hero3D() {
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
+    // Detect mobile device
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768 || 'ontouchstart' in window);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+
     const handleMouseMove = (e: MouseEvent) => {
       setMousePos({
         x: e.clientX / window.innerWidth,
@@ -441,7 +469,10 @@ export default function Hero3D() {
     };
 
     window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener('resize', checkMobile);
+    };
   }, []);
 
   return (
@@ -451,10 +482,17 @@ export default function Hero3D() {
     >
       <div className="absolute inset-0 -z-10">
         <Canvas
-          shadows
-          dpr={[1, 1.5]}
+          shadows={!isMobile}
+          dpr={isMobile ? [0.5, 1] : [1, 1.5]}
           camera={{ position: [0, 2, 8], fov: 50 }}
-          gl={{ antialias: true, powerPreference: "high-performance" }}
+          gl={{ 
+            antialias: !isMobile, 
+            powerPreference: isMobile ? "low-power" : "high-performance",
+            alpha: false,
+            stencil: false,
+            depth: true
+          }}
+          performance={{ min: 0.5 }}
         >
           <color attach="background" args={["#000000"]} />
           <fog attach="fog" args={["#000000", 10, 30]} />
@@ -462,9 +500,9 @@ export default function Hero3D() {
           <CameraRig />
           <DynamicLights />
 
-          <QuantumFoam />
-          <ParticleSwarm />
-          <CrystalCluster />
+          {!isMobile && <QuantumFoam />}
+          <ParticleSwarm isMobile={isMobile} />
+          {!isMobile && <CrystalCluster />}
 
           {SPECTRUM_COLORS.map((color, i) => (
             <RotatingCircle key={i} color={color} planeIndex={i} />
@@ -478,32 +516,36 @@ export default function Hero3D() {
             far={12}
           />
 
-          <Environment resolution={256}>
-            <Lightformer
-              form="ring"
-              intensity={12}
-              color="#A890FF"
-              scale={12}
-              target={[0, 0, 0]}
-            />
-            <Lightformer
-              form="ring"
-              intensity={8}
-              color="#E91E63"
-              scale={15}
-              position={[0, -5, 0]}
-              target={[0, 0, 0]}
-            />
-          </Environment>
+          {!isMobile && (
+            <Environment resolution={256}>
+              <Lightformer
+                form="ring"
+                intensity={12}
+                color="#A890FF"
+                scale={12}
+                target={[0, 0, 0]}
+              />
+              <Lightformer
+                form="ring"
+                intensity={8}
+                color="#E91E63"
+                scale={15}
+                position={[0, -5, 0]}
+                target={[0, 0, 0]}
+              />
+            </Environment>
+          )}
 
-          <EffectComposer>
-            <Bloom
-              luminanceThreshold={0.1}
-              luminanceSmoothing={0.9}
-              intensity={2.5}
-              levels={9}
-            />
-          </EffectComposer>
+          {!isMobile && (
+            <EffectComposer>
+              <Bloom
+                luminanceThreshold={0.1}
+                luminanceSmoothing={0.9}
+                intensity={2.5}
+                levels={9}
+              />
+            </EffectComposer>
+          )}
         </Canvas>
       </div>
 
@@ -514,35 +556,43 @@ export default function Hero3D() {
         initial="hidden"
         animate="visible"
         variants={containerVariants}
-        className="relative z-10 mx-auto flex w-full max-w-5xl flex-col items-center px-6 text-center text-text-primary"
+        className="relative z-10 mx-auto flex w-full max-w-5xl flex-col items-center px-4 sm:px-6 text-center text-text-primary"
       >
         <motion.span
           variants={itemVariants}
-          className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-5 py-2 text-sm uppercase tracking-[0.3em] text-white/80"
+          className="mb-4 sm:mb-6 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 sm:px-5 py-1.5 sm:py-2 text-xs sm:text-sm uppercase tracking-[0.2em] sm:tracking-[0.3em] text-white/80"
         >
-          🚀 Optica Student Chapter
+          Formerly Optical Society of America
         </motion.span>
-        <motion.h1
+        <motion.div
           variants={itemVariants}
-          className="font-heading text-4xl leading-[1.1] text-white drop-shadow-[0_20px_45px_rgba(10,6,36,0.45)] sm:text-6xl md:text-7xl"
+          className="w-full max-w-4xl px-4"
         >
-          Shaping the Future of Light
-        </motion.h1>
+          <Image
+            src="/logo_dark.png"
+            alt="BVP Optica Student Chapter"
+            width={1200}
+            height={400}
+            className="w-full h-auto"
+            unoptimized
+            priority
+          />
+        </motion.div>
         <motion.p
           variants={itemVariants}
-          className="mt-6 max-w-3xl text-base text-text-secondary sm:text-lg md:text-xl"
+          className="mt-6 sm:mt-8 max-w-3xl text-sm sm:text-base md:text-lg lg:text-xl text-text-secondary px-4"
         >
           Explore the world of optics, photonics, and quantum technology with
           the BVP Optica student chapter.
         </motion.p>
         <motion.div
           variants={itemVariants}
-          className="mt-10 flex flex-col items-center gap-4 sm:flex-row"
+          className="mt-8 sm:mt-10 flex flex-col items-center gap-3 sm:gap-4 w-full sm:w-auto sm:flex-row"
         >
           <motion.div whileHover={{ scale: 1.08 }} whileTap={{ scale: 0.95 }}>
             <Link
               href="/join"
-              className="inline-flex items-center justify-center rounded-button bg-gradient-to-r from-purple-600 to-pink-600 px-8 py-3 font-accent text-base font-bold text-white shadow-[0_24px_60px_-24px_rgba(168,144,255,0.95)] transition-all duration-300 hover:shadow-[0_40px_80px_-24px_rgba(168,144,255,1.2)] hover:from-purple-500 hover:to-pink-500"
+              className="inline-flex w-full sm:w-auto items-center justify-center rounded-button bg-gradient-to-r from-purple-600 to-pink-600 px-6 sm:px-8 py-2.5 sm:py-3 font-accent text-sm sm:text-base font-bold text-white shadow-[0_24px_60px_-24px_rgba(168,144,255,0.95)] transition-all duration-300 hover:shadow-[0_40px_80px_-24px_rgba(168,144,255,1.2)] hover:from-purple-500 hover:to-pink-500"
             >
               🌟 Join Us
             </Link>
@@ -550,7 +600,7 @@ export default function Hero3D() {
           <motion.div whileHover={{ scale: 1.08 }} whileTap={{ scale: 0.95 }}>
             <Link
               href="/events"
-              className="inline-flex items-center justify-center rounded-button border border-purple-500/50 px-8 py-3 font-accent text-base font-medium text-white transition-all duration-300 hover:border-pink-500 hover:bg-white/10 hover:shadow-[0_20px_40px_-20px_rgba(168,144,255,0.5)]"
+              className="inline-flex w-full sm:w-auto items-center justify-center rounded-button border border-purple-500/50 px-6 sm:px-8 py-2.5 sm:py-3 font-accent text-sm sm:text-base font-medium text-white transition-all duration-300 hover:border-pink-500 hover:bg-white/10 hover:shadow-[0_20px_40px_-20px_rgba(168,144,255,0.5)]"
             >
               ✨ View Our Events
             </Link>

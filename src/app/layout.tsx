@@ -4,6 +4,7 @@ import "./globals.css";
 import { AnimationProvider } from "@/lib/animations/AnimationProvider";
 import { ThemeProvider } from "@/lib/theme/ThemeProvider";
 import Navbar from "@/components/layout/Navbar";
+import CustomCursor from "@/components/ui/CustomCursor";
 
 const poppins = Poppins({
   weight: ["600", "700"],
@@ -87,9 +88,10 @@ export default function RootLayout({
       lang="en"
       className={`dark ${poppins.variable} ${inter.variable} ${montserrat.variable}`}
     >
-      <body className="font-body antialiased bg-optica-black text-text-primary transition-colors duration-300">
+            <body className="font-body antialiased bg-optica-black text-text-primary transition-colors duration-300 md:cursor-none">
         <ThemeProvider>
           <AnimationProvider>
+            <CustomCursor />
             <Navbar />
             <div id="main-content">{children}</div>
           </AnimationProvider>
