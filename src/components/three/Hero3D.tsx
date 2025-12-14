@@ -114,7 +114,13 @@ const quantumFoamFragmentShader = `
   }
 `;
 
-function QuantumFoam({ isMobile = false, isTablet = false }: { isMobile?: boolean; isTablet?: boolean }) {
+function QuantumFoam({
+  isMobile = false,
+  isTablet = false,
+}: {
+  isMobile?: boolean;
+  isTablet?: boolean;
+}) {
   const meshRef = useRef<THREE.Mesh>(null);
   // Adaptive detail based on device
   const detail = isMobile ? 8 : isTablet ? 12 : 20;
@@ -134,11 +140,11 @@ function QuantumFoam({ isMobile = false, isTablet = false }: { isMobile?: boolea
   // Throttle updates - mobile every 3rd frame, tablet every 2nd frame
   const frameCount = useRef(0);
   const skipFrames = isMobile ? 3 : isTablet ? 2 : 1;
-  
+
   useFrame(({ clock }) => {
     frameCount.current++;
     if (frameCount.current % skipFrames !== 0) return;
-    
+
     if (meshRef.current) {
       (meshRef.current.material as THREE.ShaderMaterial).uniforms.uTime.value =
         clock.elapsedTime;
@@ -191,7 +197,7 @@ function RotatingCircle({
     // Skip every other frame on mobile
     frameCount.current++;
     if (isMobile && frameCount.current % 2 !== 0) return;
-    
+
     if (groupRef.current) {
       const time = clock.elapsedTime;
       groupRef.current.rotation.x =
@@ -215,7 +221,9 @@ function RotatingCircle({
 
   return (
     <group ref={groupRef} rotation={initialRotation}>
-      <Tube args={[curve, isMobile ? 128 : 256, 0.05, isMobile ? 12 : 24, true]}>
+      <Tube
+        args={[curve, isMobile ? 128 : 256, 0.05, isMobile ? 12 : 24, true]}
+      >
         <meshStandardMaterial
           emissive={color}
           emissiveIntensity={isMobile ? 3 : 5}
@@ -226,7 +234,13 @@ function RotatingCircle({
   );
 }
 
-function ParticleSwarm({ isMobile = false, isTablet = false }: { isMobile?: boolean; isTablet?: boolean }) {
+function ParticleSwarm({
+  isMobile = false,
+  isTablet = false,
+}: {
+  isMobile?: boolean;
+  isTablet?: boolean;
+}) {
   const pointsRef = useRef<THREE.Points>(null);
   const particleCount = isMobile ? 300 : isTablet ? 800 : 1500;
   const frameCountRef = useRef(0);
@@ -252,7 +266,7 @@ function ParticleSwarm({ isMobile = false, isTablet = false }: { isMobile?: bool
 
   useFrame(({ clock }) => {
     if (!pointsRef.current) return;
-    
+
     // Skip frames on mobile for performance
     frameCountRef.current++;
     if (frameCountRef.current % skipFrames !== 0) return;
@@ -343,9 +357,15 @@ function ParticleSwarm({ isMobile = false, isTablet = false }: { isMobile?: bool
   );
 }
 
-function CrystalCluster({ isMobile = false, isTablet = false }: { isMobile?: boolean; isTablet?: boolean }) {
+function CrystalCluster({
+  isMobile = false,
+  isTablet = false,
+}: {
+  isMobile?: boolean;
+  isTablet?: boolean;
+}) {
   const crystalCount = isMobile ? 12 : isTablet ? 20 : 35;
-  
+
   const crystals = useMemo(() => {
     const items: {
       position: THREE.Vector3;
@@ -380,7 +400,7 @@ function CrystalCluster({ isMobile = false, isTablet = false }: { isMobile?: boo
   useFrame(({ clock }) => {
     frameCountRef.current++;
     if (isMobile && frameCountRef.current % 2 !== 0) return;
-    
+
     if (groupRef.current) {
       groupRef.current.rotation.x = clock.elapsedTime * 0.15;
       groupRef.current.rotation.y = clock.elapsedTime * 0.1;
@@ -388,7 +408,11 @@ function CrystalCluster({ isMobile = false, isTablet = false }: { isMobile?: boo
   });
 
   return (
-    <Float speed={1.2} rotationIntensity={isMobile ? 2 : 3.5} floatIntensity={isMobile ? 2 : 3.5}>
+    <Float
+      speed={1.2}
+      rotationIntensity={isMobile ? 2 : 3.5}
+      floatIntensity={isMobile ? 2 : 3.5}
+    >
       <group ref={groupRef}>
         {crystals.map((crystal) => (
           <mesh
@@ -400,8 +424,12 @@ function CrystalCluster({ isMobile = false, isTablet = false }: { isMobile?: boo
             <octahedronGeometry args={[1, isMobile ? 1 : 2]} />
             {isMobile ? (
               <meshStandardMaterial
-                color={SPECTRUM_COLORS[crystal.colorIndex % SPECTRUM_COLORS.length]}
-                emissive={SPECTRUM_COLORS[crystal.colorIndex % SPECTRUM_COLORS.length]}
+                color={
+                  SPECTRUM_COLORS[crystal.colorIndex % SPECTRUM_COLORS.length]
+                }
+                emissive={
+                  SPECTRUM_COLORS[crystal.colorIndex % SPECTRUM_COLORS.length]
+                }
                 emissiveIntensity={0.3}
                 transparent={true}
                 opacity={0.8}
@@ -414,7 +442,9 @@ function CrystalCluster({ isMobile = false, isTablet = false }: { isMobile?: boo
                 thickness={2}
                 ior={2.5}
                 color="#FFFFFF"
-                emissive={SPECTRUM_COLORS[crystal.colorIndex % SPECTRUM_COLORS.length]}
+                emissive={
+                  SPECTRUM_COLORS[crystal.colorIndex % SPECTRUM_COLORS.length]
+                }
                 emissiveIntensity={0.2}
                 clearcoat={1.0}
                 clearcoatRoughness={0.05}
@@ -465,11 +495,11 @@ function DynamicLights() {
 
 function CameraRig({ isMobile = false }: { isMobile?: boolean }) {
   const frameCountRef = useRef(0);
-  
+
   useFrame(({ camera, clock }) => {
     frameCountRef.current++;
     if (isMobile && frameCountRef.current % 2 !== 0) return;
-    
+
     const t = clock.getElapsedTime();
     const radius = 8 + Math.sin(t * 0.3) * 2;
 
@@ -523,61 +553,69 @@ export default function Hero3D() {
               depth: true,
             }}
           >
-          <color attach="background" args={["#000000"]} />
-          <fog attach="fog" args={["#000000", isMobile ? 8 : 10, isMobile ? 25 : 30]} />
-
-          <CameraRig isMobile={isMobile} />
-          <DynamicLights />
-
-          <QuantumFoam isMobile={isMobile} isTablet={isTablet} />
-          <ParticleSwarm isMobile={isMobile} isTablet={isTablet} />
-          <CrystalCluster isMobile={isMobile} isTablet={isTablet} />
-
-          {SPECTRUM_COLORS.map((color, i) => (
-            <RotatingCircle key={i} color={color} planeIndex={i} isMobile={isMobile} />
-          ))}
-
-          {!isMobile && (
-            <ContactShadows
-              position={[0, -5, 0]}
-              opacity={0.8}
-              scale={25}
-              blur={2}
-              far={12}
+            <color attach="background" args={["#000000"]} />
+            <fog
+              attach="fog"
+              args={["#000000", isMobile ? 8 : 10, isMobile ? 25 : 30]}
             />
-          )}
 
-          {!isMobile && (
-            <Environment resolution={isTablet ? 128 : 256}>
-              <Lightformer
-                form="ring"
-                intensity={12}
-                color="#A890FF"
-                scale={12}
-                target={[0, 0, 0]}
+            <CameraRig isMobile={isMobile} />
+            <DynamicLights />
+
+            <QuantumFoam isMobile={isMobile} isTablet={isTablet} />
+            <ParticleSwarm isMobile={isMobile} isTablet={isTablet} />
+            <CrystalCluster isMobile={isMobile} isTablet={isTablet} />
+
+            {SPECTRUM_COLORS.map((color, i) => (
+              <RotatingCircle
+                key={i}
+                color={color}
+                planeIndex={i}
+                isMobile={isMobile}
               />
-              <Lightformer
-                form="ring"
-                intensity={8}
-                color="#E91E63"
-                scale={15}
+            ))}
+
+            {!isMobile && (
+              <ContactShadows
                 position={[0, -5, 0]}
-                target={[0, 0, 0]}
+                opacity={0.8}
+                scale={25}
+                blur={2}
+                far={12}
               />
-            </Environment>
-          )}
+            )}
 
-          {!isMobile && (
-            <EffectComposer multisampling={isTablet ? 2 : 4}>
-              <Bloom
-                luminanceThreshold={0.15}
-                luminanceSmoothing={0.9}
-                intensity={isTablet ? 1.5 : 2.5}
-                levels={isTablet ? 5 : 9}
-              />
-            </EffectComposer>
-          )}
-        </Canvas>
+            {!isMobile && (
+              <Environment resolution={isTablet ? 128 : 256}>
+                <Lightformer
+                  form="ring"
+                  intensity={12}
+                  color="#A890FF"
+                  scale={12}
+                  target={[0, 0, 0]}
+                />
+                <Lightformer
+                  form="ring"
+                  intensity={8}
+                  color="#E91E63"
+                  scale={15}
+                  position={[0, -5, 0]}
+                  target={[0, 0, 0]}
+                />
+              </Environment>
+            )}
+
+            {!isMobile && (
+              <EffectComposer multisampling={isTablet ? 2 : 4}>
+                <Bloom
+                  luminanceThreshold={0.15}
+                  luminanceSmoothing={0.9}
+                  intensity={isTablet ? 1.5 : 2.5}
+                  levels={isTablet ? 5 : 9}
+                />
+              </EffectComposer>
+            )}
+          </Canvas>
         )}
       </div>
 

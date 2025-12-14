@@ -143,7 +143,7 @@ export default function EventCards() {
               <div className="relative h-full bg-gradient-to-br from-purple-900/30 via-black/40 to-purple-900/20 backdrop-blur-sm rounded-xl border border-purple-500/20 overflow-hidden hover:border-purple-400/40 transition-all duration-300">
                 {/* Subtle glow on hover */}
                 <div className="absolute -inset-1 bg-gradient-to-br from-purple-500/0 to-pink-500/0 group-hover:from-purple-500/10 group-hover:to-pink-500/10 rounded-xl blur-lg transition-all duration-300 -z-10" />
-                
+
                 {/* Event Image */}
                 <div className="relative h-40 sm:h-44 overflow-hidden">
                   <Image
@@ -155,14 +155,19 @@ export default function EventCards() {
                     priority={event.id === 1}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
-                  
+
                   {/* Category Badge */}
                   <div className="absolute top-3 left-3">
-                    <span className={`px-3 py-1 rounded-full text-xs font-semibold bg-gradient-to-r ${categoryColors[event.category]} text-white shadow-lg`}>
-                      {event.category.charAt(0).toUpperCase() + event.category.slice(1)}
+                    <span
+                      className={`px-3 py-1 rounded-full text-xs font-semibold bg-gradient-to-r ${
+                        categoryColors[event.category]
+                      } text-white shadow-lg`}
+                    >
+                      {event.category.charAt(0).toUpperCase() +
+                        event.category.slice(1)}
                     </span>
                   </div>
-                  
+
                   {/* Date on image */}
                   <div className="absolute bottom-3 left-3">
                     <span className="text-white/90 text-xs font-medium">
@@ -177,7 +182,11 @@ export default function EventCards() {
 
                 {/* Event Content */}
                 <div className="p-4 sm:p-5">
-                  <h3 className={`font-heading text-base sm:text-lg font-bold mb-2 bg-gradient-to-r ${categoryColors[event.category]} bg-clip-text text-transparent`}>
+                  <h3
+                    className={`font-heading text-base sm:text-lg font-bold mb-2 bg-gradient-to-r ${
+                      categoryColors[event.category]
+                    } bg-clip-text text-transparent`}
+                  >
                     {event.title}
                   </h3>
                   <p className="text-gray-400 text-sm leading-relaxed">
@@ -186,7 +195,11 @@ export default function EventCards() {
                 </div>
 
                 {/* Bottom accent line */}
-                <div className={`h-0.5 bg-gradient-to-r ${categoryColors[event.category]} transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left`} />
+                <div
+                  className={`h-0.5 bg-gradient-to-r ${
+                    categoryColors[event.category]
+                  } transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left`}
+                />
               </div>
             </motion.div>
           ))}

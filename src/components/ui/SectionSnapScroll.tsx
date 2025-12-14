@@ -8,7 +8,10 @@ interface SectionSnapScrollProps {
   sectionNames: string[];
 }
 
-export function SectionSnapScroll({ sections, sectionNames }: SectionSnapScrollProps) {
+export function SectionSnapScroll({
+  sections,
+  sectionNames,
+}: SectionSnapScrollProps) {
   const [currentSection, setCurrentSection] = useState(0);
   const [direction, setDirection] = useState<"up" | "down">("down");
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
@@ -119,21 +122,21 @@ export function SectionSnapScroll({ sections, sectionNames }: SectionSnapScrollP
 
     const handleTouchEnd = (e: TouchEvent) => {
       if (touchStartRef.current === null) return;
-      
+
       const touchEnd = e.changedTouches[0].clientY;
       const delta = touchStartRef.current - touchEnd;
-      
+
       if (Math.abs(delta) > 40) {
         const amplifiedDelta = delta * 2.5;
         scheduleScroll(amplifiedDelta);
       }
-      
+
       touchStartRef.current = null;
     };
 
     // Prevent default scroll behavior
     document.body.style.overflow = "hidden";
-    
+
     window.addEventListener("wheel", handleWheel, { passive: false });
     window.addEventListener("keydown", handleKeyDown);
     window.addEventListener("touchstart", handleTouchStart);
@@ -190,9 +193,7 @@ export function SectionSnapScroll({ sections, sectionNames }: SectionSnapScrollP
             }}
             className="absolute inset-0 w-full h-full"
           >
-            <div className="w-full h-full">
-              {sections[currentSection]}
-            </div>
+            <div className="w-full h-full">{sections[currentSection]}</div>
           </motion.div>
         </AnimatePresence>
       ) : (
@@ -201,24 +202,24 @@ export function SectionSnapScroll({ sections, sectionNames }: SectionSnapScrollP
         </div>
       )}
 
-  {/* Enhanced Section Navigation - Hidden on very small screens */}
-  <div className="pointer-events-none fixed right-3 sm:right-6 md:right-8 top-1/2 -translate-y-1/2 z-50 flex items-center gap-2 sm:gap-4">
+      {/* Enhanced Section Navigation - Hidden on very small screens */}
+      <div className="pointer-events-none fixed right-3 sm:right-6 md:right-8 top-1/2 -translate-y-1/2 z-50 flex items-center gap-2 sm:gap-4">
         {/* Progress bar - hidden on mobile */}
-  <div className="pointer-events-auto relative w-0.5 sm:w-1 h-40 sm:h-64 bg-gradient-to-b from-purple-500/10 via-pink-500/10 to-purple-500/10 rounded-full backdrop-blur-sm border border-purple-500/20 hidden sm:block">
+        <div className="pointer-events-auto relative w-0.5 sm:w-1 h-40 sm:h-64 bg-gradient-to-b from-purple-500/10 via-pink-500/10 to-purple-500/10 rounded-full backdrop-blur-sm border border-purple-500/20 hidden sm:block">
           <motion.div
             className="absolute top-0 left-0 right-0 bg-gradient-to-b from-purple-400 via-pink-400 to-purple-500 rounded-full shadow-lg shadow-purple-500/50"
             animate={{
               height: `${((currentSection + 1) / sections.length) * 100}%`,
             }}
-            transition={{ 
+            transition={{
               duration: 0.5,
-              ease: [0.22, 1, 0.36, 1]
+              ease: [0.22, 1, 0.36, 1],
             }}
           />
         </div>
 
         {/* Section dots */}
-  <div className="pointer-events-auto flex flex-col items-center gap-3 sm:gap-6">
+        <div className="pointer-events-auto flex flex-col items-center gap-3 sm:gap-6">
           {sections.map((_, index) => (
             <button
               key={index}

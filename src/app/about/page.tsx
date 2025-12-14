@@ -4,12 +4,12 @@ import { motion, useInView } from "motion/react";
 import { useRef } from "react";
 import Image from "next/image";
 
-function AnimatedSection({ 
-  children, 
+function AnimatedSection({
+  children,
   className = "",
-  delay = 0 
-}: { 
-  children: React.ReactNode; 
+  delay = 0,
+}: {
+  children: React.ReactNode;
   className?: string;
   delay?: number;
 }) {
@@ -68,8 +68,7 @@ export default function AboutPage() {
     },
     {
       title: "Community",
-      description:
-        "Join a close-knit community driving innovation together.",
+      description: "Join a close-knit community driving innovation together.",
       icon: "🤝",
       color: "from-teal-400 to-blue-400",
     },
@@ -114,8 +113,9 @@ export default function AboutPage() {
                 <p className="text-gray-300 text-sm leading-relaxed">
                   To advance the fields of optics and photonics by providing
                   students with opportunities for learning, research, and
-                  collaboration. We strive to create a community where innovation
-                  thrives and members can explore cutting-edge technologies.
+                  collaboration. We strive to create a community where
+                  innovation thrives and members can explore cutting-edge
+                  technologies.
                 </p>
               </div>
             </div>
@@ -131,8 +131,9 @@ export default function AboutPage() {
                 <p className="text-gray-300 text-sm leading-relaxed">
                   To establish BVP Optica as a leading student chapter that
                   empowers the next generation of scientists and engineers. We
-                  envision a future where our members contribute significantly to
-                  technological advancements in optics and photonics globally.
+                  envision a future where our members contribute significantly
+                  to technological advancements in optics and photonics
+                  globally.
                 </p>
               </div>
             </div>
@@ -162,7 +163,9 @@ export default function AboutPage() {
                   >
                     {item.icon}
                   </motion.div>
-                  <h3 className={`font-heading text-base font-semibold mb-2 bg-gradient-to-r ${item.color} bg-clip-text text-transparent`}>
+                  <h3
+                    className={`font-heading text-base font-semibold mb-2 bg-gradient-to-r ${item.color} bg-clip-text text-transparent`}
+                  >
                     {item.title}
                   </h3>
                   <p className="text-gray-400 text-xs leading-relaxed">
@@ -193,7 +196,7 @@ export default function AboutPage() {
                 <div className="relative flex-shrink-0">
                   {/* Glow behind image */}
                   <div className="absolute -inset-3 bg-gradient-to-br from-purple-500/30 to-pink-500/20 rounded-2xl blur-xl" />
-                  
+
                   <div className="relative w-48 h-64 md:w-56 md:h-72 rounded-xl overflow-hidden border-2 border-purple-400/30">
                     <Image
                       src="/yugnanda_mam.jpg"
@@ -228,17 +231,19 @@ export default function AboutPage() {
 
                   {/* Description */}
                   <p className="text-gray-300 text-sm leading-relaxed mb-4">
-                    Having founded this club in 2019, Dr. Puri has been key in establishing and 
-                    nurturing it ever since. With a Ph.D. in Optical Communication and extensive 
-                    experience in academia, Dr. Puri has been a driving force behind BVP 
-                    Optica&apos;s growth and success.
+                    Having founded this club in 2019, Dr. Puri has been key in
+                    establishing and nurturing it ever since. With a Ph.D. in
+                    Optical Communication and extensive experience in academia,
+                    Dr. Puri has been a driving force behind BVP Optica&apos;s
+                    growth and success.
                   </p>
 
                   {/* Quote */}
                   <div className="border-l-2 border-purple-400 pl-4 py-2">
                     <p className="text-purple-200/90 italic text-sm">
-                      &ldquo;Empowering students to explore the fascinating world of optics 
-                      and photonics through innovation and collaboration.&rdquo;
+                      &ldquo;Empowering students to explore the fascinating
+                      world of optics and photonics through innovation and
+                      collaboration.&rdquo;
                     </p>
                   </div>
                 </div>

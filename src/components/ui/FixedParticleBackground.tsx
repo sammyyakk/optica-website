@@ -16,7 +16,7 @@ export function FixedParticleBackground() {
       duration: 3 + Math.random() * 2,
       delay: Math.random() * 2,
     }));
-    
+
     // Layer 2: Medium stars (50 stars)
     const mediumStars = Array.from({ length: 50 }, (_, i) => ({
       id: `medium-${i}`,
@@ -27,7 +27,7 @@ export function FixedParticleBackground() {
       duration: 2 + Math.random() * 3,
       delay: Math.random() * 3,
     }));
-    
+
     // Layer 3: Small distant stars (100 stars)
     const smallStars = Array.from({ length: 100 }, (_, i) => ({
       id: `small-${i}`,
@@ -38,21 +38,23 @@ export function FixedParticleBackground() {
       duration: 1.5 + Math.random() * 2.5,
       delay: Math.random() * 4,
     }));
-    
+
     return { largStars, mediumStars, smallStars };
   }, []);
 
   // Generate nebula clouds
-  const nebulaClouds = useMemo(() => 
-    Array.from({ length: 3 }, (_, i) => ({
-      id: `nebula-${i}`,
-      x: Math.random() * 100,
-      y: Math.random() * 100,
-      scale: 0.8 + Math.random() * 0.4,
-      rotation: Math.random() * 360,
-      duration: 15 + Math.random() * 10,
-    }))
-  , []);
+  const nebulaClouds = useMemo(
+    () =>
+      Array.from({ length: 3 }, (_, i) => ({
+        id: `nebula-${i}`,
+        x: Math.random() * 100,
+        y: Math.random() * 100,
+        scale: 0.8 + Math.random() * 0.4,
+        rotation: Math.random() * 360,
+        duration: 15 + Math.random() * 10,
+      })),
+    []
+  );
 
   return (
     <div className="fixed inset-0 z-0 overflow-hidden bg-gradient-to-b from-background-dark via-[#0a0e1a] to-background-dark">
@@ -91,7 +93,9 @@ export function FixedParticleBackground() {
             top: `${star.y}%`,
             width: `${star.size}px`,
             height: `${star.size}px`,
-            boxShadow: `0 0 ${star.size * 2}px rgba(255, 255, 255, 0.8), 0 0 ${star.size * 4}px rgba(108, 99, 255, 0.4)`,
+            boxShadow: `0 0 ${star.size * 2}px rgba(255, 255, 255, 0.8), 0 0 ${
+              star.size * 4
+            }px rgba(108, 99, 255, 0.4)`,
           }}
           animate={{
             opacity: [star.opacity, star.opacity * 0.3, star.opacity],
@@ -157,7 +161,8 @@ export function FixedParticleBackground() {
       <motion.div
         className="absolute w-1 h-1 bg-white rounded-full"
         style={{
-          boxShadow: "0 0 10px rgba(255, 255, 255, 1), 0 0 20px rgba(108, 99, 255, 0.8)",
+          boxShadow:
+            "0 0 10px rgba(255, 255, 255, 1), 0 0 20px rgba(108, 99, 255, 0.8)",
         }}
         animate={{
           x: ["-10%", "110%"],
@@ -171,11 +176,12 @@ export function FixedParticleBackground() {
           ease: "easeOut",
         }}
       />
-      
+
       <motion.div
         className="absolute w-1 h-1 bg-white rounded-full"
         style={{
-          boxShadow: "0 0 10px rgba(255, 255, 255, 1), 0 0 20px rgba(233, 30, 99, 0.8)",
+          boxShadow:
+            "0 0 10px rgba(255, 255, 255, 1), 0 0 20px rgba(233, 30, 99, 0.8)",
         }}
         animate={{
           x: ["110%", "-10%"],

@@ -50,13 +50,17 @@ export default function FacultyAdvisorSection() {
               {/* Photo */}
               <motion.div
                 initial={{ opacity: 0, scale: 0.9 }}
-                animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
+                animate={
+                  isInView
+                    ? { opacity: 1, scale: 1 }
+                    : { opacity: 0, scale: 0.9 }
+                }
                 transition={{ duration: 0.6, delay: 0.3 }}
                 className="relative flex-shrink-0"
               >
                 {/* Glow behind image */}
                 <div className="absolute -inset-3 bg-gradient-to-br from-purple-500/30 to-pink-500/20 rounded-2xl blur-xl" />
-                
+
                 <div className="relative w-40 h-52 sm:w-48 sm:h-64 md:w-56 md:h-72 rounded-xl overflow-hidden border-2 border-purple-400/30">
                   <Image
                     src="/yugnanda_mam.jpg"
@@ -74,7 +78,9 @@ export default function FacultyAdvisorSection() {
                 {/* Name */}
                 <motion.h3
                   initial={{ opacity: 0, y: 20 }}
-                  animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+                  animate={
+                    isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }
+                  }
                   transition={{ duration: 0.5, delay: 0.4 }}
                   className="font-heading text-xl sm:text-2xl md:text-3xl font-bold text-white mb-3 sm:mb-4"
                 >
@@ -87,11 +93,17 @@ export default function FacultyAdvisorSection() {
                     <motion.div
                       key={index}
                       initial={{ opacity: 0, scale: 0.9 }}
-                      animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
+                      animate={
+                        isInView
+                          ? { opacity: 1, scale: 1 }
+                          : { opacity: 0, scale: 0.9 }
+                      }
                       transition={{ duration: 0.4, delay: 0.5 + index * 0.1 }}
                       className="flex items-center gap-2 bg-purple-900/30 rounded-lg px-2 sm:px-3 py-1.5 sm:py-2 border border-purple-500/20"
                     >
-                      <span className="text-base sm:text-lg">{achievement.icon}</span>
+                      <span className="text-base sm:text-lg">
+                        {achievement.icon}
+                      </span>
                       <span className="text-gray-300 text-[10px] sm:text-xs font-medium leading-tight">
                         {achievement.label}
                       </span>
@@ -106,22 +118,26 @@ export default function FacultyAdvisorSection() {
                   transition={{ duration: 0.5, delay: 0.7 }}
                   className="text-gray-300 text-xs sm:text-sm leading-relaxed mb-3 sm:mb-4"
                 >
-                  Having founded this club in 2019, Dr. Puri has been key in establishing and 
-                  nurturing it ever since. With a Ph.D. in Optical Communication and extensive 
-                  experience in academia, Dr. Puri has been a driving force behind BVP 
-                  Optica&apos;s growth and success.
+                  Having founded this club in 2019, Dr. Puri has been key in
+                  establishing and nurturing it ever since. With a Ph.D. in
+                  Optical Communication and extensive experience in academia,
+                  Dr. Puri has been a driving force behind BVP Optica&apos;s
+                  growth and success.
                 </motion.p>
 
                 {/* Quote */}
                 <motion.div
                   initial={{ opacity: 0, x: -20 }}
-                  animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
+                  animate={
+                    isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }
+                  }
                   transition={{ duration: 0.5, delay: 0.8 }}
                   className="border-l-2 border-purple-400 pl-3 sm:pl-4 py-1.5 sm:py-2"
                 >
                   <p className="text-purple-200/90 italic text-xs sm:text-sm">
-                    &ldquo;Empowering students to explore the fascinating world of optics 
-                    and photonics through innovation and collaboration.&rdquo;
+                    &ldquo;Empowering students to explore the fascinating world
+                    of optics and photonics through innovation and
+                    collaboration.&rdquo;
                   </p>
                 </motion.div>
               </div>

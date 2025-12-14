@@ -95,49 +95,74 @@ export default function Navbar() {
       >
         <div className="container mx-auto px-4 md:px-6 lg:px-8">
           <div className="flex items-center justify-between h-20">
-          {/* Logo */}
-          <motion.div
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="transition-transform duration-300"
-          >
-            <Link href="/" className="flex items-center space-x-3">
-              <div className="relative">
-                <Image
-                  src="/navbar_logo_dark.png"
-                  alt="BVP Optica Logo"
-                  width={440}
-                  height={116}
-                  className="h-8 md:h-10 w-auto object-contain dark:hidden"
-                  quality={100}
-                  priority
-                  unoptimized
-                />
-                <Image
-                  src="/navbar_logo_light.png"
-                  alt="BVP Optica Logo"
-                  width={440}
-                  height={116}
-                  className="h-8 md:h-10 w-auto object-contain hidden dark:block"
-                  quality={100}
-                  priority
-                  unoptimized
-                />
-              </div>
-            </Link>
-          </motion.div>
+            {/* Logo */}
+            <motion.div
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="transition-transform duration-300"
+            >
+              <Link href="/" className="flex items-center space-x-3">
+                <div className="relative">
+                  <Image
+                    src="/navbar_logo_dark.png"
+                    alt="BVP Optica Logo"
+                    width={440}
+                    height={116}
+                    className="h-8 md:h-10 w-auto object-contain dark:hidden"
+                    quality={100}
+                    priority
+                    unoptimized
+                  />
+                  <Image
+                    src="/navbar_logo_light.png"
+                    alt="BVP Optica Logo"
+                    width={440}
+                    height={116}
+                    className="h-8 md:h-10 w-auto object-contain hidden dark:block"
+                    quality={100}
+                    priority
+                    unoptimized
+                  />
+                </div>
+              </Link>
+            </motion.div>
 
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-2 lg:space-x-4">
-            {navItems.map((item, index) =>
-              item.isRoute ? (
-                <Link key={item.name} href={item.href}>
-                  <motion.span
-                    ref={(el) => {
-                      navItemsRef.current[index] = el;
-                    }}
-                    className={`relative px-4 py-2 font-accent text-sm lg:text-base font-medium transition-all duration-300 cursor-pointer group ${
-                      isScrolled
+            {/* Desktop Navigation */}
+            <div className="hidden md:flex items-center space-x-2 lg:space-x-4">
+              {navItems.map((item, index) =>
+                item.isRoute ? (
+                  <Link key={item.name} href={item.href}>
+                    <motion.span
+                      ref={(el) => {
+                        navItemsRef.current[index] = el;
+                      }}
+                      className={`relative px-4 py-2 font-accent text-sm lg:text-base font-medium transition-all duration-300 cursor-pointer group ${
+                        isScrolled
+                          ? "text-white/80 hover:text-white"
+                          : "text-white/70 hover:text-white"
+                      }`}
+                      whileHover={{ scale: 1.08 }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      {item.name}
+                      <motion.div
+                        className="absolute bottom-0 left-4 right-4 h-0.5 bg-gradient-to-r from-purple-500 via-pink-500 to-purple-500 rounded-full"
+                        initial={{ scaleX: 0, opacity: 0 }}
+                        whileHover={{ scaleX: 1, opacity: 1 }}
+                        transition={{ duration: 0.3, ease: "easeOut" }}
+                        style={{ transformOrigin: "center" }}
+                      />
+                    </motion.span>
+                  </Link>
+                ) : (
+                  <motion.a
+                    key={item.name}
+                    href={item.href}
+                    onClick={(e) => handleNavClick(e, item.href)}
+                    className={`relative px-4 py-2 font-accent text-sm lg:text-base font-medium transition-all duration-300 group ${
+                      activeSection === item.href.slice(1)
+                        ? "text-white"
+                        : isScrolled
                         ? "text-white/80 hover:text-white"
                         : "text-white/70 hover:text-white"
                     }`}
@@ -145,110 +170,85 @@ export default function Navbar() {
                     whileTap={{ scale: 0.95 }}
                   >
                     {item.name}
-                    <motion.div
-                      className="absolute bottom-0 left-4 right-4 h-0.5 bg-gradient-to-r from-purple-500 via-pink-500 to-purple-500 rounded-full"
-                      initial={{ scaleX: 0, opacity: 0 }}
-                      whileHover={{ scaleX: 1, opacity: 1 }}
-                      transition={{ duration: 0.3, ease: "easeOut" }}
-                      style={{ transformOrigin: "center" }}
-                    />
-                  </motion.span>
-                </Link>
-              ) : (
-                <motion.a
-                  key={item.name}
-                  href={item.href}
-                  onClick={(e) => handleNavClick(e, item.href)}
-                  className={`relative px-4 py-2 font-accent text-sm lg:text-base font-medium transition-all duration-300 group ${
-                    activeSection === item.href.slice(1)
-                      ? "text-white"
-                      : isScrolled
-                      ? "text-white/80 hover:text-white"
-                      : "text-white/70 hover:text-white"
-                  }`}
-                  whileHover={{ scale: 1.08 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  {item.name}
-                  {activeSection === item.href.slice(1) && (
-                    <motion.div
-                      className="absolute bottom-0 left-4 right-4 h-0.5 bg-gradient-to-r from-purple-500 via-pink-500 to-purple-500 rounded-full"
-                      layoutId="activeSection"
-                      transition={{
-                        type: "spring",
-                        stiffness: 380,
-                        damping: 30,
-                      }}
-                    />
-                  )}
-                </motion.a>
-              )
-            )}
-          </div>
+                    {activeSection === item.href.slice(1) && (
+                      <motion.div
+                        className="absolute bottom-0 left-4 right-4 h-0.5 bg-gradient-to-r from-purple-500 via-pink-500 to-purple-500 rounded-full"
+                        layoutId="activeSection"
+                        transition={{
+                          type: "spring",
+                          stiffness: 380,
+                          damping: 30,
+                        }}
+                      />
+                    )}
+                  </motion.a>
+                )
+              )}
+            </div>
 
-          {/* Mobile Menu Button */}
-          <motion.button
-            className="md:hidden relative w-12 h-12 flex items-center justify-center"
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            whileTap={{ scale: 0.9 }}
-            aria-label={isMenuOpen ? "Close menu" : "Open menu"}
-            aria-expanded={isMenuOpen}
-            aria-controls="mobile-menu"
-          >
-            <motion.div
-              className={`w-10 h-10 rounded-full flex items-center justify-center backdrop-blur-md transition-all duration-300 ${
-                isScrolled
-                  ? "bg-white/15 hover:bg-white/25"
-                  : "bg-white/20 hover:bg-white/30"
-              }`}
-              animate={isMenuOpen ? { scale: 1.15 } : { scale: 1 }}
+            {/* Mobile Menu Button */}
+            <motion.button
+              className="md:hidden relative w-12 h-12 flex items-center justify-center"
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              whileTap={{ scale: 0.9 }}
+              aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+              aria-expanded={isMenuOpen}
+              aria-controls="mobile-menu"
             >
-              <div className="relative w-6 h-5">
-                <motion.span
-                  className={`absolute left-0 w-full h-0.5 rounded-full ${
-                    isScrolled ? "bg-white" : "bg-white"
-                  }`}
-                  animate={
-                    isMenuOpen
-                      ? { top: "50%", rotate: 45, y: "-50%" }
-                      : { top: 0, rotate: 0, y: 0 }
-                  }
-                  transition={{
-                    duration: 0.4,
-                    ease: [0.22, 1, 0.36, 1],
-                  }}
-                />
-                <motion.span
-                  className={`absolute left-0 top-1/2 -translate-y-1/2 w-full h-0.5 rounded-full ${
-                    isScrolled ? "bg-white" : "bg-white"
-                  }`}
-                  animate={
-                    isMenuOpen
-                      ? { opacity: 0, scale: 0.8 }
-                      : { opacity: 1, scale: 1 }
-                  }
-                  transition={{ duration: 0.3 }}
-                />
-                <motion.span
-                  className={`absolute left-0 bottom-0 w-full h-0.5 rounded-full ${
-                    isScrolled ? "bg-white" : "bg-white"
-                  }`}
-                  animate={
-                    isMenuOpen
-                      ? { bottom: "50%", rotate: -45, y: "50%" }
-                      : { bottom: 0, rotate: 0, y: 0 }
-                  }
-                  transition={{
-                    duration: 0.4,
-                    ease: [0.22, 1, 0.36, 1],
-                  }}
-                />
-              </div>
-            </motion.div>
-          </motion.button>
+              <motion.div
+                className={`w-10 h-10 rounded-full flex items-center justify-center backdrop-blur-md transition-all duration-300 ${
+                  isScrolled
+                    ? "bg-white/15 hover:bg-white/25"
+                    : "bg-white/20 hover:bg-white/30"
+                }`}
+                animate={isMenuOpen ? { scale: 1.15 } : { scale: 1 }}
+              >
+                <div className="relative w-6 h-5">
+                  <motion.span
+                    className={`absolute left-0 w-full h-0.5 rounded-full ${
+                      isScrolled ? "bg-white" : "bg-white"
+                    }`}
+                    animate={
+                      isMenuOpen
+                        ? { top: "50%", rotate: 45, y: "-50%" }
+                        : { top: 0, rotate: 0, y: 0 }
+                    }
+                    transition={{
+                      duration: 0.4,
+                      ease: [0.22, 1, 0.36, 1],
+                    }}
+                  />
+                  <motion.span
+                    className={`absolute left-0 top-1/2 -translate-y-1/2 w-full h-0.5 rounded-full ${
+                      isScrolled ? "bg-white" : "bg-white"
+                    }`}
+                    animate={
+                      isMenuOpen
+                        ? { opacity: 0, scale: 0.8 }
+                        : { opacity: 1, scale: 1 }
+                    }
+                    transition={{ duration: 0.3 }}
+                  />
+                  <motion.span
+                    className={`absolute left-0 bottom-0 w-full h-0.5 rounded-full ${
+                      isScrolled ? "bg-white" : "bg-white"
+                    }`}
+                    animate={
+                      isMenuOpen
+                        ? { bottom: "50%", rotate: -45, y: "50%" }
+                        : { bottom: 0, rotate: 0, y: 0 }
+                    }
+                    transition={{
+                      duration: 0.4,
+                      ease: [0.22, 1, 0.36, 1],
+                    }}
+                  />
+                </div>
+              </motion.div>
+            </motion.button>
+          </div>
         </div>
-      </div>
-    </motion.nav>
+      </motion.nav>
 
       {/* Mobile Menu */}
       <AnimatePresence>

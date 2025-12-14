@@ -8,9 +8,21 @@ export function FooterSection() {
   const isInView = useInView(ref, { once: false, amount: 0.3 });
 
   const socialLinks = [
-    { name: "Instagram", href: "https://instagram.com/bvpoptica", hoverColor: "hover:text-pink-400" },
-    { name: "LinkedIn", href: "https://www.linkedin.com/company/bvp-optica/", hoverColor: "hover:text-blue-400" },
-    { name: "Twitter", href: "https://twitter.com/bvpoptica", hoverColor: "hover:text-purple-400" },
+    {
+      name: "Instagram",
+      href: "https://instagram.com/bvpoptica",
+      hoverColor: "hover:text-pink-400",
+    },
+    {
+      name: "LinkedIn",
+      href: "https://www.linkedin.com/company/bvp-optica/",
+      hoverColor: "hover:text-blue-400",
+    },
+    {
+      name: "Twitter",
+      href: "https://twitter.com/bvpoptica",
+      hoverColor: "hover:text-purple-400",
+    },
   ];
 
   return (

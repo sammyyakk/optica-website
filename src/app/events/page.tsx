@@ -4,12 +4,12 @@ import { motion, useInView } from "motion/react";
 import { useRef } from "react";
 import EventCards from "@/components/events/EventCards";
 
-function AnimatedSection({ 
-  children, 
+function AnimatedSection({
+  children,
   className = "",
-  delay = 0 
-}: { 
-  children: React.ReactNode; 
+  delay = 0,
+}: {
+  children: React.ReactNode;
   className?: string;
   delay?: number;
 }) {
@@ -51,7 +51,8 @@ export default function EventsPage() {
             &ldquo;Perfect execution? Check. Awesome time? Double check.&rdquo;
           </p>
           <p className="text-gray-400 text-sm sm:text-base max-w-2xl mx-auto px-2">
-            Explore our diverse range of events from ideathons to research visits.
+            Explore our diverse range of events from ideathons to research
+            visits.
           </p>
         </AnimatedSection>
 
