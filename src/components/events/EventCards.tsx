@@ -19,6 +19,15 @@ interface Event {
     | "competition";
 }
 
+const categoryColors: Record<string, string> = {
+  ideathon: "from-purple-400 to-pink-400",
+  seminar: "from-blue-400 to-purple-400",
+  quiz: "from-pink-400 to-orange-400",
+  debate: "from-orange-400 to-yellow-400",
+  visit: "from-green-400 to-teal-400",
+  competition: "from-teal-400 to-blue-400",
+};
+
 const mockEvents: Event[] = [
   {
     id: 1,
@@ -95,16 +104,16 @@ export default function EventCards() {
 
   return (
     <div className="w-full">
-      {/* Filter Buttons */}
-      <div className="flex flex-wrap gap-3 justify-center mb-12">
+      {/* Filter Buttons - scrollable on mobile */}
+      <div className="flex flex-wrap gap-2 sm:gap-2 justify-center mb-8 sm:mb-10 px-1">
         {categories.map((category) => (
           <motion.button
             key={category.value}
             onClick={() => setSelectedCategory(category.value)}
-            className={`px-6 py-2 rounded-button font-accent transition-all ${
+            className={`px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm font-medium transition-all duration-300 ${
               selectedCategory === category.value
-                ? "bg-gradient-to-r from-optica-purple to-quantum-violet text-white shadow-lg"
-                : "bg-surface text-text-secondary border border-optica-purple/30 hover:border-quantum-violet"
+                ? "bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg shadow-purple-500/30"
+                : "bg-purple-900/30 text-gray-300 border border-purple-500/20 hover:border-purple-400/40 hover:text-white"
             }`}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
@@ -117,49 +126,67 @@ export default function EventCards() {
       {/* Event Grid */}
       <motion.div
         layout
-        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5"
       >
         <AnimatePresence mode="popLayout">
           {filteredEvents.map((event) => (
             <motion.div
               key={event.id}
               layout
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.8 }}
-              transition={{ duration: 0.5, type: "spring" }}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+              whileHover={{ y: -6 }}
               className="group"
             >
-              <div className="bg-surface rounded-card shadow-card overflow-hidden border border-optica-purple/10 hover:border-quantum-violet/40 hover:shadow-2xl hover:scale-105 transition-all duration-300">
+              <div className="relative h-full bg-gradient-to-br from-purple-900/30 via-black/40 to-purple-900/20 backdrop-blur-sm rounded-xl border border-purple-500/20 overflow-hidden hover:border-purple-400/40 transition-all duration-300">
+                {/* Subtle glow on hover */}
+                <div className="absolute -inset-1 bg-gradient-to-br from-purple-500/0 to-pink-500/0 group-hover:from-purple-500/10 group-hover:to-pink-500/10 rounded-xl blur-lg transition-all duration-300 -z-10" />
+                
                 {/* Event Image */}
-                <div className="relative h-48 bg-gradient-to-br from-optica-purple to-quantum-violet overflow-hidden">
-                  <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-all duration-300" />
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <span className="text-white font-heading text-2xl">
-                      {event.category.toUpperCase()}
+                <div className="relative h-40 sm:h-44 overflow-hidden">
+                  <Image
+                    src={event.image}
+                    alt={event.title}
+                    fill
+                    className="object-cover transition-transform duration-500 group-hover:scale-105"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
+                    priority={event.id === 1}
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
+                  
+                  {/* Category Badge */}
+                  <div className="absolute top-3 left-3">
+                    <span className={`px-3 py-1 rounded-full text-xs font-semibold bg-gradient-to-r ${categoryColors[event.category]} text-white shadow-lg`}>
+                      {event.category.charAt(0).toUpperCase() + event.category.slice(1)}
+                    </span>
+                  </div>
+                  
+                  {/* Date on image */}
+                  <div className="absolute bottom-3 left-3">
+                    <span className="text-white/90 text-xs font-medium">
+                      {new Date(event.date).toLocaleDateString("en-US", {
+                        year: "numeric",
+                        month: "short",
+                        day: "numeric",
+                      })}
                     </span>
                   </div>
                 </div>
 
                 {/* Event Content */}
-                <div className="p-6">
-                  <div className="text-sm font-accent text-quantum-violet mb-2">
-                    {new Date(event.date).toLocaleDateString("en-US", {
-                      year: "numeric",
-                      month: "long",
-                      day: "numeric",
-                    })}
-                  </div>
-                  <h3 className="font-heading text-xl font-bold text-text-primary mb-3 group-hover:text-quantum-violet transition-colors">
+                <div className="p-4 sm:p-5">
+                  <h3 className={`font-heading text-base sm:text-lg font-bold mb-2 bg-gradient-to-r ${categoryColors[event.category]} bg-clip-text text-transparent`}>
                     {event.title}
                   </h3>
-                  <p className="font-body text-text-secondary dark:text-gray-300 text-sm leading-relaxed">
+                  <p className="text-gray-400 text-sm leading-relaxed">
                     {event.description}
                   </p>
                 </div>
 
-                {/* Hover Accent */}
-                <div className="h-1 bg-gradient-to-r from-optica-purple via-quantum-violet to-optica-purple transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
+                {/* Bottom accent line */}
+                <div className={`h-0.5 bg-gradient-to-r ${categoryColors[event.category]} transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left`} />
               </div>
             </motion.div>
           ))}
@@ -173,7 +200,7 @@ export default function EventCards() {
           animate={{ opacity: 1 }}
           className="text-center py-20"
         >
-          <p className="font-body text-xl text-text-secondary dark:text-gray-300">
+          <p className="text-gray-400 text-lg">
             No events found in this category.
           </p>
         </motion.div>

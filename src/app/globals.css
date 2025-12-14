@@ -12,6 +12,10 @@
   --dark-purple: 18, 3, 57;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   color: rgb(var(--foreground-rgb));
   background: linear-gradient(
@@ -21,13 +25,44 @@ body {
     )
     rgb(var(--background-start-rgb));
   font-size: clamp(14px, 1vw + 0.5rem, 18px);
+  overflow-x: hidden;
 }
 
-/* Hide default cursor only on desktop */
-@media (min-width: 768px) {
-  body, * {
-    cursor: none !important;
-  }
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, #A48FF5, #E91E63);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(to bottom, #B89FFF, #FF2E7E);
+}
+
+/* Custom scrollbar for content areas */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: rgba(168, 85, 247, 0.1);
+  border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, rgba(168, 85, 247, 0.6), rgba(236, 72, 153, 0.6));
+  border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(to bottom, rgba(168, 85, 247, 0.9), rgba(236, 72, 153, 0.9));
 }
 
 /* Remove dark mode specific overrides as we are now dark-by-default */

@@ -43,38 +43,6 @@ const itemVariants = {
   },
 };
 
-const chromaticAberrationVertexShader = `
-  uniform float uTime;
-  uniform vec2 uMouse;
-  varying vec2 vUv;
-  
-  void main() {
-    vUv = uv;
-    vec3 pos = position;
-    
-    float distortion = sin(pos.x * 3.0 + uTime) * 0.05 + 
-                      sin(pos.y * 2.0 + uTime * 0.7) * 0.05;
-    
-    float mouseInfluence = distance(uv, uMouse) * 0.1;
-    pos += normal * (distortion - mouseInfluence);
-    
-    gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);
-  }
-`;
-
-const chromaticAberrationFragmentShader = `
-  uniform float uTime;
-  varying vec2 vUv;
-  
-  void main() {
-    float r = sin(vUv.x * 10.0 + uTime) * 0.5 + 0.5;
-    float g = sin(vUv.y * 10.0 + uTime * 0.8) * 0.5 + 0.5;
-    float b = sin((vUv.x + vUv.y) * 10.0 + uTime * 1.2) * 0.5 + 0.5;
-    
-    gl_FragColor = vec4(r * 0.8, g * 0.6, b * 1.0, 0.3);
-  }
-`;
-
 const quantumFoamVertexShader = `
   uniform float uTime;
   uniform float uNoiseDensity;
@@ -146,10 +114,13 @@ const quantumFoamFragmentShader = `
   }
 `;
 
-function QuantumFoam() {
+function QuantumFoam({ isMobile = false, isTablet = false }: { isMobile?: boolean; isTablet?: boolean }) {
   const meshRef = useRef<THREE.Mesh>(null);
-  const uNoiseDensity = 2.5;
-  const uNoiseStrength = 0.25;
+  // Adaptive detail based on device
+  const detail = isMobile ? 8 : isTablet ? 12 : 20;
+  const uNoiseDensity = isMobile ? 1.5 : isTablet ? 2.0 : 2.5;
+  const uNoiseStrength = isMobile ? 0.15 : isTablet ? 0.2 : 0.25;
+  const sphereSize = isMobile ? 6 : 8;
 
   const uniforms = useMemo(
     () => ({
@@ -160,7 +131,14 @@ function QuantumFoam() {
     [uNoiseDensity, uNoiseStrength]
   );
 
+  // Throttle updates - mobile every 3rd frame, tablet every 2nd frame
+  const frameCount = useRef(0);
+  const skipFrames = isMobile ? 3 : isTablet ? 2 : 1;
+  
   useFrame(({ clock }) => {
+    frameCount.current++;
+    if (frameCount.current % skipFrames !== 0) return;
+    
     if (meshRef.current) {
       (meshRef.current.material as THREE.ShaderMaterial).uniforms.uTime.value =
         clock.elapsedTime;
@@ -169,7 +147,7 @@ function QuantumFoam() {
 
   return (
     <mesh ref={meshRef}>
-      <icosahedronGeometry args={[8, 24]} />
+      <icosahedronGeometry args={[sphereSize, detail]} />
       <shaderMaterial
         vertexShader={quantumFoamVertexShader}
         fragmentShader={quantumFoamFragmentShader}
@@ -183,16 +161,19 @@ function QuantumFoam() {
 function RotatingCircle({
   color,
   planeIndex,
+  isMobile = false,
 }: {
   color: THREE.ColorRepresentation;
   planeIndex: number;
+  isMobile?: boolean;
 }) {
   const curve = useMemo(() => {
     const points = [];
     const radius = planeIndex === 0 ? 4.5 : planeIndex === 1 ? 6 : 7.5;
+    const segments = isMobile ? 64 : 128;
 
-    for (let i = 0; i <= 128; i++) {
-      const angle = (i / 128) * Math.PI * 2;
+    for (let i = 0; i <= segments; i++) {
+      const angle = (i / segments) * Math.PI * 2;
       const x = Math.cos(angle) * radius;
       const y = Math.sin(angle) * radius;
       points.push(new THREE.Vector3(x, y, 0));
@@ -201,11 +182,16 @@ function RotatingCircle({
     const path = new THREE.CatmullRomCurve3(points);
     path.closed = true;
     return path;
-  }, [planeIndex]);
+  }, [planeIndex, isMobile]);
 
   const groupRef = useRef<THREE.Group>(null);
+  const frameCount = useRef(0);
 
   useFrame(({ clock }) => {
+    // Skip every other frame on mobile
+    frameCount.current++;
+    if (isMobile && frameCount.current % 2 !== 0) return;
+    
     if (groupRef.current) {
       const time = clock.elapsedTime;
       groupRef.current.rotation.x =
@@ -217,7 +203,7 @@ function RotatingCircle({
     }
   });
 
-  const initialRotation = useMemo(() => {
+  const initialRotation = useMemo<[number, number, number]>(() => {
     if (planeIndex === 0) {
       return [0, 0, 0];
     } else if (planeIndex === 1) {
@@ -228,11 +214,11 @@ function RotatingCircle({
   }, [planeIndex]);
 
   return (
-    <group ref={groupRef} rotation={initialRotation as any}>
-      <Tube args={[curve, 256, 0.05, 24, true]}>
+    <group ref={groupRef} rotation={initialRotation}>
+      <Tube args={[curve, isMobile ? 128 : 256, 0.05, isMobile ? 12 : 24, true]}>
         <meshStandardMaterial
           emissive={color}
-          emissiveIntensity={5}
+          emissiveIntensity={isMobile ? 3 : 5}
           toneMapped={false}
         />
       </Tube>
@@ -240,9 +226,11 @@ function RotatingCircle({
   );
 }
 
-function ParticleSwarm({ isMobile = false }: { isMobile?: boolean }) {
+function ParticleSwarm({ isMobile = false, isTablet = false }: { isMobile?: boolean; isTablet?: boolean }) {
   const pointsRef = useRef<THREE.Points>(null);
-  const particleCount = isMobile ? 500 : 2000;
+  const particleCount = isMobile ? 300 : isTablet ? 800 : 1500;
+  const frameCountRef = useRef(0);
+  const skipFrames = isMobile ? 2 : 1;
 
   const { positions, velocities } = useMemo(() => {
     const positions = new Float32Array(particleCount * 3);
@@ -264,6 +252,10 @@ function ParticleSwarm({ isMobile = false }: { isMobile?: boolean }) {
 
   useFrame(({ clock }) => {
     if (!pointsRef.current) return;
+    
+    // Skip frames on mobile for performance
+    frameCountRef.current++;
+    if (frameCountRef.current % skipFrames !== 0) return;
 
     const pos = pointsRef.current.geometry.attributes.position
       .array as Float32Array;
@@ -351,26 +343,44 @@ function ParticleSwarm({ isMobile = false }: { isMobile?: boolean }) {
   );
 }
 
-function CrystalCluster() {
+function CrystalCluster({ isMobile = false, isTablet = false }: { isMobile?: boolean; isTablet?: boolean }) {
+  const crystalCount = isMobile ? 12 : isTablet ? 20 : 35;
+  
   const crystals = useMemo(() => {
-    return new Array(35).fill(0).map((_, i) => ({
-      position: new THREE.Vector3(
-        (Math.random() - 0.5) * 12,
-        (Math.random() - 0.5) * 12,
-        (Math.random() - 0.5) * 12
-      ),
-      rotation: new THREE.Euler(
-        Math.random() * Math.PI,
-        Math.random() * Math.PI,
-        Math.random() * Math.PI
-      ),
-      scale: Math.random() * 0.2 + 0.1,
-    }));
-  }, []);
+    const items: {
+      position: THREE.Vector3;
+      rotation: THREE.Euler;
+      scale: number;
+      colorIndex: number;
+    }[] = [];
+
+    for (let index = 0; index < crystalCount; index++) {
+      items.push({
+        position: new THREE.Vector3(
+          (Math.random() - 0.5) * 12,
+          (Math.random() - 0.5) * 12,
+          (Math.random() - 0.5) * 12
+        ),
+        rotation: new THREE.Euler(
+          Math.random() * Math.PI,
+          Math.random() * Math.PI,
+          Math.random() * Math.PI
+        ),
+        scale: Math.random() * 0.2 + 0.1,
+        colorIndex: index,
+      });
+    }
+
+    return items;
+  }, [crystalCount]);
 
   const groupRef = useRef<THREE.Group>(null);
+  const frameCountRef = useRef(0);
 
   useFrame(({ clock }) => {
+    frameCountRef.current++;
+    if (isMobile && frameCountRef.current % 2 !== 0) return;
+    
     if (groupRef.current) {
       groupRef.current.rotation.x = clock.elapsedTime * 0.15;
       groupRef.current.rotation.y = clock.elapsedTime * 0.1;
@@ -378,32 +388,42 @@ function CrystalCluster() {
   });
 
   return (
-    <Float speed={1.2} rotationIntensity={3.5} floatIntensity={3.5}>
+    <Float speed={1.2} rotationIntensity={isMobile ? 2 : 3.5} floatIntensity={isMobile ? 2 : 3.5}>
       <group ref={groupRef}>
-        {crystals.map((crystal, i) => (
+        {crystals.map((crystal) => (
           <mesh
-            key={i}
+            key={`crystal-${crystal.colorIndex}`}
             position={crystal.position}
             rotation={crystal.rotation}
             scale={crystal.scale}
           >
-            <octahedronGeometry args={[1, 2]} />
-            <meshPhysicalMaterial
-              roughness={0.02}
-              metalness={0.05}
-              transmission={0.98}
-              thickness={2}
-              ior={2.5}
-              color="#FFFFFF"
-              emissive={SPECTRUM_COLORS[i % SPECTRUM_COLORS.length]}
-              emissiveIntensity={0.2}
-              clearcoat={1.0}
-              clearcoatRoughness={0.05}
-              reflectivity={0.8}
-              envMapIntensity={2}
-              transparent={true}
-              opacity={0.95}
-            />
+            <octahedronGeometry args={[1, isMobile ? 1 : 2]} />
+            {isMobile ? (
+              <meshStandardMaterial
+                color={SPECTRUM_COLORS[crystal.colorIndex % SPECTRUM_COLORS.length]}
+                emissive={SPECTRUM_COLORS[crystal.colorIndex % SPECTRUM_COLORS.length]}
+                emissiveIntensity={0.3}
+                transparent={true}
+                opacity={0.8}
+              />
+            ) : (
+              <meshPhysicalMaterial
+                roughness={0.02}
+                metalness={0.05}
+                transmission={0.98}
+                thickness={2}
+                ior={2.5}
+                color="#FFFFFF"
+                emissive={SPECTRUM_COLORS[crystal.colorIndex % SPECTRUM_COLORS.length]}
+                emissiveIntensity={0.2}
+                clearcoat={1.0}
+                clearcoatRoughness={0.05}
+                reflectivity={0.8}
+                envMapIntensity={2}
+                transparent={true}
+                opacity={0.95}
+              />
+            )}
           </mesh>
         ))}
       </group>
@@ -443,8 +463,13 @@ function DynamicLights() {
   );
 }
 
-function CameraRig() {
+function CameraRig({ isMobile = false }: { isMobile?: boolean }) {
+  const frameCountRef = useRef(0);
+  
   useFrame(({ camera, clock }) => {
+    frameCountRef.current++;
+    if (isMobile && frameCountRef.current % 2 !== 0) return;
+    
     const t = clock.getElapsedTime();
     const radius = 8 + Math.sin(t * 0.3) * 2;
 
@@ -458,75 +483,72 @@ function CameraRig() {
 }
 
 export default function Hero3D() {
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [isMobile, setIsMobile] = useState(false);
+  const [isTablet, setIsTablet] = useState(false);
+  const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {
-    // Detect mobile device
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768 || "ontouchstart" in window);
+    // Detect device type based on screen width only
+    const checkDevice = () => {
+      const width = window.innerWidth;
+      setIsMobile(width < 768);
+      setIsTablet(width >= 768 && width < 1024);
+      setIsReady(true);
     };
 
-    checkMobile();
-    window.addEventListener("resize", checkMobile);
+    checkDevice();
+    window.addEventListener("resize", checkDevice);
 
-    const handleMouseMove = (e: MouseEvent) => {
-      setMousePos({
-        x: e.clientX / window.innerWidth,
-        y: e.clientY / window.innerHeight,
-      });
-    };
-
-    window.addEventListener("mousemove", handleMouseMove);
     return () => {
-      window.removeEventListener("mousemove", handleMouseMove);
-      window.removeEventListener("resize", checkMobile);
+      window.removeEventListener("resize", checkDevice);
     };
   }, []);
 
   return (
     <section
       id="home"
-      className="relative isolate flex min-h-screen w-full items-center justify-center overflow-hidden bg-black"
+      className="relative isolate flex min-h-[100svh] w-full items-center justify-center overflow-hidden bg-black"
     >
       <div className="absolute inset-0 -z-10">
-        <Canvas
-          shadows={!isMobile}
-          dpr={isMobile ? [0.5, 1] : [1, 1.5]}
-          camera={{ position: [0, 2, 8], fov: 50 }}
-          gl={{
-            antialias: !isMobile,
-            powerPreference: isMobile ? "low-power" : "high-performance",
-            alpha: false,
-            stencil: false,
-            depth: true,
-          }}
-          performance={{ min: 0.5 }}
-        >
+        {isReady && (
+          <Canvas
+            shadows={!isMobile}
+            dpr={isMobile ? 1 : isTablet ? 1.5 : 2}
+            camera={{ position: [0, 2, 8], fov: isMobile ? 60 : 50 }}
+            gl={{
+              antialias: !isMobile,
+              powerPreference: "default",
+              alpha: false,
+              stencil: false,
+              depth: true,
+            }}
+          >
           <color attach="background" args={["#000000"]} />
-          <fog attach="fog" args={["#000000", 10, 30]} />
+          <fog attach="fog" args={["#000000", isMobile ? 8 : 10, isMobile ? 25 : 30]} />
 
-          <CameraRig />
+          <CameraRig isMobile={isMobile} />
           <DynamicLights />
 
-          {!isMobile && <QuantumFoam />}
-          <ParticleSwarm isMobile={isMobile} />
-          {!isMobile && <CrystalCluster />}
+          <QuantumFoam isMobile={isMobile} isTablet={isTablet} />
+          <ParticleSwarm isMobile={isMobile} isTablet={isTablet} />
+          <CrystalCluster isMobile={isMobile} isTablet={isTablet} />
 
           {SPECTRUM_COLORS.map((color, i) => (
-            <RotatingCircle key={i} color={color} planeIndex={i} />
+            <RotatingCircle key={i} color={color} planeIndex={i} isMobile={isMobile} />
           ))}
 
-          <ContactShadows
-            position={[0, -5, 0]}
-            opacity={0.8}
-            scale={25}
-            blur={2}
-            far={12}
-          />
+          {!isMobile && (
+            <ContactShadows
+              position={[0, -5, 0]}
+              opacity={0.8}
+              scale={25}
+              blur={2}
+              far={12}
+            />
+          )}
 
           {!isMobile && (
-            <Environment resolution={256}>
+            <Environment resolution={isTablet ? 128 : 256}>
               <Lightformer
                 form="ring"
                 intensity={12}
@@ -546,69 +568,75 @@ export default function Hero3D() {
           )}
 
           {!isMobile && (
-            <EffectComposer>
+            <EffectComposer multisampling={isTablet ? 2 : 4}>
               <Bloom
-                luminanceThreshold={0.1}
+                luminanceThreshold={0.15}
                 luminanceSmoothing={0.9}
-                intensity={2.5}
-                levels={9}
+                intensity={isTablet ? 1.5 : 2.5}
+                levels={isTablet ? 5 : 9}
               />
             </EffectComposer>
           )}
         </Canvas>
+        )}
       </div>
 
+      {/* Glow overlay - visible on all devices */}
       <div className="absolute inset-0 -z-0 bg-[radial-gradient(circle_at_top,_rgba(168,144,255,0.35),_transparent_60%)]" />
+      <div className="absolute inset-0 -z-0 bg-[radial-gradient(circle_at_center,_rgba(111,76,255,0.15),_transparent_50%)] sm:hidden" />
       <div className="absolute inset-0 -z-0 bg-gradient-to-b from-[#0E1A2B]/10 via-[#0E1A2B]/50 to-[#0E1A2B]" />
 
       <motion.div
         initial="hidden"
         animate="visible"
         variants={containerVariants}
-        className="relative z-10 mx-auto flex w-full max-w-5xl flex-col items-center px-4 sm:px-6 text-center text-text-primary"
+        className="relative z-10 mx-auto flex w-full max-w-[min(92vw,1100px)] 2xl:max-w-[1000px] flex-col items-center gap-4 px-6 text-center text-white"
       >
         <motion.span
           variants={itemVariants}
-          className="mb-4 sm:mb-6 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 sm:px-5 py-1.5 sm:py-2 text-xs sm:text-sm uppercase tracking-[0.2em] sm:tracking-[0.3em] text-white/80"
+          className="mb-2 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 sm:px-6 py-1.5 text-[0.55rem] sm:text-xs lg:text-sm uppercase tracking-[0.25em] text-white/80"
         >
           Formerly Optical Society of America
         </motion.span>
-        <motion.div variants={itemVariants} className="w-full max-w-4xl px-4">
+        <motion.div
+          variants={itemVariants}
+          className="w-full max-w-[min(88vw,960px)] 2xl:max-w-[840px] px-2"
+        >
           <Image
             src="/logo_dark.png"
             alt="BVP Optica Student Chapter"
             width={1200}
             height={400}
-            className="w-full h-auto"
-            unoptimized
             priority
+            className="mx-auto h-auto w-full max-w-[min(88vw,880px)] 2xl:max-w-[800px] object-contain"
+            sizes="(max-width: 768px) 90vw, (max-width: 1280px) 70vw, 900px"
           />
         </motion.div>
         <motion.p
           variants={itemVariants}
-          className="mt-6 sm:mt-8 max-w-3xl text-sm sm:text-base md:text-lg lg:text-xl text-text-secondary px-4"
+          className="mt-4 sm:mt-6 max-w-3xl text-balance text-sm sm:text-base md:text-lg lg:text-xl text-white/90"
         >
           Explore the world of optics, photonics, and quantum technology with
           the BVP Optica student chapter.
         </motion.p>
         <motion.div
           variants={itemVariants}
-          className="mt-8 sm:mt-10 flex flex-col items-center gap-3 sm:gap-4 w-full sm:w-auto sm:flex-row"
+          className="mt-6 sm:mt-8 flex w-full flex-wrap items-center justify-center gap-3 sm:gap-4 max-w-[min(90vw,620px)] px-2"
         >
-          <motion.div whileHover={{ scale: 1.08 }} whileTap={{ scale: 0.95 }}>
+          <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.96 }}>
             <Link
               href="/join"
-              className="inline-flex w-full sm:w-auto items-center justify-center rounded-button bg-gradient-to-r from-purple-600 to-pink-600 px-6 sm:px-8 py-2.5 sm:py-3 font-accent text-sm sm:text-base font-bold text-white shadow-[0_24px_60px_-24px_rgba(168,144,255,0.95)] transition-all duration-300 hover:shadow-[0_40px_80px_-24px_rgba(168,144,255,1.2)] hover:from-purple-500 hover:to-pink-500"
+              className="inline-flex min-w-[140px] sm:min-w-[180px] items-center justify-center rounded-button bg-gradient-to-r from-purple-600 to-pink-600 px-5 sm:px-8 py-2.5 sm:py-3 font-accent text-sm sm:text-base font-semibold text-white shadow-[0_24px_60px_-24px_rgba(168,144,255,0.95)] transition-all duration-300 hover:shadow-[0_40px_80px_-24px_rgba(168,144,255,1.2)] hover:from-purple-500 hover:to-pink-500"
             >
-              🌟 Join Us
+              Join Us
             </Link>
           </motion.div>
-          <motion.div whileHover={{ scale: 1.08 }} whileTap={{ scale: 0.95 }}>
+          <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.96 }}>
             <Link
               href="/events"
-              className="inline-flex w-full sm:w-auto items-center justify-center rounded-button border border-purple-500/50 px-6 sm:px-8 py-2.5 sm:py-3 font-accent text-sm sm:text-base font-medium text-white transition-all duration-300 hover:border-pink-500 hover:bg-white/10 hover:shadow-[0_20px_40px_-20px_rgba(168,144,255,0.5)]"
+              className="inline-flex min-w-[140px] sm:min-w-[180px] items-center justify-center rounded-button border border-white/30 px-5 sm:px-8 py-2.5 sm:py-3 font-accent text-sm sm:text-base font-medium text-white transition-all duration-300 hover:border-pink-500 hover:bg-white/10 hover:shadow-[0_20px_40px_-20px_rgba(168,144,255,0.5)]"
             >
-              ✨ View Our Events
+              View Our Events
             </Link>
           </motion.div>
         </motion.div>
