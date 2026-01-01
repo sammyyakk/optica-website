@@ -6,43 +6,46 @@ import { useMemo } from "react";
 export function FixedParticleBackground() {
   // Generate multiple layers of stars with different properties
   const starLayers = useMemo(() => {
-    // Layer 1: Large bright stars (20 stars)
+    // Layer 1: Large bright stars (20 stars) - faster twinkling
     const largStars = Array.from({ length: 20 }, (_, i) => ({
       id: `large-${i}`,
       x: Math.random() * 100,
       y: Math.random() * 100,
       size: 3 + Math.random() * 2,
       opacity: 0.8 + Math.random() * 0.2,
-      duration: 3 + Math.random() * 2,
-      delay: Math.random() * 2,
+      minOpacity: 0.1 + Math.random() * 0.2, // Random min opacity
+      duration: 0.8 + Math.random() * 1.2, // Faster: 0.8-2s
+      delay: Math.random() * 1,
     }));
 
-    // Layer 2: Medium stars (50 stars)
+    // Layer 2: Medium stars (50 stars) - faster twinkling
     const mediumStars = Array.from({ length: 50 }, (_, i) => ({
       id: `medium-${i}`,
       x: Math.random() * 100,
       y: Math.random() * 100,
       size: 2 + Math.random() * 1,
       opacity: 0.5 + Math.random() * 0.3,
-      duration: 2 + Math.random() * 3,
-      delay: Math.random() * 3,
+      minOpacity: 0.05 + Math.random() * 0.15, // Random min opacity
+      duration: 0.5 + Math.random() * 1.5, // Faster: 0.5-2s
+      delay: Math.random() * 2,
     }));
 
-    // Layer 3: Small distant stars (100 stars)
+    // Layer 3: Small distant stars (100 stars) - faster twinkling
     const smallStars = Array.from({ length: 100 }, (_, i) => ({
       id: `small-${i}`,
       x: Math.random() * 100,
       y: Math.random() * 100,
       size: 1 + Math.random() * 0.5,
       opacity: 0.3 + Math.random() * 0.4,
-      duration: 1.5 + Math.random() * 2.5,
-      delay: Math.random() * 4,
+      minOpacity: 0.02 + Math.random() * 0.1, // Random min opacity
+      duration: 0.3 + Math.random() * 1.2, // Faster: 0.3-1.5s
+      delay: Math.random() * 2,
     }));
 
     return { largStars, mediumStars, smallStars };
   }, []);
 
-  // Generate nebula clouds
+  // Generate nebula clouds - purple/pink only, no blue
   const nebulaClouds = useMemo(
     () =>
       Array.from({ length: 3 }, (_, i) => ({
@@ -58,7 +61,7 @@ export function FixedParticleBackground() {
 
   return (
     <div className="fixed inset-0 z-0 overflow-hidden bg-gradient-to-b from-background-dark via-[#0a0e1a] to-background-dark">
-      {/* Nebula clouds - large glowing areas */}
+      {/* Nebula clouds - purple/pink only */}
       {nebulaClouds.map((cloud) => (
         <motion.div
           key={cloud.id}
@@ -68,12 +71,12 @@ export function FixedParticleBackground() {
             top: `${cloud.y}%`,
             width: "500px",
             height: "500px",
-            background: `radial-gradient(circle, rgba(108, 99, 255, 0.15) 0%, rgba(233, 30, 99, 0.1) 50%, transparent 70%)`,
+            background: `radial-gradient(circle, rgba(164, 143, 245, 0.12) 0%, rgba(233, 30, 99, 0.08) 50%, transparent 70%)`,
           }}
           animate={{
             scale: [cloud.scale, cloud.scale * 1.2, cloud.scale],
             rotate: [cloud.rotation, cloud.rotation + 30, cloud.rotation],
-            opacity: [0.3, 0.5, 0.3],
+            opacity: [0.25, 0.4, 0.25],
           }}
           transition={{
             duration: cloud.duration,
@@ -83,7 +86,7 @@ export function FixedParticleBackground() {
         />
       ))}
 
-      {/* Large stars */}
+      {/* Large stars - faster and more random twinkling */}
       {starLayers.largStars.map((star) => (
         <motion.div
           key={star.id}
@@ -95,22 +98,29 @@ export function FixedParticleBackground() {
             height: `${star.size}px`,
             boxShadow: `0 0 ${star.size * 2}px rgba(255, 255, 255, 0.8), 0 0 ${
               star.size * 4
-            }px rgba(108, 99, 255, 0.4)`,
+            }px rgba(164, 143, 245, 0.4)`,
           }}
           animate={{
-            opacity: [star.opacity, star.opacity * 0.3, star.opacity],
-            scale: [1, 1.2, 1],
+            opacity: [
+              star.opacity,
+              star.minOpacity,
+              star.opacity * 0.6,
+              star.minOpacity * 1.5,
+              star.opacity,
+            ],
+            scale: [1, 1.3, 0.9, 1.2, 1],
           }}
           transition={{
             duration: star.duration,
             delay: star.delay,
             repeat: Infinity,
             ease: "easeInOut",
+            times: [0, 0.25, 0.5, 0.75, 1],
           }}
         />
       ))}
 
-      {/* Medium stars */}
+      {/* Medium stars - faster and more random twinkling */}
       {starLayers.mediumStars.map((star) => (
         <motion.div
           key={star.id}
@@ -123,18 +133,25 @@ export function FixedParticleBackground() {
             boxShadow: `0 0 ${star.size * 2}px rgba(255, 255, 255, 0.6)`,
           }}
           animate={{
-            opacity: [star.opacity, star.opacity * 0.4, star.opacity],
+            opacity: [
+              star.opacity,
+              star.minOpacity,
+              star.opacity * 0.7,
+              star.minOpacity * 2,
+              star.opacity,
+            ],
           }}
           transition={{
             duration: star.duration,
             delay: star.delay,
             repeat: Infinity,
             ease: "easeInOut",
+            times: [0, 0.3, 0.5, 0.8, 1],
           }}
         />
       ))}
 
-      {/* Small stars */}
+      {/* Small stars - faster and more random twinkling */}
       {starLayers.smallStars.map((star) => (
         <motion.div
           key={star.id}
@@ -146,23 +163,30 @@ export function FixedParticleBackground() {
             height: `${star.size}px`,
           }}
           animate={{
-            opacity: [star.opacity, star.opacity * 0.5, star.opacity],
+            opacity: [
+              star.opacity,
+              star.minOpacity,
+              star.opacity * 0.5,
+              star.minOpacity * 3,
+              star.opacity,
+            ],
           }}
           transition={{
             duration: star.duration,
             delay: star.delay,
             repeat: Infinity,
             ease: "easeInOut",
+            times: [0, 0.2, 0.6, 0.85, 1],
           }}
         />
       ))}
 
-      {/* Shooting stars */}
+      {/* Shooting stars - purple tinted instead of blue */}
       <motion.div
         className="absolute w-1 h-1 bg-white rounded-full"
         style={{
           boxShadow:
-            "0 0 10px rgba(255, 255, 255, 1), 0 0 20px rgba(108, 99, 255, 0.8)",
+            "0 0 10px rgba(255, 255, 255, 1), 0 0 20px rgba(164, 143, 245, 0.8)",
         }}
         animate={{
           x: ["-10%", "110%"],

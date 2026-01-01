@@ -2,13 +2,18 @@
 
 import { motion, useInView } from "motion/react";
 import { useRef } from "react";
+import { FixedParticleBackground } from "@/components/ui/FixedParticleBackground";
+import { FooterSection } from "@/components/home/FooterSection";
 
 interface TeamMember {
   name: string;
   role: string;
   image?: string;
-  linkedin?: string;
+  linkedin: string; // Required
   instagram?: string;
+  github?: string;
+  twitter?: string;
+  website?: string;
 }
 
 const coreTeam: TeamMember[] = [
@@ -16,6 +21,13 @@ const coreTeam: TeamMember[] = [
   { name: "Vice President", role: "Vice President", linkedin: "#" },
   { name: "Secretary", role: "Secretary", linkedin: "#" },
   { name: "Treasurer", role: "Treasurer", linkedin: "#" },
+];
+
+// Technical Department - 3 heads (displayed separately in a row)
+const technicalHeads: TeamMember[] = [
+  { name: "Technical Head 1", role: "Technical Department", linkedin: "#" },
+  { name: "Technical Head 2", role: "Technical Department", linkedin: "#" },
+  { name: "Technical Head 3", role: "Technical Department", linkedin: "#" },
 ];
 
 const departmentHeads: TeamMember[] = [
@@ -32,12 +44,16 @@ const departmentHeads: TeamMember[] = [
   { name: "Outreach Head 1", role: "Outreach Department", linkedin: "#" },
   { name: "Outreach Head 2", role: "Outreach Department", linkedin: "#" },
   // Social Media Department - 2 heads
-  { name: "Social Media Head 1", role: "Social Media Department", linkedin: "#" },
-  { name: "Social Media Head 2", role: "Social Media Department", linkedin: "#" },
-  // Technical Department - 3 heads
-  { name: "Technical Head 1", role: "Technical Department", linkedin: "#" },
-  { name: "Technical Head 2", role: "Technical Department", linkedin: "#" },
-  { name: "Technical Head 3", role: "Technical Department", linkedin: "#" },
+  {
+    name: "Social Media Head 1",
+    role: "Social Media Department",
+    linkedin: "#",
+  },
+  {
+    name: "Social Media Head 2",
+    role: "Social Media Department",
+    linkedin: "#",
+  },
 ];
 
 const roleColors: Record<string, string> = {
@@ -135,25 +151,26 @@ function TeamMemberCard({
         </p>
 
         {/* Social Links */}
-        <div className="flex gap-2 sm:gap-3 justify-center">
-          {member.linkedin && (
-            <motion.a
-              href={member.linkedin}
-              target="_blank"
-              rel="noopener noreferrer"
-              whileHover={{ scale: 1.15 }}
-              whileTap={{ scale: 0.95 }}
-              className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-purple-900/50 border border-purple-500/30 flex items-center justify-center text-gray-300 hover:text-white hover:bg-purple-500/50 hover:border-purple-400/50 transition-all duration-300"
+        <div className="flex gap-2 sm:gap-3 justify-center flex-wrap">
+          {/* LinkedIn - Always shown (required) */}
+          <motion.a
+            href={member.linkedin}
+            target="_blank"
+            rel="noopener noreferrer"
+            whileHover={{ scale: 1.15 }}
+            whileTap={{ scale: 0.95 }}
+            className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-purple-900/50 border border-purple-500/30 flex items-center justify-center text-gray-300 hover:text-white hover:bg-blue-500/50 hover:border-blue-400/50 transition-all duration-300"
+          >
+            <svg
+              className="w-3.5 h-3.5 sm:w-4 sm:h-4"
+              fill="currentColor"
+              viewBox="0 0 24 24"
             >
-              <svg
-                className="w-3.5 h-3.5 sm:w-4 sm:h-4"
-                fill="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
-              </svg>
-            </motion.a>
-          )}
+              <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+            </svg>
+          </motion.a>
+
+          {/* Instagram - Optional */}
           {member.instagram && (
             <motion.a
               href={member.instagram}
@@ -172,6 +189,72 @@ function TeamMemberCard({
               </svg>
             </motion.a>
           )}
+
+          {/* GitHub - Optional */}
+          {member.github && (
+            <motion.a
+              href={member.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              whileHover={{ scale: 1.15 }}
+              whileTap={{ scale: 0.95 }}
+              className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-purple-900/50 border border-purple-500/30 flex items-center justify-center text-gray-300 hover:text-white hover:bg-gray-500/50 hover:border-gray-400/50 transition-all duration-300"
+            >
+              <svg
+                className="w-3.5 h-3.5 sm:w-4 sm:h-4"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
+              </svg>
+            </motion.a>
+          )}
+
+          {/* Twitter/X - Optional */}
+          {member.twitter && (
+            <motion.a
+              href={member.twitter}
+              target="_blank"
+              rel="noopener noreferrer"
+              whileHover={{ scale: 1.15 }}
+              whileTap={{ scale: 0.95 }}
+              className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-purple-900/50 border border-purple-500/30 flex items-center justify-center text-gray-300 hover:text-white hover:bg-sky-500/50 hover:border-sky-400/50 transition-all duration-300"
+            >
+              <svg
+                className="w-3.5 h-3.5 sm:w-4 sm:h-4"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+              </svg>
+            </motion.a>
+          )}
+
+          {/* Website - Optional */}
+          {member.website && (
+            <motion.a
+              href={member.website}
+              target="_blank"
+              rel="noopener noreferrer"
+              whileHover={{ scale: 1.15 }}
+              whileTap={{ scale: 0.95 }}
+              className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-purple-900/50 border border-purple-500/30 flex items-center justify-center text-gray-300 hover:text-white hover:bg-purple-500/50 hover:border-purple-400/50 transition-all duration-300"
+            >
+              <svg
+                className="w-3.5 h-3.5 sm:w-4 sm:h-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                strokeWidth={2}
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582m15.686 0A11.953 11.953 0 0112 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0121 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0112 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 013 12c0-1.605.42-3.113 1.157-4.418"
+                />
+              </svg>
+            </motion.a>
+          )}
         </div>
 
         {/* Bottom Accent */}
@@ -185,53 +268,70 @@ function TeamMemberCard({
 
 export default function TeamPage() {
   return (
-    <main className="min-h-screen bg-[#0E1A2B] pt-20 sm:pt-24 pb-16 sm:pb-20 overflow-hidden">
-      {/* Background effects - smaller on mobile */}
-      <div className="fixed inset-0 -z-10">
-        <div className="absolute top-1/4 left-1/4 w-64 h-64 sm:w-96 sm:h-96 bg-purple-500/10 rounded-full blur-[80px] sm:blur-[128px]" />
-        <div className="absolute bottom-1/4 right-1/3 w-64 h-64 sm:w-96 sm:h-96 bg-pink-500/10 rounded-full blur-[80px] sm:blur-[128px]" />
+    <main className="min-h-screen bg-transparent text-white overflow-hidden">
+      {/* Fixed particle background */}
+      <FixedParticleBackground />
+
+      <div className="relative z-10 pt-20 sm:pt-24 pb-8 sm:pb-12">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 md:px-8">
+          {/* Header */}
+          <AnimatedSection className="text-center mb-4 sm:mb-6">
+            <h1 className="font-heading text-3xl sm:text-4xl md:text-6xl font-bold mb-4 sm:mb-6 bg-gradient-to-r from-purple-300 via-pink-300 to-purple-400 bg-clip-text text-transparent">
+              Meet Our Team
+            </h1>
+          </AnimatedSection>
+
+          <AnimatedSection delay={0.15} className="text-center mb-10 sm:mb-16">
+            <p className="text-gray-400 text-sm sm:text-base max-w-2xl mx-auto leading-relaxed px-2">
+              The passionate individuals driving BVP Optica forward through
+              innovation and collaboration.
+            </p>
+          </AnimatedSection>
+
+          {/* Core Team */}
+          <AnimatedSection delay={0.25} className="mb-8 sm:mb-10">
+            <h2 className="font-heading text-xl sm:text-2xl md:text-3xl font-bold text-center bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+              Core Team
+            </h2>
+          </AnimatedSection>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 mb-12 sm:mb-16">
+            {coreTeam.map((member, index) => (
+              <TeamMemberCard key={index} member={member} index={index} />
+            ))}
+          </div>
+
+          {/* Technical Department - Special 3-column row */}
+          <AnimatedSection delay={0.3} className="mb-8 sm:mb-10">
+            <h2 className="font-heading text-xl sm:text-2xl md:text-3xl font-bold text-center bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">
+              Technical Department
+            </h2>
+          </AnimatedSection>
+
+          <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 mb-12 sm:mb-16 max-w-4xl mx-auto">
+            {technicalHeads.map((member, index) => (
+              <TeamMemberCard key={index} member={member} index={index} />
+            ))}
+          </div>
+
+          {/* Other Department Heads */}
+          <AnimatedSection delay={0.35} className="mb-8 sm:mb-10">
+            <h2 className="font-heading text-xl sm:text-2xl md:text-3xl font-bold text-center bg-gradient-to-r from-pink-400 to-purple-400 bg-clip-text text-transparent">
+              Department Heads
+            </h2>
+          </AnimatedSection>
+
+          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
+            {departmentHeads.map((member, index) => (
+              <TeamMemberCard key={index} member={member} index={index} />
+            ))}
+          </div>
+        </div>
       </div>
 
-      <div className="mx-auto max-w-6xl px-4 sm:px-6 md:px-8">
-        {/* Header */}
-        <AnimatedSection className="text-center mb-4 sm:mb-6">
-          <h1 className="font-heading text-3xl sm:text-4xl md:text-6xl font-bold mb-4 sm:mb-6 bg-gradient-to-r from-purple-300 via-pink-300 to-purple-400 bg-clip-text text-transparent">
-            Meet Our Team
-          </h1>
-        </AnimatedSection>
-
-        <AnimatedSection delay={0.15} className="text-center mb-10 sm:mb-16">
-          <p className="text-gray-400 text-sm sm:text-base max-w-2xl mx-auto leading-relaxed px-2">
-            The passionate individuals driving BVP Optica forward through
-            innovation and collaboration.
-          </p>
-        </AnimatedSection>
-
-        {/* Core Team */}
-        <AnimatedSection delay={0.25} className="mb-8 sm:mb-10">
-          <h2 className="font-heading text-xl sm:text-2xl md:text-3xl font-bold text-center bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
-            Core Team
-          </h2>
-        </AnimatedSection>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 mb-12 sm:mb-16">
-          {coreTeam.map((member, index) => (
-            <TeamMemberCard key={index} member={member} index={index} />
-          ))}
-        </div>
-
-        {/* Department Heads */}
-        <AnimatedSection delay={0.3} className="mb-8 sm:mb-10">
-          <h2 className="font-heading text-xl sm:text-2xl md:text-3xl font-bold text-center bg-gradient-to-r from-pink-400 to-purple-400 bg-clip-text text-transparent">
-            Department Heads
-          </h2>
-        </AnimatedSection>
-
-        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
-          {departmentHeads.map((member, index) => (
-            <TeamMemberCard key={index} member={member} index={index} />
-          ))}
-        </div>
+      {/* Footer */}
+      <div className="relative z-10">
+        <FooterSection />
       </div>
     </main>
   );

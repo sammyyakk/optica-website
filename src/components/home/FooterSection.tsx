@@ -112,8 +112,19 @@ export function FooterSection() {
             transition={{ duration: 0.5, delay: 0.4 }}
             className="text-center text-[10px] sm:text-xs border-t border-purple-500/20 pt-4 sm:pt-6"
           >
-            <p className="text-gray-500">
+            <p className="text-gray-500 mb-2">
               © 2025 BVP Optica. All rights reserved.
+            </p>
+            <p className="text-gray-500">
+              Made with <span className="text-pink-400">❤</span> by{" "}
+              <a
+                href="https://www.github.com/sammyyakk"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-purple-400 hover:text-purple-300 transition-colors"
+              >
+                Samyak Jain
+              </a>
             </p>
           </motion.div>
         </motion.div>
