@@ -37,6 +37,7 @@
     "@types/react-dom": "^18.3.1",
     "@types/three": "^0.170.0",
     "autoprefixer": "^10.4.21",
+    "baseline-browser-mapping": "^2.9.18",
     "eslint": "^9.14.0",
     "eslint-config-next": "^15.0.3",
     "postcss": "^8.4.49",

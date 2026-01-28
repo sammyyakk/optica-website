@@ -88,12 +88,12 @@ export default function RootLayout({
       lang="en"
       className={`dark ${poppins.variable} ${inter.variable} ${montserrat.variable}`}
     >
-      <body className="font-body antialiased bg-optica-black text-text-primary transition-colors duration-300 md:cursor-none">
+      <body className="font-body antialiased bg-optica-black text-text-primary transition-colors duration-300 md:cursor-none overflow-x-hidden">
         <ThemeProvider>
           <AnimationProvider>
             <CustomCursor />
             <Navbar />
-            <div id="main-content">{children}</div>
+            <main id="main-content">{children}</main>
           </AnimationProvider>
         </ThemeProvider>
       </body>

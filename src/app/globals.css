@@ -10,10 +10,36 @@
   /* Brand Colors */
   --primary-purple: 164, 143, 245;
   --dark-purple: 18, 3, 57;
+  
+  /* Fluid spacing scale (scales with viewport) */
+  --space-xs: clamp(0.25rem, 0.5vw, 0.5rem);
+  --space-sm: clamp(0.5rem, 1vw, 0.75rem);
+  --space-md: clamp(0.75rem, 1.5vw, 1.25rem);
+  --space-lg: clamp(1rem, 2vw, 2rem);
+  --space-xl: clamp(1.5rem, 3vw, 3rem);
+  --space-2xl: clamp(2rem, 4vw, 4rem);
+  
+  /* Fluid container widths */
+  --container-sm: min(90vw, 640px);
+  --container-md: min(90vw, 768px);
+  --container-lg: min(90vw, 1024px);
+  --container-xl: min(90vw, 1280px);
 }
 
+/* Base font size that scales with viewport but stays readable */
 html {
+  /* 16px base at 1920px viewport, scales down/up proportionally */
+  /* Minimum 14px, maximum 18px */
+  font-size: clamp(0.875rem, 0.8rem + 0.25vw, 1.125rem);
   scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+/* Prevent horizontal overflow */
+html, body {
+  overflow-x: hidden;
+  max-width: 100vw;
 }
 
 body {
@@ -24,7 +50,6 @@ body {
       rgb(var(--background-end-rgb))
     )
     rgb(var(--background-start-rgb));
-  font-size: clamp(14px, 1vw + 0.5rem, 18px);
   overflow-x: hidden;
 }
 
@@ -68,30 +93,74 @@ body {
 /* Remove dark mode specific overrides as we are now dark-by-default */
 /* @media (prefers-color-scheme: dark) { ... } */
 
+/* Fluid Typography - scales smoothly with viewport and user zoom */
 h1, .text-5xl, .text-6xl, .text-7xl {
-  font-size: clamp(2rem, 5vw + 1rem, 4.5rem);
+  font-size: clamp(1.75rem, 1rem + 3vw, 4rem);
+  line-height: 1.1;
+}
+
+h2, .text-4xl {
+  font-size: clamp(1.5rem, 0.75rem + 2.5vw, 3rem);
   line-height: 1.2;
 }
 
-
-h2, .text-4xl {
-  font-size: clamp(1.75rem, 4vw + 0.5rem, 3rem);
+h3, .text-3xl {
+  font-size: clamp(1.25rem, 0.75rem + 2vw, 2.25rem);
   line-height: 1.3;
 }
 
-h3, .text-3xl {
-  font-size: clamp(1.5rem, 3vw + 0.5rem, 2.25rem);
-  line-height: 1.4;
-}
-
 h4, .text-2xl {
-  font-size: clamp(1.25rem, 2.5vw + 0.5rem, 1.875rem);
+  font-size: clamp(1.125rem, 0.75rem + 1.5vw, 1.75rem);
   line-height: 1.4;
 }
 
-p, .text-lg {
-  font-size: clamp(1rem, 1.5vw + 0.25rem, 1.25rem);
+p, .text-base, .text-lg {
+  font-size: clamp(0.875rem, 0.75rem + 0.5vw, 1.125rem);
   line-height: 1.6;
+}
+
+small, .text-sm {
+  font-size: clamp(0.75rem, 0.625rem + 0.4vw, 0.875rem);
+  line-height: 1.5;
+}
+
+.text-xs {
+  font-size: clamp(0.625rem, 0.5rem + 0.3vw, 0.75rem);
+  line-height: 1.5;
+}
+
+/* Fluid spacing utilities */
+.fluid-padding {
+  padding: clamp(0.75rem, 2vw, 2rem);
+}
+
+.fluid-padding-x {
+  padding-left: clamp(1rem, 3vw, 3rem);
+  padding-right: clamp(1rem, 3vw, 3rem);
+}
+
+.fluid-padding-y {
+  padding-top: clamp(1rem, 2.5vw, 2.5rem);
+  padding-bottom: clamp(1rem, 2.5vw, 2.5rem);
+}
+
+.fluid-gap {
+  gap: clamp(0.5rem, 1.5vw, 1.5rem);
+}
+
+.fluid-margin-y {
+  margin-top: clamp(1rem, 3vw, 3rem);
+  margin-bottom: clamp(1rem, 3vw, 3rem);
+}
+
+/* Container with fluid max-width */
+.fluid-container {
+  width: 100%;
+  max-width: min(90vw, 1280px);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: clamp(1rem, 3vw, 2rem);
+  padding-right: clamp(1rem, 3vw, 2rem);
 }
 
 @layer utilities {

@@ -3,13 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Canvas, useFrame } from "@react-three/fiber";
-import {
-  ContactShadows,
-  Environment,
-  Float,
-  Lightformer,
-  Tube,
-} from "@react-three/drei";
+import { Environment, Float, Lightformer, Tube } from "@react-three/drei";
 import { EffectComposer, Bloom } from "@react-three/postprocessing";
 import { cubicBezier } from "motion";
 import { motion } from "motion/react";
@@ -43,108 +37,128 @@ const itemVariants = {
   },
 };
 
+// Performance detection
+function detectPerformanceTier(): "low" | "medium" | "high" {
+  if (typeof window === "undefined") return "medium";
+
+  const canvas = document.createElement("canvas");
+  const gl =
+    canvas.getContext("webgl") || canvas.getContext("experimental-webgl");
+
+  if (!gl) return "low";
+
+  const debugInfo = (gl as WebGLRenderingContext).getExtension(
+    "WEBGL_debug_renderer_info",
+  );
+  const renderer = debugInfo
+    ? (gl as WebGLRenderingContext)
+        .getParameter(debugInfo.UNMASKED_RENDERER_WEBGL)
+        .toLowerCase()
+    : "";
+
+  // Only mark as low-end for very old mobile GPUs or very low core count
+  const isLowEnd =
+    renderer.includes("mali-4") ||
+    renderer.includes("adreno 3") ||
+    navigator.hardwareConcurrency <= 2;
+
+  // Check for high-end indicators
+  const isHighEnd =
+    (renderer.includes("nvidia") ||
+      renderer.includes("radeon") ||
+      renderer.includes("apple m")) &&
+    navigator.hardwareConcurrency >= 8 &&
+    window.innerWidth >= 1024;
+
+  if (isLowEnd) return "low";
+  if (isHighEnd) return "high";
+  return "medium";
+}
+
+// Simplified vertex shader with enhanced noise computation
 const quantumFoamVertexShader = `
   uniform float uTime;
-  uniform float uNoiseDensity;
   uniform float uNoiseStrength;
   
-  vec3 mod289(vec3 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
-  vec4 mod289(vec4 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
-  vec4 permute(vec4 x) { return mod289(((x*34.0)+1.0)*x); }
-  vec4 taylorInvSqrt(vec4 r) { return 1.79284291400159 - 0.85373472095314 * r; }
+  // Improved noise function for better visual effect
+  float hash(vec3 p) {
+    p = fract(p * 0.3183099 + 0.1);
+    p *= 17.0;
+    return fract(p.x * p.y * p.z * (p.x + p.y + p.z));
+  }
   
-  float snoise(vec3 v) {
-    const vec2 C = vec2(1.0/6.0, 1.0/3.0);
-    const vec4 D = vec4(0.0, 0.5, 1.0, 2.0);
-    vec3 i = floor(v + dot(v, C.yyy));
-    vec3 x0 = v - i + dot(i, C.xxx);
-    vec3 g = step(x0.yzx, x0.xyz);
-    vec3 l = 1.0 - g;
-    vec3 i1 = min(g.xyz, l.zxy);
-    vec3 i2 = max(g.xyz, l.zxy);
-    vec3 x1 = x0 - i1 + C.xxx;
-    vec3 x2 = x0 - i2 + C.yyy;
-    vec3 x3 = x0 - D.yyy;
-    i = mod289(i);
-    vec4 p = permute(permute(permute(
-      i.z + vec4(0.0, i1.z, i2.z, 1.0))
-      + i.y + vec4(0.0, i1.y, i2.y, 1.0))
-      + i.x + vec4(0.0, i1.x, i2.x, 1.0));
-    float n_ = 0.142857142857;
-    vec3 ns = n_ * D.wyz - D.xzx;
-    vec4 j = p - 49.0 * floor(p * ns.z * ns.z);
-    vec4 x_ = floor(j * ns.z);
-    vec4 y_ = floor(j - 7.0 * x_);
-    vec4 x = x_ * ns.x + ns.yyyy;
-    vec4 y = y_ * ns.x + ns.yyyy;
-    vec4 h = 1.0 - abs(x) - abs(y);
-    vec4 b0 = vec4(x.xy, y.xy);
-    vec4 b1 = vec4(x.zw, y.zw);
-    vec4 s0 = floor(b0)*2.0 + 1.0;
-    vec4 s1 = floor(b1)*2.0 + 1.0;
-    vec4 sh = -step(h, vec4(0.0));
-    vec4 a0 = b0.xzyw + s0.xzyw*sh.xxyy;
-    vec4 a1 = b1.xzyw + s1.xzyw*sh.zzww;
-    vec3 p0 = vec3(a0.xy,h.x);
-    vec3 p1 = vec3(a0.zw,h.y);
-    vec3 p2 = vec3(a1.xy,h.z);
-    vec3 p3 = vec3(a1.zw,h.w);
-    vec4 norm = taylorInvSqrt(vec4(dot(p0,p0), dot(p1,p1), dot(p2,p2), dot(p3,p3)));
-    p0 *= norm.x;
-    p1 *= norm.y;
-    p2 *= norm.z;
-    p3 *= norm.w;
-    vec4 m = max(0.6 - vec4(dot(x0,x0), dot(x1,x1), dot(x2,x2), dot(x3,x3)), 0.0);
-    m = m * m;
-    return 42.0 * dot(m*m, vec4(dot(p0,x0), dot(p1,x1), dot(p2,x2), dot(p3,x3)));
+  float noise(vec3 p) {
+    vec3 i = floor(p);
+    vec3 f = fract(p);
+    f = f * f * (3.0 - 2.0 * f);
+    return mix(
+      mix(mix(hash(i), hash(i + vec3(1,0,0)), f.x),
+          mix(hash(i + vec3(0,1,0)), hash(i + vec3(1,1,0)), f.x), f.y),
+      mix(mix(hash(i + vec3(0,0,1)), hash(i + vec3(1,0,1)), f.x),
+          mix(hash(i + vec3(0,1,1)), hash(i + vec3(1,1,1)), f.x), f.y),
+      f.z
+    );
+  }
+  
+  // Layered noise for more organic look
+  float fbm(vec3 p) {
+    float value = 0.0;
+    float amplitude = 0.5;
+    float frequency = 1.0;
+    for (int i = 0; i < 4; i++) {
+      value += amplitude * noise(p * frequency);
+      amplitude *= 0.5;
+      frequency *= 2.0;
+    }
+    return value;
   }
 
   void main() {
     vec3 pos = position;
-    float noise = snoise(pos * uNoiseDensity + uTime * 0.35);
-    float noise2 = snoise(pos * uNoiseDensity * 0.5 + uTime * 0.15);
-    pos += normal * (noise * uNoiseStrength + noise2 * uNoiseStrength * 0.5);
+    // More dramatic noise with multiple layers
+    float n1 = fbm(pos * 2.0 + uTime * 0.4);
+    float n2 = noise(pos * 4.0 - uTime * 0.6) * 0.5;
+    float combinedNoise = n1 + n2;
+    pos += normal * combinedNoise * uNoiseStrength;
     gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);
   }
 `;
 
 const quantumFoamFragmentShader = `
+  uniform float uTime;
+  
   void main() {
-    gl_FragColor = vec4(0.12, 0.04, 0.35, 0.12);
+    // Subtle color variation based on position for more visual interest
+    float pulse = sin(uTime * 2.0) * 0.1 + 0.9;
+    gl_FragColor = vec4(0.45 * pulse, 0.25, 0.85, 0.35);
   }
 `;
 
+type PerformanceTier = "low" | "medium" | "high";
+
 function QuantumFoam({
-  isMobile = false,
-  isTablet = false,
+  performanceTier = "medium",
 }: {
-  isMobile?: boolean;
-  isTablet?: boolean;
+  performanceTier?: PerformanceTier;
 }) {
   const meshRef = useRef<THREE.Mesh>(null);
-  // Adaptive detail based on device
-  const detail = isMobile ? 8 : isTablet ? 12 : 20;
-  const uNoiseDensity = isMobile ? 1.5 : isTablet ? 2.0 : 2.5;
-  const uNoiseStrength = isMobile ? 0.15 : isTablet ? 0.2 : 0.25;
-  const sphereSize = isMobile ? 6 : 8;
+
+  // Increased detail for better visuals
+  const detail =
+    performanceTier === "low" ? 12 : performanceTier === "medium" ? 20 : 28;
+  const uNoiseStrength =
+    performanceTier === "low" ? 0.4 : performanceTier === "medium" ? 0.6 : 0.8;
+  const sphereSize = 7;
 
   const uniforms = useMemo(
     () => ({
       uTime: { value: 0 },
-      uNoiseDensity: { value: uNoiseDensity },
       uNoiseStrength: { value: uNoiseStrength },
     }),
-    [uNoiseDensity, uNoiseStrength]
+    [uNoiseStrength],
   );
 
-  // Throttle updates - mobile every 3rd frame, tablet every 2nd frame
-  const frameCount = useRef(0);
-  const skipFrames = isMobile ? 3 : isTablet ? 2 : 1;
-
   useFrame(({ clock }) => {
-    frameCount.current++;
-    if (frameCount.current % skipFrames !== 0) return;
-
     if (meshRef.current) {
       (meshRef.current.material as THREE.ShaderMaterial).uniforms.uTime.value =
         clock.elapsedTime;
@@ -167,16 +181,16 @@ function QuantumFoam({
 function RotatingCircle({
   color,
   planeIndex,
-  isMobile = false,
+  performanceTier = "medium",
 }: {
   color: THREE.ColorRepresentation;
   planeIndex: number;
-  isMobile?: boolean;
+  performanceTier?: PerformanceTier;
 }) {
   const curve = useMemo(() => {
     const points = [];
     const radius = planeIndex === 0 ? 4.5 : planeIndex === 1 ? 6 : 7.5;
-    const segments = isMobile ? 64 : 128;
+    const segments = 64; // Enough for smooth circles
 
     for (let i = 0; i <= segments; i++) {
       const angle = (i / segments) * Math.PI * 2;
@@ -188,16 +202,11 @@ function RotatingCircle({
     const path = new THREE.CatmullRomCurve3(points);
     path.closed = true;
     return path;
-  }, [planeIndex, isMobile]);
+  }, [planeIndex]);
 
   const groupRef = useRef<THREE.Group>(null);
-  const frameCount = useRef(0);
 
   useFrame(({ clock }) => {
-    // Skip every other frame on mobile
-    frameCount.current++;
-    if (isMobile && frameCount.current % 2 !== 0) return;
-
     if (groupRef.current) {
       const time = clock.elapsedTime;
       groupRef.current.rotation.x =
@@ -221,12 +230,11 @@ function RotatingCircle({
 
   return (
     <group ref={groupRef} rotation={initialRotation}>
-      <Tube
-        args={[curve, isMobile ? 128 : 256, 0.05, isMobile ? 12 : 24, true]}
-      >
+      <Tube args={[curve, 128, 0.05, 12, true]}>
         <meshStandardMaterial
+          color={color}
           emissive={color}
-          emissiveIntensity={isMobile ? 3 : 5}
+          emissiveIntensity={2.5}
           toneMapped={false}
         />
       </Tube>
@@ -235,16 +243,18 @@ function RotatingCircle({
 }
 
 function ParticleSwarm({
-  isMobile = false,
-  isTablet = false,
+  performanceTier = "medium",
 }: {
-  isMobile?: boolean;
-  isTablet?: boolean;
+  performanceTier?: PerformanceTier;
 }) {
   const pointsRef = useRef<THREE.Points>(null);
-  const particleCount = isMobile ? 300 : isTablet ? 800 : 1500;
-  const frameCountRef = useRef(0);
-  const skipFrames = isMobile ? 2 : 1;
+  // Increased particle counts for more visual density
+  const particleCount =
+    performanceTier === "low"
+      ? 400
+      : performanceTier === "medium"
+        ? 1200
+        : 2500;
 
   const { positions, velocities } = useMemo(() => {
     const positions = new Float32Array(particleCount * 3);
@@ -252,13 +262,13 @@ function ParticleSwarm({
 
     for (let i = 0; i < particleCount; i++) {
       const i3 = i * 3;
-      positions[i3] = (Math.random() - 0.5) * 25;
-      positions[i3 + 1] = (Math.random() - 0.5) * 25;
-      positions[i3 + 2] = (Math.random() - 0.5) * 25;
+      positions[i3] = (Math.random() - 0.5) * 20;
+      positions[i3 + 1] = (Math.random() - 0.5) * 20;
+      positions[i3 + 2] = (Math.random() - 0.5) * 20;
 
-      velocities[i3] = (Math.random() - 0.5) * 0.1;
-      velocities[i3 + 1] = (Math.random() - 0.5) * 0.1;
-      velocities[i3 + 2] = (Math.random() - 0.5) * 0.1;
+      velocities[i3] = (Math.random() - 0.5) * 0.08;
+      velocities[i3 + 1] = (Math.random() - 0.5) * 0.08;
+      velocities[i3 + 2] = (Math.random() - 0.5) * 0.08;
     }
 
     return { positions, velocities };
@@ -267,69 +277,42 @@ function ParticleSwarm({
   useFrame(({ clock }) => {
     if (!pointsRef.current) return;
 
-    // Skip frames on mobile for performance
-    frameCountRef.current++;
-    if (frameCountRef.current % skipFrames !== 0) return;
-
     const pos = pointsRef.current.geometry.attributes.position
       .array as Float32Array;
     const time = clock.elapsedTime;
 
+    // Simplified physics - less computation per particle
     for (let i = 0; i < particleCount; i++) {
       const i3 = i * 3;
       const x = pos[i3];
       const y = pos[i3 + 1];
       const z = pos[i3 + 2];
 
-      // Gravity towards center with pulsing - but repel when too close
       const centerDist = Math.sqrt(x * x + y * y + z * z);
-      const gravityStrength = Math.sin(time * 0.5) * 0.02 + 0.01;
+      const gravityStrength = Math.sin(time * 0.4) * 0.015 + 0.008;
 
-      // Slow down particles when near center
-      const slowdownFactor = centerDist < 3 ? 0.85 : 1.0;
+      // Simplified force calculation
+      const force = centerDist > 2 ? -gravityStrength : 0.03;
+      const invDist = 1 / (centerDist + 0.5);
 
-      // Smooth transition between repulsion and attraction
-      // Use a blend factor that smoothly transitions from 0 to 1
-      const blendStart = 1.5;
-      const blendEnd = 3.0;
-      const blendFactor = Math.min(
-        1,
-        Math.max(0, (centerDist - blendStart) / (blendEnd - blendStart))
-      );
+      velocities[i3] += x * invDist * force;
+      velocities[i3 + 1] += y * invDist * force;
+      velocities[i3 + 2] += z * invDist * force;
 
-      // Repulsion force (strong when close)
-      const repulsionForce = (1 - blendFactor) * 0.05;
-
-      // Attraction force (strong when far)
-      const attractionForce = blendFactor * gravityStrength;
-
-      // Apply blended forces
-      const forceDirection = centerDist > 0 ? 1 / (centerDist + 0.1) : 0;
-      velocities[i3] +=
-        x * forceDirection * repulsionForce -
-        (x / (centerDist + 1)) * attractionForce;
-      velocities[i3 + 1] +=
-        y * forceDirection * repulsionForce -
-        (y / (centerDist + 1)) * attractionForce;
-      velocities[i3 + 2] +=
-        z * forceDirection * repulsionForce -
-        (z / (centerDist + 1)) * attractionForce;
-
-      // Damping (stronger damping when near center)
-      const dampingFactor = 0.98 * slowdownFactor;
-      velocities[i3] *= dampingFactor;
-      velocities[i3 + 1] *= dampingFactor;
-      velocities[i3 + 2] *= dampingFactor;
+      // Damping
+      velocities[i3] *= 0.97;
+      velocities[i3 + 1] *= 0.97;
+      velocities[i3 + 2] *= 0.97;
 
       // Update position
       pos[i3] += velocities[i3];
       pos[i3 + 1] += velocities[i3 + 1];
       pos[i3 + 2] += velocities[i3 + 2];
 
-      // Boundary conditions
-      if (Math.abs(pos[i3]) > 15) velocities[i3] *= -0.5;
-      if (Math.abs(pos[i3 + 1]) > 15) velocities[i3 + 1] *= -0.5;
-      if (Math.abs(pos[i3 + 2]) > 15) velocities[i3 + 2] *= -0.5;
+      // Simple boundary
+      if (Math.abs(pos[i3]) > 12) velocities[i3] *= -0.5;
+      if (Math.abs(pos[i3 + 1]) > 12) velocities[i3 + 1] *= -0.5;
+      if (Math.abs(pos[i3 + 2]) > 12) velocities[i3 + 2] *= -0.5;
     }
 
     pointsRef.current.geometry.attributes.position.needsUpdate = true;
@@ -351,20 +334,20 @@ function ParticleSwarm({
         color="#A48FF5"
         toneMapped={false}
         transparent
-        opacity={0.8}
+        opacity={0.9}
       />
     </points>
   );
 }
 
 function CrystalCluster({
-  isMobile = false,
-  isTablet = false,
+  performanceTier = "medium",
 }: {
-  isMobile?: boolean;
-  isTablet?: boolean;
+  performanceTier?: PerformanceTier;
 }) {
-  const crystalCount = isMobile ? 12 : isTablet ? 20 : 35;
+  // Increased crystal count for more visual interest
+  const crystalCount =
+    performanceTier === "low" ? 15 : performanceTier === "medium" ? 28 : 40;
 
   const crystals = useMemo(() => {
     const items: {
@@ -377,16 +360,16 @@ function CrystalCluster({
     for (let index = 0; index < crystalCount; index++) {
       items.push({
         position: new THREE.Vector3(
-          (Math.random() - 0.5) * 12,
-          (Math.random() - 0.5) * 12,
-          (Math.random() - 0.5) * 12
+          (Math.random() - 0.5) * 10,
+          (Math.random() - 0.5) * 10,
+          (Math.random() - 0.5) * 10,
         ),
         rotation: new THREE.Euler(
           Math.random() * Math.PI,
           Math.random() * Math.PI,
-          Math.random() * Math.PI
+          Math.random() * Math.PI,
         ),
-        scale: Math.random() * 0.2 + 0.1,
+        scale: Math.random() * 0.15 + 0.08,
         colorIndex: index,
       });
     }
@@ -395,117 +378,127 @@ function CrystalCluster({
   }, [crystalCount]);
 
   const groupRef = useRef<THREE.Group>(null);
-  const frameCountRef = useRef(0);
 
   useFrame(({ clock }) => {
-    frameCountRef.current++;
-    if (isMobile && frameCountRef.current % 2 !== 0) return;
-
     if (groupRef.current) {
-      groupRef.current.rotation.x = clock.elapsedTime * 0.15;
-      groupRef.current.rotation.y = clock.elapsedTime * 0.1;
+      groupRef.current.rotation.x = clock.elapsedTime * 0.1;
+      groupRef.current.rotation.y = clock.elapsedTime * 0.08;
     }
   });
 
+  // Skip Float on low performance - it adds overhead
+  const content = (
+    <group ref={groupRef}>
+      {crystals.map((crystal) => (
+        <mesh
+          key={`crystal-${crystal.colorIndex}`}
+          position={crystal.position}
+          rotation={crystal.rotation}
+          scale={crystal.scale}
+        >
+          <octahedronGeometry args={[1, 1]} />
+          <meshStandardMaterial
+            color={SPECTRUM_COLORS[crystal.colorIndex % SPECTRUM_COLORS.length]}
+            emissive={
+              SPECTRUM_COLORS[crystal.colorIndex % SPECTRUM_COLORS.length]
+            }
+            emissiveIntensity={1}
+            toneMapped={false}
+            transparent={true}
+            opacity={0.8}
+          />
+        </mesh>
+      ))}
+    </group>
+  );
+
+  if (performanceTier === "low") {
+    return content;
+  }
+
   return (
-    <Float
-      speed={1.2}
-      rotationIntensity={isMobile ? 2 : 3.5}
-      floatIntensity={isMobile ? 2 : 3.5}
-    >
-      <group ref={groupRef}>
-        {crystals.map((crystal) => (
-          <mesh
-            key={`crystal-${crystal.colorIndex}`}
-            position={crystal.position}
-            rotation={crystal.rotation}
-            scale={crystal.scale}
-          >
-            <octahedronGeometry args={[1, isMobile ? 1 : 2]} />
-            {isMobile ? (
-              <meshStandardMaterial
-                color={
-                  SPECTRUM_COLORS[crystal.colorIndex % SPECTRUM_COLORS.length]
-                }
-                emissive={
-                  SPECTRUM_COLORS[crystal.colorIndex % SPECTRUM_COLORS.length]
-                }
-                emissiveIntensity={0.3}
-                transparent={true}
-                opacity={0.8}
-              />
-            ) : (
-              <meshPhysicalMaterial
-                roughness={0.02}
-                metalness={0.05}
-                transmission={0.98}
-                thickness={2}
-                ior={2.5}
-                color="#FFFFFF"
-                emissive={
-                  SPECTRUM_COLORS[crystal.colorIndex % SPECTRUM_COLORS.length]
-                }
-                emissiveIntensity={0.2}
-                clearcoat={1.0}
-                clearcoatRoughness={0.05}
-                reflectivity={0.8}
-                envMapIntensity={2}
-                transparent={true}
-                opacity={0.95}
-              />
-            )}
-          </mesh>
-        ))}
-      </group>
+    <Float speed={0.8} rotationIntensity={1.5} floatIntensity={1.5}>
+      {content}
     </Float>
   );
 }
 
-function DynamicLights() {
+function DynamicLights({
+  performanceTier = "medium",
+}: {
+  performanceTier?: PerformanceTier;
+}) {
+  // Simplified lighting for lower tiers
+  if (performanceTier === "low") {
+    return (
+      <>
+        <pointLight position={[5, 5, 5]} intensity={1.5} color="#A48FF5" />
+        <ambientLight intensity={0.4} />
+      </>
+    );
+  }
+
   return (
     <>
       <pointLight
         position={[8, 8, 8]}
-        intensity={2}
+        intensity={1.5}
         color="#A48FF5"
         decay={2}
       />
       <pointLight
         position={[-8, -8, 8]}
-        intensity={1.5}
+        intensity={1}
         color="#E91E63"
         decay={2}
       />
-      <pointLight
-        position={[0, 10, -8]}
-        intensity={1.2}
-        color="#6F4CFF"
-        decay={2}
-      />
-      <pointLight
-        position={[8, -8, -8]}
-        intensity={0.8}
-        color="#00FF88"
-        decay={2}
-      />
+      {performanceTier === "high" && (
+        <pointLight
+          position={[0, 10, -8]}
+          intensity={0.8}
+          color="#6F4CFF"
+          decay={2}
+        />
+      )}
       <ambientLight intensity={0.3} />
     </>
   );
 }
 
-function CameraRig({ isMobile = false }: { isMobile?: boolean }) {
+function CameraRig({
+  performanceTier = "medium",
+}: {
+  performanceTier?: PerformanceTier;
+}) {
   const frameCountRef = useRef(0);
 
   useFrame(({ camera, clock }) => {
+    // Camera updates every frame for smooth movement
     frameCountRef.current++;
-    if (isMobile && frameCountRef.current % 2 !== 0) return;
 
     const t = clock.getElapsedTime();
-    const radius = 8 + Math.sin(t * 0.3) * 2;
 
-    camera.position.x = Math.sin(t * 0.2) * radius;
-    camera.position.z = Math.cos(t * 0.15) * radius;
-    camera.position.y = 2 + Math.sin(t * 0.25) * 1.5 + Math.cos(t * 0.35) * 1;
+    // Start outside the quantum foam and slowly move in
+    // Initial radius is 18 (outside), target radius is ~7 (inside)
+    const initialRadius = 18;
+    const targetRadius = 7;
+    const transitionDuration = 8; // seconds to spend mostly outside
+
+    // Smooth easing function for the transition (ease-out)
+    const transitionProgress = Math.min(t / transitionDuration, 1);
+    const easedProgress = 1 - Math.pow(1 - transitionProgress, 3); // cubic ease-out
+
+    // Interpolate between initial and target radius
+    const baseRadius =
+      initialRadius - (initialRadius - targetRadius) * easedProgress;
+
+    // Add the oscillation after transition, but damped during transition
+    const oscillationStrength = easedProgress * 1.5;
+    const radius = baseRadius + Math.sin(t * 0.2) * oscillationStrength;
+
+    camera.position.x = Math.sin(t * 0.15) * radius;
+    camera.position.z = Math.cos(t * 0.12) * radius;
+    camera.position.y = 2 + Math.sin(t * 0.18) * 1;
 
     camera.lookAt(0, 0, 0);
   });
@@ -513,26 +506,18 @@ function CameraRig({ isMobile = false }: { isMobile?: boolean }) {
 }
 
 export default function Hero3D() {
-  const [isMobile, setIsMobile] = useState(false);
-  const [isTablet, setIsTablet] = useState(false);
+  const [performanceTier, setPerformanceTier] =
+    useState<PerformanceTier>("medium");
   const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {
-    // Detect device type based on screen width only
-    const checkDevice = () => {
-      const width = window.innerWidth;
-      setIsMobile(width < 768);
-      setIsTablet(width >= 768 && width < 1024);
-      setIsReady(true);
-    };
-
-    checkDevice();
-    window.addEventListener("resize", checkDevice);
-
-    return () => {
-      window.removeEventListener("resize", checkDevice);
-    };
+    const tier = detectPerformanceTier();
+    setPerformanceTier(tier);
+    setIsReady(true);
   }, []);
+
+  const dpr =
+    performanceTier === "low" ? 0.75 : performanceTier === "medium" ? 1 : 1.5;
 
   return (
     <section
@@ -542,79 +527,76 @@ export default function Hero3D() {
       <div className="absolute inset-0 -z-10">
         {isReady && (
           <Canvas
-            shadows={!isMobile}
-            dpr={isMobile ? 1 : isTablet ? 1.5 : 2}
-            camera={{ position: [0, 2, 8], fov: isMobile ? 60 : 50 }}
+            shadows={false}
+            dpr={dpr}
+            camera={{
+              position: [0, 2, 8],
+              fov: performanceTier === "low" ? 65 : 55,
+            }}
             gl={{
-              antialias: !isMobile,
-              powerPreference: "default",
+              antialias: false,
+              powerPreference:
+                performanceTier === "low" ? "low-power" : "default",
               alpha: false,
               stencil: false,
               depth: true,
+              failIfMajorPerformanceCaveat: false,
             }}
+            frameloop="always"
           >
-            <color attach="background" args={["#000000"]} />
-            <fog
-              attach="fog"
-              args={["#000000", isMobile ? 8 : 10, isMobile ? 25 : 30]}
-            />
+            <color attach="background" args={["#050510"]} />
+            <fog attach="fog" args={["#0a0515", 8, 25]} />
 
-            <CameraRig isMobile={isMobile} />
-            <DynamicLights />
+            <CameraRig performanceTier={performanceTier} />
+            <DynamicLights performanceTier={performanceTier} />
 
-            <QuantumFoam isMobile={isMobile} isTablet={isTablet} />
-            <ParticleSwarm isMobile={isMobile} isTablet={isTablet} />
-            <CrystalCluster isMobile={isMobile} isTablet={isTablet} />
+            <QuantumFoam performanceTier={performanceTier} />
+            <ParticleSwarm performanceTier={performanceTier} />
 
+            {/* Crystals on all tiers */}
+            <CrystalCluster performanceTier={performanceTier} />
+
+            {/* All 3 rings on all tiers */}
             {SPECTRUM_COLORS.map((color, i) => (
               <RotatingCircle
                 key={i}
                 color={color}
                 planeIndex={i}
-                isMobile={isMobile}
+                performanceTier={performanceTier}
               />
             ))}
 
-            {!isMobile && (
-              <ContactShadows
-                position={[0, -5, 0]}
-                opacity={0.8}
-                scale={25}
-                blur={2}
-                far={12}
-              />
-            )}
-
-            {!isMobile && (
-              <Environment resolution={isTablet ? 128 : 256}>
+            {/* Environment on medium and high */}
+            {performanceTier !== "low" && (
+              <Environment resolution={128}>
                 <Lightformer
                   form="ring"
-                  intensity={12}
+                  intensity={8}
                   color="#A890FF"
-                  scale={12}
+                  scale={10}
                   target={[0, 0, 0]}
                 />
                 <Lightformer
                   form="ring"
-                  intensity={8}
+                  intensity={5}
                   color="#E91E63"
-                  scale={15}
+                  scale={12}
                   position={[0, -5, 0]}
                   target={[0, 0, 0]}
                 />
               </Environment>
             )}
 
-            {!isMobile && (
-              <EffectComposer multisampling={isTablet ? 2 : 4}>
-                <Bloom
-                  luminanceThreshold={0.15}
-                  luminanceSmoothing={0.9}
-                  intensity={isTablet ? 1.5 : 2.5}
-                  levels={isTablet ? 5 : 9}
-                />
-              </EffectComposer>
-            )}
+            {/* Bloom on ALL tiers for glow effect */}
+            <EffectComposer multisampling={0}>
+              <Bloom
+                luminanceThreshold={0}
+                luminanceSmoothing={0.9}
+                intensity={performanceTier === "high" ? 3 : 2.5}
+                levels={performanceTier === "high" ? 7 : 5}
+                mipmapBlur
+              />
+            </EffectComposer>
           </Canvas>
         )}
       </div>
@@ -632,21 +614,39 @@ export default function Hero3D() {
       >
         <motion.span
           variants={itemVariants}
-          className="mb-2 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 sm:px-6 py-1.5 text-[0.55rem] sm:text-xs lg:text-sm uppercase tracking-[0.25em] text-white/80"
+          className="mb-2 inline-flex items-center gap-2 rounded-full border border-purple-400/50 bg-purple-500/20 px-4 sm:px-6 py-1.5 text-[0.55rem] sm:text-xs lg:text-sm uppercase tracking-[0.25em] text-purple-100 shadow-[0_0_15px_rgba(168,144,255,0.6),0_0_30px_rgba(168,144,255,0.5),0_0_50px_rgba(168,144,255,0.3),inset_0_0_25px_rgba(168,144,255,0.2)] backdrop-blur-sm"
+          style={{
+            textShadow:
+              "0 0 8px rgba(168,144,255,1), 0 0 16px rgba(168,144,255,0.8), 0 0 32px rgba(168,144,255,0.6), 0 0 50px rgba(168,144,255,0.4)",
+          }}
         >
           Formerly Optical Society of America
         </motion.span>
         <motion.div
           variants={itemVariants}
-          className="w-full max-w-[min(88vw,960px)] 2xl:max-w-[840px] px-2"
+          className="relative w-full max-w-[min(88vw,960px)] 2xl:max-w-[840px] px-2"
         >
+          {/* Blurred glass effect behind logo that fades into background */}
+          <div
+            className="absolute -inset-x-32 -inset-y-20 rounded-[2rem]"
+            style={{
+              background:
+                "radial-gradient(ellipse at center, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.025) 40%, transparent 75%)",
+              backdropFilter: "blur(1px)",
+              WebkitBackdropFilter: "blur(1px)",
+              maskImage:
+                "radial-gradient(ellipse at center, black 30%, transparent 80%)",
+              WebkitMaskImage:
+                "radial-gradient(ellipse at center, black 30%, transparent 80%)",
+            }}
+          />
           <Image
             src="/logo_dark.png"
             alt="BVP Optica Student Chapter"
             width={1200}
             height={400}
             priority
-            className="mx-auto h-auto w-full max-w-[min(88vw,880px)] 2xl:max-w-[800px] object-contain"
+            className="relative mx-auto h-auto w-full max-w-[min(88vw,880px)] 2xl:max-w-[800px] object-contain"
             sizes="(max-width: 768px) 90vw, (max-width: 1280px) 70vw, 900px"
           />
         </motion.div>
