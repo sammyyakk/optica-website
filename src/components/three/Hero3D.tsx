@@ -281,38 +281,61 @@ function ParticleSwarm({
       .array as Float32Array;
     const time = clock.elapsedTime;
 
-    // Simplified physics - less computation per particle
     for (let i = 0; i < particleCount; i++) {
       const i3 = i * 3;
       const x = pos[i3];
       const y = pos[i3 + 1];
       const z = pos[i3 + 2];
 
+      // Gravity towards center with pulsing - but repel when too close
       const centerDist = Math.sqrt(x * x + y * y + z * z);
-      const gravityStrength = Math.sin(time * 0.4) * 0.015 + 0.008;
+      const gravityStrength = Math.sin(time * 0.5) * 0.02 + 0.01;
 
-      // Simplified force calculation
-      const force = centerDist > 2 ? -gravityStrength : 0.03;
-      const invDist = 1 / (centerDist + 0.5);
+      // Slow down particles when near center
+      const slowdownFactor = centerDist < 3 ? 0.85 : 1.0;
 
-      velocities[i3] += x * invDist * force;
-      velocities[i3 + 1] += y * invDist * force;
-      velocities[i3 + 2] += z * invDist * force;
+      // Smooth transition between repulsion and attraction
+      // Use a blend factor that smoothly transitions from 0 to 1
+      const blendStart = 1.5;
+      const blendEnd = 3.0;
+      const blendFactor = Math.min(
+        1,
+        Math.max(0, (centerDist - blendStart) / (blendEnd - blendStart)),
+      );
 
-      // Damping
-      velocities[i3] *= 0.97;
-      velocities[i3 + 1] *= 0.97;
-      velocities[i3 + 2] *= 0.97;
+      // Repulsion force (strong when close)
+      const repulsionForce = (1 - blendFactor) * 0.05;
+
+      // Attraction force (strong when far)
+      const attractionForce = blendFactor * gravityStrength;
+
+      // Apply blended forces
+      const forceDirection = centerDist > 0 ? 1 / (centerDist + 0.1) : 0;
+      velocities[i3] +=
+        x * forceDirection * repulsionForce -
+        (x / (centerDist + 1)) * attractionForce;
+      velocities[i3 + 1] +=
+        y * forceDirection * repulsionForce -
+        (y / (centerDist + 1)) * attractionForce;
+      velocities[i3 + 2] +=
+        z * forceDirection * repulsionForce -
+        (z / (centerDist + 1)) * attractionForce;
+
+      // Damping (stronger damping when near center)
+      const dampingFactor = 0.98 * slowdownFactor;
+      velocities[i3] *= dampingFactor;
+      velocities[i3 + 1] *= dampingFactor;
+      velocities[i3 + 2] *= dampingFactor;
 
       // Update position
       pos[i3] += velocities[i3];
       pos[i3 + 1] += velocities[i3 + 1];
       pos[i3 + 2] += velocities[i3 + 2];
 
-      // Simple boundary
-      if (Math.abs(pos[i3]) > 12) velocities[i3] *= -0.5;
-      if (Math.abs(pos[i3 + 1]) > 12) velocities[i3 + 1] *= -0.5;
-      if (Math.abs(pos[i3 + 2]) > 12) velocities[i3 + 2] *= -0.5;
+      // Boundary conditions
+      if (Math.abs(pos[i3]) > 15) velocities[i3] *= -0.5;
+      if (Math.abs(pos[i3 + 1]) > 15) velocities[i3 + 1] *= -0.5;
+      if (Math.abs(pos[i3 + 2]) > 15) velocities[i3 + 2] *= -0.5;
     }
 
     pointsRef.current.geometry.attributes.position.needsUpdate = true;
@@ -345,9 +368,9 @@ function CrystalCluster({
 }: {
   performanceTier?: PerformanceTier;
 }) {
-  // Increased crystal count for more visual interest
+  // Crystal count
   const crystalCount =
-    performanceTier === "low" ? 15 : performanceTier === "medium" ? 28 : 40;
+    performanceTier === "low" ? 8 : performanceTier === "medium" ? 14 : 20;
 
   const crystals = useMemo(() => {
     const items: {
@@ -396,13 +419,13 @@ function CrystalCluster({
           rotation={crystal.rotation}
           scale={crystal.scale}
         >
-          <octahedronGeometry args={[1, 1]} />
+          <dodecahedronGeometry args={[1, 0]} />
           <meshStandardMaterial
             color={SPECTRUM_COLORS[crystal.colorIndex % SPECTRUM_COLORS.length]}
             emissive={
               SPECTRUM_COLORS[crystal.colorIndex % SPECTRUM_COLORS.length]
             }
-            emissiveIntensity={1}
+            emissiveIntensity={2}
             toneMapped={false}
             transparent={true}
             opacity={0.8}
@@ -494,11 +517,11 @@ function CameraRig({
 
     // Add the oscillation after transition, but damped during transition
     const oscillationStrength = easedProgress * 1.5;
-    const radius = baseRadius + Math.sin(t * 0.2) * oscillationStrength;
+    const radius = baseRadius + Math.sin(t * 0.28) * oscillationStrength;
 
-    camera.position.x = Math.sin(t * 0.15) * radius;
-    camera.position.z = Math.cos(t * 0.12) * radius;
-    camera.position.y = 2 + Math.sin(t * 0.18) * 1;
+    camera.position.x = Math.sin(t * 0.21) * radius;
+    camera.position.z = Math.cos(t * 0.168) * radius;
+    camera.position.y = 2 + Math.sin(t * 0.252) * 1;
 
     camera.lookAt(0, 0, 0);
   });
