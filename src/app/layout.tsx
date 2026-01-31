@@ -24,7 +24,7 @@ const montserrat = Montserrat({
   variable: "--font-montserrat",
 });
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://bvpoptica.in";
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.bvpoptica.com";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -143,8 +143,8 @@ const jsonLd = {
   "@type": "Organization",
   name: "BVP Optica",
   alternateName: "BVP Optica Student Chapter",
-  url: "https://bvpoptica.in",
-  logo: "https://bvpoptica.in/glow_accent_logo.png",
+  url: "https://www.bvpoptica.com",
+  logo: "https://www.bvpoptica.com/glow_accent_logo.png",
   description:
     "Official student chapter of Optica at Bharati Vidyapeeth's College of Engineering, Delhi. Advancing optics and photonics through education, innovation, and global collaboration.",
   email: "bvpoptica@gmail.com",
@@ -184,7 +184,7 @@ export default function RootLayout({
     >
       <head>
         <link rel="manifest" href="/manifest.json" />
-        <link rel="canonical" href="https://bvpoptica.in" />
+        <link rel="canonical" href="https://www.bvpoptica.com" />
         <meta name="theme-color" content="#0E1A2B" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />

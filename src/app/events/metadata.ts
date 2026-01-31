@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://bvpoptica.in";
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.bvpoptica.com";
 
 export const metadata: Metadata = {
   title: "Events",
