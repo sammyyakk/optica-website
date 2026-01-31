@@ -195,7 +195,6 @@ function QuantumFoam({
 function RotatingCircle({
   color,
   planeIndex,
-  performanceTier = "medium",
 }: {
   color: THREE.ColorRepresentation;
   planeIndex: number;
@@ -512,11 +511,7 @@ function DynamicLights({
   );
 }
 
-function CameraRig({
-  performanceTier = "medium",
-}: {
-  performanceTier?: PerformanceTier;
-}) {
+function CameraRig() {
   const frameCountRef = useRef(0);
 
   useFrame(({ camera, clock }) => {
@@ -608,7 +603,7 @@ export default function Hero3D() {
             <color attach="background" args={["#050510"]} />
             <fog attach="fog" args={["#0a0515", 8, 25]} />
 
-            <CameraRig performanceTier={performanceTier} />
+            <CameraRig />
             <DynamicLights performanceTier={performanceTier} />
 
             <QuantumFoam
