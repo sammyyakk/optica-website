@@ -24,7 +24,18 @@ const montserrat = Montserrat({
   variable: "--font-montserrat",
 });
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.bvpoptica.com";
+// Use VERCEL_URL for preview deployments, custom domain for production
+const getBaseUrl = () => {
+  if (process.env.NEXT_PUBLIC_SITE_URL) {
+    return process.env.NEXT_PUBLIC_SITE_URL;
+  }
+  if (process.env.VERCEL_URL) {
+    return `https://${process.env.VERCEL_URL}`;
+  }
+  return "https://www.bvpoptica.com";
+};
+
+const siteUrl = getBaseUrl();
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
