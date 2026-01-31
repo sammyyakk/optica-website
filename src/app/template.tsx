@@ -10,11 +10,11 @@ interface TemplateProps {
 export default function Template({ children }: TemplateProps) {
   return (
     <motion.div
-      initial={{ 
+      initial={{
         opacity: 0,
         filter: "blur(8px)",
       }}
-      animate={{ 
+      animate={{
         opacity: 1,
         filter: "blur(0px)",
       }}

@@ -176,7 +176,11 @@ export default function Navbar() {
                         <motion.div
                           className="absolute bottom-0 left-4 right-4 h-0.5 bg-gradient-to-r from-purple-500 via-pink-500 to-purple-500 rounded-full"
                           layoutId="activeNavIndicator"
-                          transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                          transition={{
+                            type: "spring",
+                            stiffness: 380,
+                            damping: 30,
+                          }}
                         />
                       ) : (
                         <motion.div
@@ -211,9 +215,7 @@ export default function Navbar() {
                       whileHover={{ opacity: 1, scale: 1 }}
                       transition={{ duration: 0.2 }}
                     />
-                    <motion.div
-                      className="absolute inset-0 rounded-lg bg-transparent group-hover:bg-white/5 transition-all duration-300"
-                    />
+                    <motion.div className="absolute inset-0 rounded-lg bg-transparent group-hover:bg-white/5 transition-all duration-300" />
                     <span className="relative z-10">{item.name}</span>
                     <motion.div
                       className="absolute bottom-0 left-4 right-4 h-0.5 bg-gradient-to-r from-purple-500 via-pink-500 to-purple-500 rounded-full"
@@ -402,27 +404,79 @@ export default function Navbar() {
                 {navItems.map((item, index) => {
                   const isActive = item.isRoute && pathname === item.href;
                   return (
-                  <motion.div
-                    key={item.name}
-                    initial={{ opacity: 0, x: 50, y: 20 }}
-                    animate={{ opacity: 1, x: 0, y: 0 }}
-                    transition={{
-                      delay: index * 0.08,
-                      duration: 0.5,
-                      ease: [0.22, 1, 0.36, 1],
-                    }}
-                  >
-                    {item.isRoute ? (
-                      <Link
-                        href={item.href}
-                        onClick={() => setIsMenuOpen(false)}
-                      >
-                        <motion.div
-                          className={`group relative py-4 px-6 rounded-2xl border transition-all duration-300 cursor-pointer backdrop-blur-md ${
-                            isActive
-                              ? "bg-gradient-to-r from-purple-500/30 via-pink-500/20 to-purple-500/30 border-purple-400/50"
-                              : "bg-gradient-to-r from-white/10 to-white/5 hover:from-white/20 hover:to-white/10 border-white/20 hover:border-white/40"
-                          }`}
+                    <motion.div
+                      key={item.name}
+                      initial={{ opacity: 0, x: 50, y: 20 }}
+                      animate={{ opacity: 1, x: 0, y: 0 }}
+                      transition={{
+                        delay: index * 0.08,
+                        duration: 0.5,
+                        ease: [0.22, 1, 0.36, 1],
+                      }}
+                    >
+                      {item.isRoute ? (
+                        <Link
+                          href={item.href}
+                          onClick={() => setIsMenuOpen(false)}
+                        >
+                          <motion.div
+                            className={`group relative py-4 px-6 rounded-2xl border transition-all duration-300 cursor-pointer backdrop-blur-md ${
+                              isActive
+                                ? "bg-gradient-to-r from-purple-500/30 via-pink-500/20 to-purple-500/30 border-purple-400/50"
+                                : "bg-gradient-to-r from-white/10 to-white/5 hover:from-white/20 hover:to-white/10 border-white/20 hover:border-white/40"
+                            }`}
+                            whileHover={{
+                              x: 12,
+                              boxShadow:
+                                "0 20px 40px -20px rgba(168,144,255,0.6)",
+                            }}
+                            whileTap={{ scale: 0.98 }}
+                          >
+                            <div className="flex items-center justify-between">
+                              <span
+                                className={`font-heading text-xl font-bold transition-colors ${
+                                  isActive
+                                    ? "text-purple-300"
+                                    : "text-white group-hover:text-purple-300"
+                                }`}
+                              >
+                                {item.name}
+                              </span>
+                              {isActive ? (
+                                <motion.div
+                                  className="w-2 h-2 rounded-full bg-gradient-to-r from-purple-400 to-pink-400"
+                                  animate={{ scale: [1, 1.3, 1] }}
+                                  transition={{
+                                    duration: 1.5,
+                                    repeat: Infinity,
+                                  }}
+                                />
+                              ) : (
+                                <motion.svg
+                                  className="w-5 h-5 text-white/60 group-hover:text-purple-300 transition-colors"
+                                  fill="none"
+                                  stroke="currentColor"
+                                  viewBox="0 0 24 24"
+                                  initial={{ x: 0 }}
+                                >
+                                  <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth={2}
+                                    d="M9 5l7 7-7 7"
+                                  />
+                                </motion.svg>
+                              )}
+                            </div>
+                          </motion.div>
+                        </Link>
+                      ) : (item as { isExternal?: boolean }).isExternal ? (
+                        <motion.a
+                          href={item.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          onClick={() => setIsMenuOpen(false)}
+                          className="group relative block py-4 px-6 rounded-2xl bg-gradient-to-r from-white/10 to-white/5 hover:from-white/20 hover:to-white/10 border border-white/20 hover:border-white/40 transition-all duration-300 cursor-pointer backdrop-blur-md"
                           whileHover={{
                             x: 12,
                             boxShadow:
@@ -431,102 +485,59 @@ export default function Navbar() {
                           whileTap={{ scale: 0.98 }}
                         >
                           <div className="flex items-center justify-between">
-                            <span className={`font-heading text-xl font-bold transition-colors ${
-                              isActive ? "text-purple-300" : "text-white group-hover:text-purple-300"
-                            }`}>
+                            <span className="font-heading text-xl font-bold text-white group-hover:text-purple-300 transition-colors">
                               {item.name}
                             </span>
-                            {isActive ? (
-                              <motion.div
-                                className="w-2 h-2 rounded-full bg-gradient-to-r from-purple-400 to-pink-400"
-                                animate={{ scale: [1, 1.3, 1] }}
-                                transition={{ duration: 1.5, repeat: Infinity }}
+                            <motion.svg
+                              className="w-5 h-5 text-white/60 group-hover:text-purple-300 transition-colors"
+                              fill="none"
+                              stroke="currentColor"
+                              viewBox="0 0 24 24"
+                              initial={{ x: 0 }}
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
                               />
-                            ) : (
-                              <motion.svg
-                                className="w-5 h-5 text-white/60 group-hover:text-purple-300 transition-colors"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
-                                initial={{ x: 0 }}
-                              >
-                                <path
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                  strokeWidth={2}
-                                  d="M9 5l7 7-7 7"
-                                />
-                              </motion.svg>
-                            )}
+                            </motion.svg>
                           </div>
-                        </motion.div>
-                      </Link>
-                    ) : (item as { isExternal?: boolean }).isExternal ? (
-                      <motion.a
-                        href={item.href}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        onClick={() => setIsMenuOpen(false)}
-                        className="group relative block py-4 px-6 rounded-2xl bg-gradient-to-r from-white/10 to-white/5 hover:from-white/20 hover:to-white/10 border border-white/20 hover:border-white/40 transition-all duration-300 cursor-pointer backdrop-blur-md"
-                        whileHover={{
-                          x: 12,
-                          boxShadow: "0 20px 40px -20px rgba(168,144,255,0.6)",
-                        }}
-                        whileTap={{ scale: 0.98 }}
-                      >
-                        <div className="flex items-center justify-between">
-                          <span className="font-heading text-xl font-bold text-white group-hover:text-purple-300 transition-colors">
-                            {item.name}
-                          </span>
-                          <motion.svg
-                            className="w-5 h-5 text-white/60 group-hover:text-purple-300 transition-colors"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                            initial={{ x: 0 }}
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth={2}
-                              d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
-                            />
-                          </motion.svg>
-                        </div>
-                      </motion.a>
-                    ) : (
-                      <motion.a
-                        href={item.href}
-                        onClick={(e) => handleNavClick(e, item.href)}
-                        className="group relative block py-4 px-6 rounded-2xl bg-gradient-to-r from-white/10 to-white/5 hover:from-white/20 hover:to-white/10 border border-white/20 hover:border-white/40 transition-all duration-300 cursor-pointer backdrop-blur-md"
-                        whileHover={{
-                          x: 12,
-                          boxShadow: "0 20px 40px -20px rgba(168,144,255,0.6)",
-                        }}
-                        whileTap={{ scale: 0.98 }}
-                      >
-                        <div className="flex items-center justify-between">
-                          <span className="font-heading text-xl font-bold text-white group-hover:text-purple-300 transition-colors">
-                            {item.name}
-                          </span>
-                          <motion.svg
-                            className="w-5 h-5 text-white/60 group-hover:text-purple-300 transition-colors"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                            initial={{ x: 0 }}
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth={2}
-                              d="M9 5l7 7-7 7"
-                            />
-                          </motion.svg>
-                        </div>
-                      </motion.a>
-                    )}
-                  </motion.div>
+                        </motion.a>
+                      ) : (
+                        <motion.a
+                          href={item.href}
+                          onClick={(e) => handleNavClick(e, item.href)}
+                          className="group relative block py-4 px-6 rounded-2xl bg-gradient-to-r from-white/10 to-white/5 hover:from-white/20 hover:to-white/10 border border-white/20 hover:border-white/40 transition-all duration-300 cursor-pointer backdrop-blur-md"
+                          whileHover={{
+                            x: 12,
+                            boxShadow:
+                              "0 20px 40px -20px rgba(168,144,255,0.6)",
+                          }}
+                          whileTap={{ scale: 0.98 }}
+                        >
+                          <div className="flex items-center justify-between">
+                            <span className="font-heading text-xl font-bold text-white group-hover:text-purple-300 transition-colors">
+                              {item.name}
+                            </span>
+                            <motion.svg
+                              className="w-5 h-5 text-white/60 group-hover:text-purple-300 transition-colors"
+                              fill="none"
+                              stroke="currentColor"
+                              viewBox="0 0 24 24"
+                              initial={{ x: 0 }}
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M9 5l7 7-7 7"
+                              />
+                            </motion.svg>
+                          </div>
+                        </motion.a>
+                      )}
+                    </motion.div>
                   );
                 })}
               </nav>
