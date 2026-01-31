@@ -1,0 +1,14 @@
+# BVP Optica Website Robots.txt
+# https://bvpoptica.in
+
+User-agent: *
+Allow: /
+
+# Sitemaps
+Sitemap: https://bvpoptica.in/sitemap.xml
+
+# Crawl-delay for politeness
+Crawl-delay: 1
+
+# Disallow admin/api routes if any
+Disallow: /api/
