@@ -20,16 +20,16 @@ export function HeroSection() {
 
       {/* Scroll indicator - offset slightly left to account for nav rail */}
       <motion.div
-        className="pointer-events-none absolute bottom-6 sm:bottom-10 left-0 right-0 z-20 mx-auto flex w-fit flex-col items-center gap-1.5 sm:gap-2 pr-8 sm:pr-12 md:pr-16"
+        className="pointer-events-none absolute bottom-2 sm:bottom-4 left-0 right-0 z-20 mx-auto flex w-fit flex-col items-center gap-1 sm:gap-1.5 pr-8 sm:pr-12 md:pr-16"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 2, duration: 1 }}
       >
-        <span className="text-white/70 text-[0.5rem] sm:text-[0.65rem] font-medium tracking-[0.25em] sm:tracking-[0.35em] uppercase">
+        <span className="text-white/70 text-[0.4rem] sm:text-[0.5rem] font-medium tracking-[0.2em] sm:tracking-[0.25em] uppercase">
           Scroll to explore
         </span>
         <motion.div
-          className="flex h-10 w-6 sm:h-12 sm:w-7 items-start justify-center rounded-full border border-white/40 bg-white/5 p-1.5 sm:p-2"
+          className="flex h-8 w-5 sm:h-9 sm:w-5 items-start justify-center rounded-full border border-white/40 bg-white/5 p-1 sm:p-1.5"
           animate={{
             borderColor: [
               "rgba(255,255,255,0.35)",
@@ -40,8 +40,8 @@ export function HeroSection() {
           transition={{ duration: 2.2, repeat: Infinity }}
         >
           <motion.span
-            className="h-2 w-2 rounded-full bg-white"
-            animate={{ y: [0, 16, 0], opacity: [1, 0.4, 1] }}
+            className="h-1.5 w-1.5 rounded-full bg-white"
+            animate={{ y: [0, 12, 0], opacity: [1, 0.4, 1] }}
             transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
           />
         </motion.div>

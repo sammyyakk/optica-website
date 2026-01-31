@@ -138,17 +138,31 @@ type PerformanceTier = "low" | "medium" | "high";
 
 function QuantumFoam({
   performanceTier = "medium",
+  isMobile = false,
 }: {
   performanceTier?: PerformanceTier;
+  isMobile?: boolean;
 }) {
   const meshRef = useRef<THREE.Mesh>(null);
 
-  // Increased detail for better visuals
-  const detail =
-    performanceTier === "low" ? 12 : performanceTier === "medium" ? 20 : 28;
-  const uNoiseStrength =
-    performanceTier === "low" ? 0.4 : performanceTier === "medium" ? 0.6 : 0.8;
-  const sphereSize = 7;
+  // Reduced detail on mobile to save resources
+  const detail = isMobile
+    ? 8
+    : performanceTier === "low"
+      ? 12
+      : performanceTier === "medium"
+        ? 20
+        : 28;
+  // Increased noise strength on mobile/tablet for more visible effect
+  const uNoiseStrength = isMobile
+    ? 0.55
+    : performanceTier === "low"
+      ? 0.4
+      : performanceTier === "medium"
+        ? 0.6
+        : 0.8;
+  // Smaller quantum foam on mobile
+  const sphereSize = isMobile ? 5 : 7;
 
   const uniforms = useMemo(
     () => ({
@@ -244,13 +258,16 @@ function RotatingCircle({
 
 function ParticleSwarm({
   performanceTier = "medium",
+  isMobile = false,
 }: {
   performanceTier?: PerformanceTier;
+  isMobile?: boolean;
 }) {
   const pointsRef = useRef<THREE.Points>(null);
-  // Increased particle counts for more visual density
-  const particleCount =
-    performanceTier === "low"
+  // Significantly reduced particle counts on mobile
+  const particleCount = isMobile
+    ? 200
+    : performanceTier === "low"
       ? 400
       : performanceTier === "medium"
         ? 1200
@@ -365,12 +382,19 @@ function ParticleSwarm({
 
 function CrystalCluster({
   performanceTier = "medium",
+  isMobile = false,
 }: {
   performanceTier?: PerformanceTier;
+  isMobile?: boolean;
 }) {
-  // Crystal count
-  const crystalCount =
-    performanceTier === "low" ? 8 : performanceTier === "medium" ? 14 : 20;
+  // Reduced crystal count on mobile
+  const crystalCount = isMobile
+    ? 5
+    : performanceTier === "low"
+      ? 8
+      : performanceTier === "medium"
+        ? 14
+        : 20;
 
   const crystals = useMemo(() => {
     const items: {
@@ -532,15 +556,29 @@ export default function Hero3D() {
   const [performanceTier, setPerformanceTier] =
     useState<PerformanceTier>("medium");
   const [isReady, setIsReady] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     const tier = detectPerformanceTier();
     setPerformanceTier(tier);
+    const mobile = window.innerWidth < 768;
+    setIsMobile(mobile);
     setIsReady(true);
+
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  const dpr =
-    performanceTier === "low" ? 0.75 : performanceTier === "medium" ? 1 : 1.5;
+  const dpr = isMobile
+    ? 0.6
+    : performanceTier === "low"
+      ? 0.75
+      : performanceTier === "medium"
+        ? 1
+        : 1.5;
 
   return (
     <section
@@ -573,11 +611,20 @@ export default function Hero3D() {
             <CameraRig performanceTier={performanceTier} />
             <DynamicLights performanceTier={performanceTier} />
 
-            <QuantumFoam performanceTier={performanceTier} />
-            <ParticleSwarm performanceTier={performanceTier} />
+            <QuantumFoam
+              performanceTier={performanceTier}
+              isMobile={isMobile}
+            />
+            <ParticleSwarm
+              performanceTier={performanceTier}
+              isMobile={isMobile}
+            />
 
             {/* Crystals on all tiers */}
-            <CrystalCluster performanceTier={performanceTier} />
+            <CrystalCluster
+              performanceTier={performanceTier}
+              isMobile={isMobile}
+            />
 
             {/* All 3 rings on all tiers */}
             {SPECTRUM_COLORS.map((color, i) => (
@@ -685,12 +732,14 @@ export default function Hero3D() {
           className="mt-6 sm:mt-8 flex w-full flex-wrap items-center justify-center gap-3 sm:gap-4 max-w-[min(90vw,620px)] px-2"
         >
           <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.96 }}>
-            <Link
-              href="/join"
-              className="inline-flex min-w-[140px] sm:min-w-[180px] items-center justify-center rounded-button bg-gradient-to-r from-purple-600 to-pink-600 px-5 sm:px-8 py-2.5 sm:py-3 font-accent text-sm sm:text-base font-semibold text-white shadow-[0_24px_60px_-24px_rgba(168,144,255,0.95)] transition-all duration-300 hover:shadow-[0_40px_80px_-24px_rgba(168,144,255,1.2)] hover:from-purple-500 hover:to-pink-500"
+            <a
+              href="https://www.optica.org/membership/join/individual/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex min-w-[140px] sm:min-w-[180px] items-center justify-center rounded-button bg-[#A890FF] px-5 sm:px-8 py-2.5 sm:py-3 font-accent text-sm sm:text-base font-semibold text-white shadow-[0_24px_60px_-24px_rgba(168,144,255,0.95)] transition-all duration-300 hover:shadow-[0_40px_80px_-24px_rgba(168,144,255,1.2)] hover:bg-[#9A80F0]"
             >
               Join Us
-            </Link>
+            </a>
           </motion.div>
           <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.96 }}>
             <Link

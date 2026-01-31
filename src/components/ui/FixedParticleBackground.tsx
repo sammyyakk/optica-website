@@ -1,63 +1,88 @@
 "use client";
 
 import { motion } from "motion/react";
-import { useMemo } from "react";
+import { useMemo, useState, useEffect } from "react";
 
 export function FixedParticleBackground() {
+  const [isMobile, setIsMobile] = useState(false);
+  const [isReady, setIsReady] = useState(false);
+
+  useEffect(() => {
+    const checkDevice = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkDevice();
+    setIsReady(true);
+    window.addEventListener("resize", checkDevice);
+    return () => window.removeEventListener("resize", checkDevice);
+  }, []);
+
   // Generate multiple layers of stars with different properties
+  // Mobile: ~40% of desktop stars, Desktop: 70% of original
   const starLayers = useMemo(() => {
-    // Layer 1: Large bright stars (20 stars) - faster twinkling
-    const largStars = Array.from({ length: 20 }, (_, i) => ({
+    // Desktop counts (70% of original: 20->14, 50->35, 100->70)
+    // Mobile counts (~40% of desktop: 14->6, 35->14, 70->28)
+    const largeCount = isMobile ? 6 : 14;
+    const mediumCount = isMobile ? 14 : 35;
+    const smallCount = isMobile ? 28 : 70;
+
+    // Slower twinkling - mobile: 3x slower, desktop: 1.5x slower
+    const durationMultiplier = isMobile ? 3 : 1.5;
+
+    // Layer 1: Large bright stars - slower twinkling
+    const largStars = Array.from({ length: largeCount }, (_, i) => ({
       id: `large-${i}`,
       x: Math.random() * 100,
       y: Math.random() * 100,
       size: 3 + Math.random() * 2,
       opacity: 0.8 + Math.random() * 0.2,
-      minOpacity: 0.1 + Math.random() * 0.2, // Random min opacity
-      duration: 0.8 + Math.random() * 1.2, // Faster: 0.8-2s
+      minOpacity: 0.1 + Math.random() * 0.2,
+      duration: (0.8 + Math.random() * 1.2) * durationMultiplier,
       delay: Math.random() * 1,
     }));
 
-    // Layer 2: Medium stars (50 stars) - faster twinkling
-    const mediumStars = Array.from({ length: 50 }, (_, i) => ({
+    // Layer 2: Medium stars - slower twinkling
+    const mediumStars = Array.from({ length: mediumCount }, (_, i) => ({
       id: `medium-${i}`,
       x: Math.random() * 100,
       y: Math.random() * 100,
       size: 2 + Math.random() * 1,
       opacity: 0.5 + Math.random() * 0.3,
-      minOpacity: 0.05 + Math.random() * 0.15, // Random min opacity
-      duration: 0.5 + Math.random() * 1.5, // Faster: 0.5-2s
+      minOpacity: 0.05 + Math.random() * 0.15,
+      duration: (0.5 + Math.random() * 1.5) * durationMultiplier,
       delay: Math.random() * 2,
     }));
 
-    // Layer 3: Small distant stars (100 stars) - faster twinkling
-    const smallStars = Array.from({ length: 100 }, (_, i) => ({
+    // Layer 3: Small distant stars - slower twinkling
+    const smallStars = Array.from({ length: smallCount }, (_, i) => ({
       id: `small-${i}`,
       x: Math.random() * 100,
       y: Math.random() * 100,
       size: 1 + Math.random() * 0.5,
       opacity: 0.3 + Math.random() * 0.4,
-      minOpacity: 0.02 + Math.random() * 0.1, // Random min opacity
-      duration: 0.3 + Math.random() * 1.2, // Faster: 0.3-1.5s
+      minOpacity: 0.02 + Math.random() * 0.1,
+      duration: (0.3 + Math.random() * 1.2) * durationMultiplier,
       delay: Math.random() * 2,
     }));
 
     return { largStars, mediumStars, smallStars };
-  }, []);
+  }, [isMobile]);
 
-  // Generate nebula clouds - purple/pink only, no blue
+  // Generate nebula clouds - fewer on mobile
   const nebulaClouds = useMemo(
     () =>
-      Array.from({ length: 3 }, (_, i) => ({
+      Array.from({ length: isMobile ? 2 : 3 }, (_, i) => ({
         id: `nebula-${i}`,
         x: Math.random() * 100,
         y: Math.random() * 100,
         scale: 0.8 + Math.random() * 0.4,
         rotation: Math.random() * 360,
-        duration: 15 + Math.random() * 10,
+        duration: (15 + Math.random() * 10) * (isMobile ? 1.5 : 1),
       })),
-    []
+    [isMobile],
   );
+
+  if (!isReady) return null;
 
   return (
     <div className="fixed inset-0 z-0 overflow-hidden bg-gradient-to-b from-background-dark via-[#0a0e1a] to-background-dark">
@@ -69,8 +94,8 @@ export function FixedParticleBackground() {
           style={{
             left: `${cloud.x}%`,
             top: `${cloud.y}%`,
-            width: "500px",
-            height: "500px",
+            width: isMobile ? "300px" : "500px",
+            height: isMobile ? "300px" : "500px",
             background: `radial-gradient(circle, rgba(164, 143, 245, 0.12) 0%, rgba(233, 30, 99, 0.08) 50%, transparent 70%)`,
           }}
           animate={{
@@ -86,7 +111,7 @@ export function FixedParticleBackground() {
         />
       ))}
 
-      {/* Large stars - faster and more random twinkling */}
+      {/* Large stars - slower twinkling */}
       {starLayers.largStars.map((star) => (
         <motion.div
           key={star.id}
@@ -120,7 +145,7 @@ export function FixedParticleBackground() {
         />
       ))}
 
-      {/* Medium stars - faster and more random twinkling */}
+      {/* Medium stars - slower twinkling */}
       {starLayers.mediumStars.map((star) => (
         <motion.div
           key={star.id}
@@ -151,7 +176,7 @@ export function FixedParticleBackground() {
         />
       ))}
 
-      {/* Small stars - faster and more random twinkling */}
+      {/* Small stars - slower twinkling */}
       {starLayers.smallStars.map((star) => (
         <motion.div
           key={star.id}
@@ -181,44 +206,48 @@ export function FixedParticleBackground() {
         />
       ))}
 
-      {/* Shooting stars - purple tinted instead of blue */}
-      <motion.div
-        className="absolute w-1 h-1 bg-white rounded-full"
-        style={{
-          boxShadow:
-            "0 0 10px rgba(255, 255, 255, 1), 0 0 20px rgba(164, 143, 245, 0.8)",
-        }}
-        animate={{
-          x: ["-10%", "110%"],
-          y: ["-10%", "40%"],
-          opacity: [0, 1, 1, 0],
-        }}
-        transition={{
-          duration: 2,
-          repeat: Infinity,
-          repeatDelay: 5,
-          ease: "easeOut",
-        }}
-      />
+      {/* Shooting stars - only on desktop */}
+      {!isMobile && (
+        <>
+          <motion.div
+            className="absolute w-1 h-1 bg-white rounded-full"
+            style={{
+              boxShadow:
+                "0 0 10px rgba(255, 255, 255, 1), 0 0 20px rgba(164, 143, 245, 0.8)",
+            }}
+            animate={{
+              x: ["-10%", "110%"],
+              y: ["-10%", "40%"],
+              opacity: [0, 1, 1, 0],
+            }}
+            transition={{
+              duration: 2,
+              repeat: Infinity,
+              repeatDelay: 8,
+              ease: "easeOut",
+            }}
+          />
 
-      <motion.div
-        className="absolute w-1 h-1 bg-white rounded-full"
-        style={{
-          boxShadow:
-            "0 0 10px rgba(255, 255, 255, 1), 0 0 20px rgba(233, 30, 99, 0.8)",
-        }}
-        animate={{
-          x: ["110%", "-10%"],
-          y: ["60%", "90%"],
-          opacity: [0, 1, 1, 0],
-        }}
-        transition={{
-          duration: 2.5,
-          repeat: Infinity,
-          repeatDelay: 8,
-          ease: "easeOut",
-        }}
-      />
+          <motion.div
+            className="absolute w-1 h-1 bg-white rounded-full"
+            style={{
+              boxShadow:
+                "0 0 10px rgba(255, 255, 255, 1), 0 0 20px rgba(233, 30, 99, 0.8)",
+            }}
+            animate={{
+              x: ["110%", "-10%"],
+              y: ["60%", "90%"],
+              opacity: [0, 1, 1, 0],
+            }}
+            transition={{
+              duration: 2.5,
+              repeat: Infinity,
+              repeatDelay: 12,
+              ease: "easeOut",
+            }}
+          />
+        </>
+      )}
 
       {/* Gradient overlay for depth */}
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-background-dark/50" />

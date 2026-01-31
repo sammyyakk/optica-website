@@ -2,6 +2,7 @@
 
 import { motion, useInView } from "motion/react";
 import { useRef } from "react";
+import Image from "next/image";
 import { FixedParticleBackground } from "@/components/ui/FixedParticleBackground";
 import { FooterSection } from "@/components/home/FooterSection";
 
@@ -14,45 +15,161 @@ interface TeamMember {
   github?: string;
   twitter?: string;
   website?: string;
+  isCreator?: boolean; // Easter egg for the website creator
 }
 
 const coreTeam: TeamMember[] = [
-  { name: "President", role: "President", linkedin: "#" },
-  { name: "Vice President", role: "Vice President", linkedin: "#" },
-  { name: "Secretary", role: "Secretary", linkedin: "#" },
-  { name: "Treasurer", role: "Treasurer", linkedin: "#" },
+  {
+    name: "Akshat Arora",
+    role: "President",
+    image: "/team/akshat.png",
+    linkedin: "#",
+    instagram: "#",
+  },
+  {
+    name: "Anand Ambastha",
+    role: "Vice President",
+    image: "/team/anand.jpeg",
+    linkedin: "#",
+    instagram: "#",
+  },
+  {
+    name: "Pratham Gupta",
+    role: "Secretary",
+    image: "/team/pratham.jpeg",
+    linkedin: "#",
+    instagram: "#",
+  },
+  {
+    name: "Lavanya Mathur",
+    role: "Treasurer",
+    image: "/team/lavanya.jpeg",
+    linkedin: "#",
+    instagram: "#",
+  },
+];
+
+// Special Officers - 2 members
+const specialOfficers: TeamMember[] = [
+  {
+    name: "Simran Kaur",
+    role: "Special Officer",
+    image: "/team/simran.jpeg",
+    linkedin: "#",
+    instagram: "#",
+  },
+  {
+    name: "Gaurav Sharma",
+    role: "Special Officer",
+    image: "/team/gaurav.jpeg",
+    linkedin: "#",
+    instagram: "#",
+  },
 ];
 
 // Technical Department - 3 heads (displayed separately in a row)
 const technicalHeads: TeamMember[] = [
-  { name: "Technical Head 1", role: "Technical Department", linkedin: "#" },
-  { name: "Technical Head 2", role: "Technical Department", linkedin: "#" },
-  { name: "Technical Head 3", role: "Technical Department", linkedin: "#" },
+  {
+    name: "Mayank Singh",
+    role: "Technical",
+    image: "/team/mayank.png",
+    linkedin: "#",
+    instagram: "#",
+  },
+  {
+    name: "Samyak Jain",
+    role: "Technical",
+    image: "/team/samyak.png",
+    linkedin: "https://www.linkedin.com/in/sammyyakk/",
+    instagram: "https://www.instagram.com/sammyyakk/",
+    github: "https://github.com/sammyyakk",
+    website: "https://samyakjain.dev",
+    isCreator: true,
+  },
+  {
+    name: "Saksham Malik",
+    role: "Technical",
+    image: "/team/saksham.jpeg",
+    linkedin: "#",
+    instagram: "#",
+  },
 ];
 
 const departmentHeads: TeamMember[] = [
-  // Content Department - 2 heads
-  { name: "Content Head 1", role: "Content Department", linkedin: "#" },
-  { name: "Content Head 2", role: "Content Department", linkedin: "#" },
-  // Design Department - 2 heads
-  { name: "Design Head 1", role: "Design Department", linkedin: "#" },
-  { name: "Design Head 2", role: "Design Department", linkedin: "#" },
-  // Logistics Department - 2 heads
-  { name: "Logistics Head 1", role: "Logistics Department", linkedin: "#" },
-  { name: "Logistics Head 2", role: "Logistics Department", linkedin: "#" },
-  // Outreach Department - 2 heads
-  { name: "Outreach Head 1", role: "Outreach Department", linkedin: "#" },
-  { name: "Outreach Head 2", role: "Outreach Department", linkedin: "#" },
-  // Social Media Department - 2 heads
+  // Social Media & Publicity - 2 heads
   {
-    name: "Social Media Head 1",
-    role: "Social Media Department",
+    name: "Chetna Negi",
+    role: "Social Media & Publicity",
+    image: "/team/chetna.jpeg",
     linkedin: "#",
+    instagram: "#",
   },
   {
-    name: "Social Media Head 2",
-    role: "Social Media Department",
+    name: "Sambhav Jain",
+    role: "Social Media & Publicity",
+    image: "/team/sambhav.png",
     linkedin: "#",
+    instagram: "#",
+  },
+  // Design & Creative - 2 heads
+  {
+    name: "Aahana Budhiraja",
+    role: "Design & Creative",
+    image: "/team/ahana.jpeg",
+    linkedin: "#",
+    instagram: "#",
+  },
+  {
+    name: "Vanshika Bisht",
+    role: "Design & Creative",
+    image: "/team/vanshika.jpeg",
+    linkedin: "#",
+    instagram: "#",
+  },
+  // Outreach & Communication - 2 heads
+  {
+    name: "Avni Kanungo",
+    role: "Outreach & Communication",
+    image: "/team/avni.jpeg",
+    linkedin: "#",
+    instagram: "#",
+  },
+  {
+    name: "Pranshu Mittal",
+    role: "Outreach & Communication",
+    image: "/team/pranshu.jpeg",
+    linkedin: "#",
+    instagram: "#",
+  },
+  // Content & Documentation - 2 heads
+  {
+    name: "Adya Singh",
+    role: "Content & Documentation",
+    image: "/team/adya.jpeg",
+    linkedin: "#",
+    instagram: "#",
+  },
+  {
+    name: "Ananya Suman",
+    role: "Content & Documentation",
+    image: "/team/ananya.jpeg",
+    linkedin: "#",
+    instagram: "#",
+  },
+  // Logistics & Operations - 2 heads
+  {
+    name: "Kashish Tyagi",
+    role: "Logistics & Operations",
+    image: "/team/kashish.png",
+    linkedin: "#",
+    instagram: "#",
+  },
+  {
+    name: "Krish Chhabra",
+    role: "Logistics & Operations",
+    image: "/team/krish.jpeg",
+    linkedin: "#",
+    instagram: "#",
   },
 ];
 
@@ -61,12 +178,13 @@ const roleColors: Record<string, string> = {
   "Vice President": "from-pink-400 to-rose-400",
   Secretary: "from-blue-400 to-purple-400",
   Treasurer: "from-green-400 to-teal-400",
-  "Content Department": "from-orange-400 to-pink-400",
-  "Design Department": "from-purple-400 to-blue-400",
-  "Logistics Department": "from-teal-400 to-green-400",
-  "Outreach Department": "from-yellow-400 to-orange-400",
-  "Social Media Department": "from-pink-400 to-purple-400",
-  "Technical Department": "from-cyan-400 to-blue-400",
+  "Special Officer": "from-cyan-400 to-blue-400",
+  "Content & Documentation": "from-orange-400 to-pink-400",
+  "Design & Creative": "from-purple-400 to-blue-400",
+  "Logistics & Operations": "from-teal-400 to-green-400",
+  "Outreach & Communication": "from-yellow-400 to-orange-400",
+  "Social Media & Publicity": "from-pink-400 to-purple-400",
+  Technical: "from-amber-400 to-orange-400",
 };
 
 function AnimatedSection({
@@ -104,6 +222,10 @@ function TeamMemberCard({
   const gradientColor =
     roleColors[member.role] || "from-purple-400 to-pink-400";
 
+  // Special golden gradient for the creator
+  const isCreator = member.isCreator;
+  const creatorGradient = "from-yellow-400 via-amber-400 to-yellow-500";
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 30 }}
@@ -114,38 +236,93 @@ function TeamMemberCard({
         delay: index * 0.1,
         ease: [0.22, 1, 0.36, 1],
       }}
-      whileHover={{ y: -6 }}
-      className="group"
+      whileHover={{ y: -6, scale: isCreator ? 1.02 : 1 }}
+      className={`group ${isCreator ? "relative" : ""}`}
     >
-      <div className="relative h-full bg-gradient-to-br from-purple-900/30 via-black/40 to-purple-900/20 backdrop-blur-sm rounded-xl border border-purple-500/20 p-4 sm:p-6 hover:border-purple-400/40 transition-all duration-300">
-        {/* Subtle glow on hover */}
-        <div className="absolute -inset-1 bg-gradient-to-br from-purple-500/0 to-pink-500/0 group-hover:from-purple-500/10 group-hover:to-pink-500/10 rounded-xl blur-lg transition-all duration-300 -z-10" />
+      {/* Creator golden glow effect */}
+      {isCreator && (
+        <motion.div
+          className="absolute -inset-2 bg-gradient-to-r from-yellow-500/30 via-amber-400/20 to-yellow-500/30 rounded-2xl blur-xl -z-10"
+          animate={{
+            opacity: [0.3, 0.6, 0.3],
+            scale: [1, 1.05, 1],
+          }}
+          transition={{
+            duration: 3,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        />
+      )}
 
-        {/* Avatar */}
-        <div className="relative mx-auto mb-3 sm:mb-4">
-          <div
-            className={`w-20 h-20 sm:w-24 sm:h-24 mx-auto rounded-full bg-gradient-to-br ${gradientColor} p-0.5`}
+      <div
+        className={`relative h-full bg-gradient-to-br from-purple-900/30 via-black/40 to-purple-900/20 backdrop-blur-sm rounded-xl border ${isCreator ? "border-yellow-500/40 hover:border-yellow-400/60" : "border-purple-500/20 hover:border-purple-400/40"} p-4 sm:p-6 md:p-8 transition-all duration-300`}
+      >
+        {/* Subtle glow on hover */}
+        <div
+          className={`absolute -inset-1 bg-gradient-to-br ${isCreator ? "from-yellow-500/0 to-amber-500/0 group-hover:from-yellow-500/15 group-hover:to-amber-500/15" : "from-purple-500/0 to-pink-500/0 group-hover:from-purple-500/10 group-hover:to-pink-500/10"} rounded-xl blur-lg transition-all duration-300 -z-10`}
+        />
+
+        {/* Avatar - 3x bigger */}
+        <div className="relative mx-auto mb-4 sm:mb-5">
+          <motion.div
+            className={`w-32 h-32 sm:w-40 sm:h-40 md:w-48 md:h-48 mx-auto rounded-full bg-gradient-to-br ${isCreator ? creatorGradient : gradientColor} p-1 overflow-hidden`}
+            animate={
+              isCreator
+                ? {
+                    boxShadow: [
+                      "0 0 20px rgba(251, 191, 36, 0.3)",
+                      "0 0 40px rgba(251, 191, 36, 0.5)",
+                      "0 0 20px rgba(251, 191, 36, 0.3)",
+                    ],
+                  }
+                : {}
+            }
+            transition={
+              isCreator
+                ? {
+                    duration: 2,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                  }
+                : {}
+            }
           >
-            <div className="w-full h-full rounded-full bg-[#0E1A2B] flex items-center justify-center">
-              <span
-                className={`font-heading text-2xl sm:text-3xl font-bold bg-gradient-to-br ${gradientColor} bg-clip-text text-transparent`}
-              >
-                {member.name.charAt(0)}
-              </span>
-            </div>
-          </div>
+            {member.image ? (
+              <div className="w-full h-full rounded-full overflow-hidden">
+                <Image
+                  src={member.image}
+                  alt={member.name}
+                  width={300}
+                  height={300}
+                  quality={90}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            ) : (
+              <div className="w-full h-full rounded-full bg-[#0E1A2B] flex items-center justify-center">
+                <span
+                  className={`font-heading text-4xl sm:text-5xl md:text-6xl font-bold bg-gradient-to-br ${isCreator ? creatorGradient : gradientColor} bg-clip-text text-transparent`}
+                >
+                  {member.name.charAt(0)}
+                </span>
+              </div>
+            )}
+          </motion.div>
           {/* Glow behind avatar */}
           <div
-            className={`absolute inset-0 w-20 h-20 sm:w-24 sm:h-24 mx-auto rounded-full bg-gradient-to-br ${gradientColor} opacity-20 blur-xl -z-10`}
+            className={`absolute inset-0 w-32 h-32 sm:w-40 sm:h-40 md:w-48 md:h-48 mx-auto rounded-full bg-gradient-to-br ${isCreator ? creatorGradient : gradientColor} ${isCreator ? "opacity-30" : "opacity-20"} blur-xl -z-10`}
           />
         </div>
 
         {/* Member Info */}
-        <h3 className="font-heading text-base sm:text-lg font-bold text-center text-white mb-1">
+        <h3
+          className={`font-heading text-lg sm:text-xl font-bold text-center mb-1 ${isCreator ? "bg-gradient-to-r from-yellow-300 via-amber-200 to-yellow-300 bg-clip-text text-transparent" : "text-white"}`}
+        >
           {member.name}
         </h3>
         <p
-          className={`font-accent text-[10px] sm:text-xs text-center bg-gradient-to-r ${gradientColor} bg-clip-text text-transparent font-medium mb-3 sm:mb-4`}
+          className={`font-accent text-xs sm:text-sm text-center bg-gradient-to-r ${isCreator ? creatorGradient : gradientColor} bg-clip-text text-transparent font-medium mb-4 sm:mb-5`}
         >
           {member.role}
         </p>
@@ -301,9 +478,22 @@ export default function TeamPage() {
             ))}
           </div>
 
+          {/* Special Officers */}
+          <AnimatedSection delay={0.27} className="mb-8 sm:mb-10">
+            <h2 className="font-heading text-xl sm:text-2xl md:text-3xl font-bold text-center bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">
+              Special Officers
+            </h2>
+          </AnimatedSection>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5 mb-12 sm:mb-16 max-w-2xl mx-auto">
+            {specialOfficers.map((member, index) => (
+              <TeamMemberCard key={index} member={member} index={index} />
+            ))}
+          </div>
+
           {/* Technical Department - Special 3-column row */}
           <AnimatedSection delay={0.3} className="mb-8 sm:mb-10">
-            <h2 className="font-heading text-xl sm:text-2xl md:text-3xl font-bold text-center bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">
+            <h2 className="font-heading text-xl sm:text-2xl md:text-3xl font-bold text-center bg-gradient-to-r from-amber-400 to-orange-400 bg-clip-text text-transparent">
               Technical Department
             </h2>
           </AnimatedSection>

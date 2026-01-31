@@ -5,6 +5,7 @@ import type React from "react";
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "motion/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -13,6 +14,7 @@ gsap.registerPlugin(ScrollTrigger);
 
 export default function Navbar() {
   const navRef = useRef<HTMLElement>(null);
+  const pathname = usePathname();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
@@ -39,7 +41,7 @@ export default function Navbar() {
         duration: 1.2,
         ease: "cubic-bezier(0.22, 1, 0.36, 1)",
         delay: 0.3,
-      }
+      },
     );
 
     const sections = document.querySelectorAll("section[id]");
@@ -51,7 +53,7 @@ export default function Navbar() {
           }
         });
       },
-      { threshold: 0.3 }
+      { threshold: 0.3 },
     );
 
     sections.forEach((section) => observer.observe(section));
@@ -61,7 +63,7 @@ export default function Navbar() {
 
   const handleNavClick = (
     e: React.MouseEvent<HTMLAnchorElement>,
-    target: string
+    target: string,
   ) => {
     e.preventDefault();
     const element = document.querySelector(target);
@@ -80,7 +82,12 @@ export default function Navbar() {
     { name: "About", href: "/about", isRoute: true },
     { name: "Events", href: "/events", isRoute: true },
     { name: "Team", href: "/team", isRoute: true },
-    { name: "Join", href: "#join", isRoute: false },
+    {
+      name: "Join",
+      href: "https://www.optica.org/membership/join/individual/",
+      isRoute: false,
+      isExternal: true,
+    },
   ];
 
   return (
@@ -129,47 +136,124 @@ export default function Navbar() {
 
             {/* Desktop Navigation */}
             <div className="hidden md:flex items-center space-x-2 lg:space-x-4">
-              {navItems.map((item, index) =>
-                item.isRoute ? (
+              {navItems.map((item, index) => {
+                const isActive = item.isRoute && pathname === item.href;
+                return item.isRoute ? (
                   <Link key={item.name} href={item.href}>
                     <motion.span
                       ref={(el) => {
                         navItemsRef.current[index] = el;
                       }}
+                      data-cursor-hover
                       className={`relative px-4 py-2 font-accent text-sm lg:text-base font-medium transition-all duration-300 cursor-pointer group ${
-                        isScrolled
-                          ? "text-white/80 hover:text-white"
-                          : "text-white/70 hover:text-white"
+                        isActive
+                          ? "text-white"
+                          : isScrolled
+                            ? "text-white/80 hover:text-white"
+                            : "text-white/70 hover:text-white"
                       }`}
                       whileHover={{ scale: 1.08 }}
                       whileTap={{ scale: 0.95 }}
                     >
-                      {item.name}
+                      {/* Glow background on hover */}
                       <motion.div
-                        className="absolute bottom-0 left-4 right-4 h-0.5 bg-gradient-to-r from-purple-500 via-pink-500 to-purple-500 rounded-full"
-                        initial={{ scaleX: 0, opacity: 0 }}
-                        whileHover={{ scaleX: 1, opacity: 1 }}
-                        transition={{ duration: 0.3, ease: "easeOut" }}
-                        style={{ transformOrigin: "center" }}
+                        className="absolute inset-0 rounded-lg bg-gradient-to-r from-purple-500/20 via-pink-500/20 to-purple-500/20 blur-sm"
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        whileHover={{ opacity: 1, scale: 1 }}
+                        transition={{ duration: 0.2 }}
                       />
+                      {/* Active/Hover background */}
+                      <motion.div
+                        className={`absolute inset-0 rounded-lg transition-all duration-300 ${
+                          isActive
+                            ? "bg-gradient-to-r from-purple-500/30 via-pink-500/20 to-purple-500/30"
+                            : "bg-transparent group-hover:bg-white/5"
+                        }`}
+                      />
+                      <span className="relative z-10">{item.name}</span>
+                      {/* Active indicator line */}
+                      {isActive ? (
+                        <motion.div
+                          className="absolute bottom-0 left-4 right-4 h-0.5 bg-gradient-to-r from-purple-500 via-pink-500 to-purple-500 rounded-full"
+                          layoutId="activeNavIndicator"
+                          transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                        />
+                      ) : (
+                        <motion.div
+                          className="absolute bottom-0 left-4 right-4 h-0.5 bg-gradient-to-r from-purple-500 via-pink-500 to-purple-500 rounded-full"
+                          initial={{ scaleX: 0, opacity: 0 }}
+                          whileHover={{ scaleX: 1, opacity: 1 }}
+                          transition={{ duration: 0.3, ease: "easeOut" }}
+                          style={{ transformOrigin: "center" }}
+                        />
+                      )}
                     </motion.span>
                   </Link>
-                ) : (
+                ) : (item as { isExternal?: boolean }).isExternal ? (
                   <motion.a
                     key={item.name}
                     href={item.href}
-                    onClick={(e) => handleNavClick(e, item.href)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    data-cursor-hover
                     className={`relative px-4 py-2 font-accent text-sm lg:text-base font-medium transition-all duration-300 group ${
-                      activeSection === item.href.slice(1)
-                        ? "text-white"
-                        : isScrolled
+                      isScrolled
                         ? "text-white/80 hover:text-white"
                         : "text-white/70 hover:text-white"
                     }`}
                     whileHover={{ scale: 1.08 }}
                     whileTap={{ scale: 0.95 }}
                   >
-                    {item.name}
+                    {/* Glow background on hover */}
+                    <motion.div
+                      className="absolute inset-0 rounded-lg bg-gradient-to-r from-purple-500/20 via-pink-500/20 to-purple-500/20 blur-sm"
+                      initial={{ opacity: 0, scale: 0.8 }}
+                      whileHover={{ opacity: 1, scale: 1 }}
+                      transition={{ duration: 0.2 }}
+                    />
+                    <motion.div
+                      className="absolute inset-0 rounded-lg bg-transparent group-hover:bg-white/5 transition-all duration-300"
+                    />
+                    <span className="relative z-10">{item.name}</span>
+                    <motion.div
+                      className="absolute bottom-0 left-4 right-4 h-0.5 bg-gradient-to-r from-purple-500 via-pink-500 to-purple-500 rounded-full"
+                      initial={{ scaleX: 0, opacity: 0 }}
+                      whileHover={{ scaleX: 1, opacity: 1 }}
+                      transition={{ duration: 0.3, ease: "easeOut" }}
+                      style={{ transformOrigin: "center" }}
+                    />
+                  </motion.a>
+                ) : (
+                  <motion.a
+                    key={item.name}
+                    href={item.href}
+                    onClick={(e) => handleNavClick(e, item.href)}
+                    data-cursor-hover
+                    className={`relative px-4 py-2 font-accent text-sm lg:text-base font-medium transition-all duration-300 group ${
+                      activeSection === item.href.slice(1)
+                        ? "text-white"
+                        : isScrolled
+                          ? "text-white/80 hover:text-white"
+                          : "text-white/70 hover:text-white"
+                    }`}
+                    whileHover={{ scale: 1.08 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    {/* Glow background on hover */}
+                    <motion.div
+                      className="absolute inset-0 rounded-lg bg-gradient-to-r from-purple-500/20 via-pink-500/20 to-purple-500/20 blur-sm"
+                      initial={{ opacity: 0, scale: 0.8 }}
+                      whileHover={{ opacity: 1, scale: 1 }}
+                      transition={{ duration: 0.2 }}
+                    />
+                    <motion.div
+                      className={`absolute inset-0 rounded-lg transition-all duration-300 ${
+                        activeSection === item.href.slice(1)
+                          ? "bg-gradient-to-r from-purple-500/30 via-pink-500/20 to-purple-500/30"
+                          : "bg-transparent group-hover:bg-white/5"
+                      }`}
+                    />
+                    <span className="relative z-10">{item.name}</span>
                     {activeSection === item.href.slice(1) && (
                       <motion.div
                         className="absolute bottom-0 left-4 right-4 h-0.5 bg-gradient-to-r from-purple-500 via-pink-500 to-purple-500 rounded-full"
@@ -182,8 +266,8 @@ export default function Navbar() {
                       />
                     )}
                   </motion.a>
-                )
-              )}
+                );
+              })}
             </div>
 
             {/* Mobile Menu Button */}
@@ -315,7 +399,9 @@ export default function Navbar() {
 
               {/* Menu Items */}
               <nav className="px-8 space-y-3">
-                {navItems.map((item, index) => (
+                {navItems.map((item, index) => {
+                  const isActive = item.isRoute && pathname === item.href;
+                  return (
                   <motion.div
                     key={item.name}
                     initial={{ opacity: 0, x: 50, y: 20 }}
@@ -332,7 +418,11 @@ export default function Navbar() {
                         onClick={() => setIsMenuOpen(false)}
                       >
                         <motion.div
-                          className="group relative py-4 px-6 rounded-2xl bg-gradient-to-r from-white/10 to-white/5 hover:from-white/20 hover:to-white/10 border border-white/20 hover:border-white/40 transition-all duration-300 cursor-pointer backdrop-blur-md"
+                          className={`group relative py-4 px-6 rounded-2xl border transition-all duration-300 cursor-pointer backdrop-blur-md ${
+                            isActive
+                              ? "bg-gradient-to-r from-purple-500/30 via-pink-500/20 to-purple-500/30 border-purple-400/50"
+                              : "bg-gradient-to-r from-white/10 to-white/5 hover:from-white/20 hover:to-white/10 border-white/20 hover:border-white/40"
+                          }`}
                           whileHover={{
                             x: 12,
                             boxShadow:
@@ -341,26 +431,69 @@ export default function Navbar() {
                           whileTap={{ scale: 0.98 }}
                         >
                           <div className="flex items-center justify-between">
-                            <span className="font-heading text-xl font-bold text-white group-hover:text-purple-300 transition-colors">
+                            <span className={`font-heading text-xl font-bold transition-colors ${
+                              isActive ? "text-purple-300" : "text-white group-hover:text-purple-300"
+                            }`}>
                               {item.name}
                             </span>
-                            <motion.svg
-                              className="w-5 h-5 text-white/60 group-hover:text-purple-300 transition-colors"
-                              fill="none"
-                              stroke="currentColor"
-                              viewBox="0 0 24 24"
-                              initial={{ x: 0 }}
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth={2}
-                                d="M9 5l7 7-7 7"
+                            {isActive ? (
+                              <motion.div
+                                className="w-2 h-2 rounded-full bg-gradient-to-r from-purple-400 to-pink-400"
+                                animate={{ scale: [1, 1.3, 1] }}
+                                transition={{ duration: 1.5, repeat: Infinity }}
                               />
-                            </motion.svg>
+                            ) : (
+                              <motion.svg
+                                className="w-5 h-5 text-white/60 group-hover:text-purple-300 transition-colors"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                                initial={{ x: 0 }}
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth={2}
+                                  d="M9 5l7 7-7 7"
+                                />
+                              </motion.svg>
+                            )}
                           </div>
                         </motion.div>
                       </Link>
+                    ) : (item as { isExternal?: boolean }).isExternal ? (
+                      <motion.a
+                        href={item.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={() => setIsMenuOpen(false)}
+                        className="group relative block py-4 px-6 rounded-2xl bg-gradient-to-r from-white/10 to-white/5 hover:from-white/20 hover:to-white/10 border border-white/20 hover:border-white/40 transition-all duration-300 cursor-pointer backdrop-blur-md"
+                        whileHover={{
+                          x: 12,
+                          boxShadow: "0 20px 40px -20px rgba(168,144,255,0.6)",
+                        }}
+                        whileTap={{ scale: 0.98 }}
+                      >
+                        <div className="flex items-center justify-between">
+                          <span className="font-heading text-xl font-bold text-white group-hover:text-purple-300 transition-colors">
+                            {item.name}
+                          </span>
+                          <motion.svg
+                            className="w-5 h-5 text-white/60 group-hover:text-purple-300 transition-colors"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                            initial={{ x: 0 }}
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={2}
+                              d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                            />
+                          </motion.svg>
+                        </div>
+                      </motion.a>
                     ) : (
                       <motion.a
                         href={item.href}
@@ -394,7 +527,8 @@ export default function Navbar() {
                       </motion.a>
                     )}
                   </motion.div>
-                ))}
+                  );
+                })}
               </nav>
 
               {/* Bottom Decoration */}

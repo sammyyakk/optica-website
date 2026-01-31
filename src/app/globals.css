@@ -36,6 +36,29 @@ html {
   text-size-adjust: 100%;
 }
 
+/* Desktop auto-scaling: Ensures consistent appearance regardless of zoom */
+/* This uses viewport units and clamp() to auto-adjust sizing */
+@media (min-width: 1024px) {
+  :root {
+    /* Scale factor based on viewport width for desktop consistency */
+    --scale-factor: clamp(0.85, calc(100vw / 1920), 1.15);
+  }
+  
+  /* Apply scaling to main content containers */
+  .scale-container {
+    transform: scale(var(--scale-factor));
+    transform-origin: top center;
+  }
+}
+
+/* Mobile scaling consistency */
+@media (max-width: 767px) {
+  :root {
+    /* Mobile scale factor */
+    --scale-factor: clamp(0.9, calc(100vw / 390), 1.1);
+  }
+}
+
 /* Prevent horizontal overflow */
 html, body {
   overflow-x: hidden;
@@ -94,38 +117,40 @@ body {
 /* @media (prefers-color-scheme: dark) { ... } */
 
 /* Fluid Typography - scales smoothly with viewport and user zoom */
+/* Desktop: Uses vw units that adapt to browser zoom */
+/* Mobile: Uses smaller base sizes with tighter ranges */
 h1, .text-5xl, .text-6xl, .text-7xl {
-  font-size: clamp(1.75rem, 1rem + 3vw, 4rem);
+  font-size: clamp(1.75rem, 1rem + 2.5vw, 4rem);
   line-height: 1.1;
 }
 
 h2, .text-4xl {
-  font-size: clamp(1.5rem, 0.75rem + 2.5vw, 3rem);
+  font-size: clamp(1.5rem, 0.75rem + 2vw, 3rem);
   line-height: 1.2;
 }
 
 h3, .text-3xl {
-  font-size: clamp(1.25rem, 0.75rem + 2vw, 2.25rem);
+  font-size: clamp(1.25rem, 0.75rem + 1.5vw, 2.25rem);
   line-height: 1.3;
 }
 
 h4, .text-2xl {
-  font-size: clamp(1.125rem, 0.75rem + 1.5vw, 1.75rem);
+  font-size: clamp(1.125rem, 0.75rem + 1vw, 1.75rem);
   line-height: 1.4;
 }
 
 p, .text-base, .text-lg {
-  font-size: clamp(0.875rem, 0.75rem + 0.5vw, 1.125rem);
+  font-size: clamp(0.875rem, 0.75rem + 0.35vw, 1.125rem);
   line-height: 1.6;
 }
 
 small, .text-sm {
-  font-size: clamp(0.75rem, 0.625rem + 0.4vw, 0.875rem);
+  font-size: clamp(0.75rem, 0.625rem + 0.3vw, 0.875rem);
   line-height: 1.5;
 }
 
 .text-xs {
-  font-size: clamp(0.625rem, 0.5rem + 0.3vw, 0.75rem);
+  font-size: clamp(0.625rem, 0.5rem + 0.2vw, 0.75rem);
   line-height: 1.5;
 }
 

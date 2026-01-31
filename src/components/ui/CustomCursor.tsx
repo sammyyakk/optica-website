@@ -52,7 +52,9 @@ export default function CustomCursor() {
 
       // Check if hovering over clickable elements
       const target = e.target as HTMLElement;
+      const isNavHover = target.closest("[data-cursor-hover]");
       const isClickable =
+        isNavHover ||
         target.closest("a") ||
         target.closest("button") ||
         target.closest('input[type="button"]') ||
