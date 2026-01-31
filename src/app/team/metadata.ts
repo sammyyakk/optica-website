@@ -22,10 +22,10 @@ export const metadata: Metadata = {
     url: `${siteUrl}/team`,
     images: [
       {
-        url: "/og-team.png",
-        width: 1200,
-        height: 630,
-        alt: "BVP Optica Team",
+        url: `${siteUrl}/glow_accent_logo.png`,
+        width: 800,
+        height: 800,
+        alt: "BVP Optica Logo",
       },
     ],
   },
@@ -33,7 +33,12 @@ export const metadata: Metadata = {
     title: "Our Team | BVP Optica - Meet the Innovators",
     description:
       "Meet the passionate team behind BVP Optica - dedicated students driving innovation in optics and photonics.",
-    images: ["/og-team.png"],
+    images: [
+      {
+        url: `${siteUrl}/glow_accent_logo.png`,
+        alt: "BVP Optica Logo",
+      },
+    ],
   },
   alternates: {
     canonical: `${siteUrl}/team`,

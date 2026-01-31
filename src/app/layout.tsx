@@ -86,20 +86,25 @@ export const metadata: Metadata = {
       "Join BVP Optica - the premier student chapter for optics and photonics at BVCOE Delhi. Explore workshops, events, research opportunities, and connect with like-minded innovators.",
     images: [
       {
-        url: "/og-image.png",
-        width: 1200,
-        height: 630,
-        alt: "BVP Optica - Student Chapter",
+        url: `${siteUrl}/glow_accent_logo.png`,
+        width: 800,
+        height: 800,
+        alt: "BVP Optica Logo",
         type: "image/png",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "BVP Optica - Student Chapter",
+    title: "BVP Optica - Student Chapter | Optics & Photonics",
     description:
       "Advancing optics and photonics through education, innovation, and global collaboration at BVCOE Delhi.",
-    images: ["/og-image.png"],
+    images: [
+      {
+        url: `${siteUrl}/glow_accent_logo.png`,
+        alt: "BVP Optica Logo",
+      },
+    ],
     creator: "@bvpoptica",
     site: "@bvpoptica",
   },
@@ -187,7 +192,10 @@ export default function RootLayout({
         <link rel="canonical" href="https://www.bvpoptica.com" />
         <meta name="theme-color" content="#0E1A2B" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
-        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+        <meta
+          name="apple-mobile-web-app-status-bar-style"
+          content="black-translucent"
+        />
         <meta name="apple-mobile-web-app-title" content="BVP Optica" />
         <script
           type="application/ld+json"

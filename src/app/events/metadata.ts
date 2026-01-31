@@ -24,10 +24,10 @@ export const metadata: Metadata = {
     url: `${siteUrl}/events`,
     images: [
       {
-        url: "/og-events.png",
-        width: 1200,
-        height: 630,
-        alt: "BVP Optica Events",
+        url: `${siteUrl}/glow_accent_logo.png`,
+        width: 800,
+        height: 800,
+        alt: "BVP Optica Logo",
       },
     ],
   },
@@ -35,7 +35,12 @@ export const metadata: Metadata = {
     title: "Events | BVP Optica - Workshops, Seminars & More",
     description:
       "Discover exciting events by BVP Optica - workshops, seminars, hackathons, and networking opportunities.",
-    images: ["/og-events.png"],
+    images: [
+      {
+        url: `${siteUrl}/glow_accent_logo.png`,
+        alt: "BVP Optica Logo",
+      },
+    ],
   },
   alternates: {
     canonical: `${siteUrl}/events`,
