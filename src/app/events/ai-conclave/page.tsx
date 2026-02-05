@@ -553,12 +553,104 @@ const Icons = {
   ),
 };
 
-// Optimized background
+// Mouse follower glow component
+function MouseFollower() {
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      setMousePos({ x: e.clientX, y: e.clientY });
+      if (!isVisible) setIsVisible(true);
+    };
+
+    const handleMouseLeave = () => setIsVisible(false);
+    const handleMouseEnter = () => setIsVisible(true);
+
+    window.addEventListener("mousemove", handleMouseMove);
+    document.body.addEventListener("mouseleave", handleMouseLeave);
+    document.body.addEventListener("mouseenter", handleMouseEnter);
+
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+      document.body.removeEventListener("mouseleave", handleMouseLeave);
+      document.body.removeEventListener("mouseenter", handleMouseEnter);
+    };
+  }, [isVisible]);
+
+  return (
+    <>
+      {/* Main glow that follows cursor */}
+      <motion.div
+        className="fixed pointer-events-none z-50"
+        animate={{
+          x: mousePos.x - 150,
+          y: mousePos.y - 150,
+          opacity: isVisible ? 1 : 0,
+        }}
+        transition={{ type: "spring", damping: 30, stiffness: 200 }}
+      >
+        <div
+          className="w-[300px] h-[300px] rounded-full"
+          style={{
+            background:
+              "radial-gradient(circle, rgba(139,92,246,0.15) 0%, rgba(236,72,153,0.08) 40%, transparent 70%)",
+          }}
+        />
+      </motion.div>
+
+      {/* Secondary smaller glow - faster follow */}
+      <motion.div
+        className="fixed pointer-events-none z-50"
+        animate={{
+          x: mousePos.x - 75,
+          y: mousePos.y - 75,
+          opacity: isVisible ? 1 : 0,
+        }}
+        transition={{ type: "spring", damping: 20, stiffness: 300 }}
+      >
+        <div
+          className="w-[150px] h-[150px] rounded-full"
+          style={{
+            background:
+              "radial-gradient(circle, rgba(6,182,212,0.2) 0%, transparent 70%)",
+          }}
+        />
+      </motion.div>
+
+      {/* Tiny dot at cursor */}
+      <motion.div
+        className="fixed pointer-events-none z-50 w-2 h-2 rounded-full bg-white/50"
+        animate={{
+          x: mousePos.x - 4,
+          y: mousePos.y - 4,
+          opacity: isVisible ? 0.8 : 0,
+        }}
+        transition={{ type: "spring", damping: 15, stiffness: 400 }}
+      />
+    </>
+  );
+}
+
+// Optimized background with more particles
 function CrazyBackground() {
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      setMousePos({ 
+        x: (e.clientX / window.innerWidth) * 100,
+        y: (e.clientY / window.innerHeight) * 100 
+      });
+    };
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
+  }, []);
+
   return (
     <div className="fixed inset-0 -z-10 overflow-hidden bg-[#030014]">
-      {/* Static grid */}
-      <div
+      {/* Animated grid with pulse */}
+      <motion.div
         className="absolute inset-0 opacity-15"
         style={{
           backgroundImage: `
@@ -567,37 +659,148 @@ function CrazyBackground() {
           `,
           backgroundSize: "80px 80px",
         }}
+        animate={{ opacity: [0.1, 0.2, 0.1] }}
+        transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
       />
 
-      {/* Static gradient orbs */}
-      <div
-        className="absolute top-1/4 left-1/4 w-[500px] h-[500px] rounded-full opacity-30"
+      {/* Floating orbs - mouse reactive */}
+      <motion.div
+        className="absolute top-0 left-0 w-[500px] h-[500px] rounded-full opacity-35"
         style={{
           background:
             "radial-gradient(circle, rgba(139,92,246,0.4) 0%, transparent 70%)",
         }}
+        animate={{
+          x: mousePos.x * 0.3,
+          y: mousePos.y * 0.2,
+        }}
+        transition={{ type: "spring", damping: 50, stiffness: 100 }}
       />
-      <div
-        className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] rounded-full opacity-25"
+      <motion.div
+        className="absolute bottom-0 right-0 w-[450px] h-[450px] rounded-full opacity-30"
         style={{
           background:
             "radial-gradient(circle, rgba(236,72,153,0.4) 0%, transparent 70%)",
         }}
+        animate={{
+          x: -mousePos.x * 0.2,
+          y: -mousePos.y * 0.3,
+        }}
+        transition={{ type: "spring", damping: 50, stiffness: 100 }}
       />
-      <div
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full opacity-20"
+      <motion.div
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full opacity-25"
         style={{
           background:
-            "radial-gradient(circle, rgba(6,182,212,0.3) 0%, transparent 70%)",
+            "radial-gradient(circle, rgba(6,182,212,0.35) 0%, transparent 70%)",
+        }}
+        animate={{
+          scale: [1, 1.15, 1],
+          x: (mousePos.x - 50) * 0.5,
+          y: (mousePos.y - 50) * 0.5,
+        }}
+        transition={{ 
+          scale: { duration: 18, repeat: Infinity, ease: "easeInOut" },
+          x: { type: "spring", damping: 50, stiffness: 80 },
+          y: { type: "spring", damping: 50, stiffness: 80 },
         }}
       />
 
-      {/* Subtle vignette */}
+      {/* Floating particles - increased to 30 */}
+      {[...Array(30)].map((_, i) => (
+        <motion.div
+          key={i}
+          className="absolute rounded-full"
+          style={{
+            left: `${(i * 3.5) % 100}%`,
+            top: `${(i * 11) % 100}%`,
+            width: `${2 + (i % 3)}px`,
+            height: `${2 + (i % 3)}px`,
+            background:
+              i % 4 === 0 ? "#a855f7" : i % 4 === 1 ? "#ec4899" : i % 4 === 2 ? "#06b6d4" : "#fbbf24",
+          }}
+          animate={{
+            y: [0, -100 - (i % 4) * 30, 0],
+            opacity: [0.2, 0.9, 0.2],
+          }}
+          transition={{
+            duration: 5 + (i % 5) * 1.5,
+            repeat: Infinity,
+            delay: i * 0.3,
+            ease: "easeInOut",
+          }}
+        />
+      ))}
+
+      {/* Mouse-reactive particle burst area */}
+      <motion.div
+        className="absolute pointer-events-none"
+        style={{
+          left: `${mousePos.x}%`,
+          top: `${mousePos.y}%`,
+          transform: "translate(-50%, -50%)",
+        }}
+      >
+        {[...Array(8)].map((_, i) => (
+          <motion.div
+            key={i}
+            className="absolute w-1 h-1 rounded-full bg-purple-400/60"
+            animate={{
+              x: [0, Math.cos((i * Math.PI) / 4) * 60],
+              y: [0, Math.sin((i * Math.PI) / 4) * 60],
+              opacity: [0.8, 0],
+              scale: [1, 0.5],
+            }}
+            transition={{
+              duration: 1.5,
+              repeat: Infinity,
+              delay: i * 0.1,
+              ease: "easeOut",
+            }}
+          />
+        ))}
+      </motion.div>
+
+      {/* Single scanning line */}
+      <motion.div
+        className="absolute left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-purple-500/50 to-transparent"
+        animate={{ top: ["-5%", "105%"] }}
+        transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
+      />
+
+      {/* Single rotating ring */}
+      <motion.div
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full opacity-10"
+        style={{
+          background:
+            "conic-gradient(from 0deg, transparent, rgba(139,92,246,0.3), transparent, rgba(236,72,153,0.3), transparent)",
+        }}
+        animate={{ rotate: 360 }}
+        transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
+      />
+
+      {/* Corner glows - static */}
+      <div
+        className="absolute top-0 left-0 w-[250px] h-[250px] opacity-40"
+        style={{
+          background:
+            "radial-gradient(circle at top left, rgba(139,92,246,0.25) 0%, transparent 70%)",
+        }}
+      />
+      <div
+        className="absolute bottom-0 right-0 w-[250px] h-[250px] opacity-40"
+        style={{
+          background:
+            "radial-gradient(circle at bottom right, rgba(236,72,153,0.25) 0%, transparent 70%)",
+        }}
+      />
+
+      {/* Vignette */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
           background:
-            "radial-gradient(ellipse at center, transparent 0%, rgba(0,0,0,0.4) 100%)",
+            "radial-gradient(ellipse at center, transparent 0%, rgba(0,0,0,0.5) 100%)",
         }}
       />
     </div>
@@ -619,8 +822,11 @@ function GlitchText({
         <motion.span
           className="absolute top-0 left-0 text-cyan-400 opacity-70"
           style={{ clipPath: "inset(0 0 50% 0)" }}
-          animate={{ x: [-2, 2, -2], opacity: [0.7, 0, 0.7] }}
-          transition={{ duration: 0.2, repeat: Infinity, repeatDelay: 3 }}
+          animate={{
+            x: [-2, 2, -1, 3, -2],
+            opacity: [0.7, 0.5, 0.8, 0.4, 0.7],
+          }}
+          transition={{ duration: 0.5, repeat: Infinity, ease: "easeInOut" }}
           aria-hidden="true"
         >
           {children}
@@ -628,11 +834,11 @@ function GlitchText({
         <motion.span
           className="absolute top-0 left-0 text-pink-400 opacity-70"
           style={{ clipPath: "inset(50% 0 0 0)" }}
-          animate={{ x: [2, -2, 2], opacity: [0.7, 0, 0.7] }}
+          animate={{ x: [2, -2, 1, -3, 2], opacity: [0.7, 0.4, 0.8, 0.5, 0.7] }}
           transition={{
-            duration: 0.2,
+            duration: 0.5,
             repeat: Infinity,
-            repeatDelay: 3,
+            ease: "easeInOut",
             delay: 0.1,
           }}
           aria-hidden="true"
@@ -1042,10 +1248,11 @@ export default function AIConclaveEvent() {
   return (
     <main className="min-h-screen text-white overflow-hidden">
       <CrazyBackground />
+      <MouseFollower />
 
       <div className="relative z-10">
         {/* Hero Section */}
-        <section className="min-h-screen flex flex-col items-center justify-center px-4 sm:px-6 py-20 relative">
+        <section className="min-h-screen flex flex-col items-center justify-center px-4 sm:px-6 pt-28 sm:pt-32 pb-20 relative">
           <div className="text-center max-w-5xl mx-auto">
             {/* Animated badge */}
             <motion.div
@@ -1083,7 +1290,7 @@ export default function AIConclaveEvent() {
               transition={{ duration: 0.8, delay: 0.4, type: "spring" }}
               className="mb-4 sm:mb-6"
             >
-              <GlitchText className="font-heading text-5xl sm:text-7xl md:text-8xl lg:text-[10rem] font-black leading-none">
+              <GlitchText className="font-heading text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black leading-none">
                 <span
                   className="bg-gradient-to-r from-purple-400 via-pink-400 to-cyan-400 bg-clip-text text-transparent"
                   style={{
