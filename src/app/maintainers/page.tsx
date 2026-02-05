@@ -22,7 +22,7 @@ interface Maintainer {
 const leadMaintainer: Maintainer = {
   name: "Samyak Jain",
   role: "Lead Developer",
-  title: "Creator & Lead Maintainer",
+  title: "Creator",
   image: "/team/samyak.png",
   linkedin: "https://www.linkedin.com/in/sammyyakk/",
   instagram: "https://www.instagram.com/sammyyakk/",
