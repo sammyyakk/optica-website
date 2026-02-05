@@ -212,21 +212,24 @@ export default function BlogPostPage() {
 
   if (!post) {
     return (
-      <main className="min-h-screen bg-[#0E1A2B] pt-20 flex items-center justify-center">
-        <div className="text-center">
-          <div className="text-6xl mb-4">📄</div>
-          <h1 className="text-2xl font-heading text-white mb-2">
-            Post Not Found
-          </h1>
-          <p className="text-gray-400 mb-6">
-            The article you&apos;re looking for doesn&apos;t exist.
-          </p>
-          <Link
-            href="/blog"
-            className="px-6 py-2.5 bg-purple-500/20 hover:bg-purple-500/30 text-purple-300 rounded-lg border border-purple-500/30 transition-all"
-          >
-            ← Back to Blog
-          </Link>
+      <main className="min-h-screen bg-transparent text-white overflow-hidden">
+        <FixedParticleBackground />
+        <div className="relative z-10 pt-20 flex items-center justify-center min-h-screen">
+          <div className="text-center">
+            <div className="text-6xl mb-4">📄</div>
+            <h1 className="text-2xl font-heading text-white mb-2">
+              Post Not Found
+            </h1>
+            <p className="text-gray-400 mb-6">
+              The article you&apos;re looking for doesn&apos;t exist.
+            </p>
+            <Link
+              href="/blog"
+              className="px-6 py-2.5 bg-purple-500/20 hover:bg-purple-500/30 text-purple-300 rounded-lg border border-purple-500/30 transition-all"
+            >
+              ← Back to Blog
+            </Link>
+          </div>
         </div>
       </main>
     );
@@ -235,7 +238,8 @@ export default function BlogPostPage() {
   const processedContent = processContent(post.content);
 
   return (
-    <main className="min-h-screen bg-[#0E1A2B] pt-20 sm:pt-24 pb-16">
+    <main className="min-h-screen bg-transparent text-white overflow-hidden">
+      {/* Fixed particle background */}
       <FixedParticleBackground />
 
       {/* Reading progress bar */}
@@ -246,13 +250,8 @@ export default function BlogPostPage() {
         />
       </div>
 
-      {/* Background effects */}
-      <div className="fixed inset-0 -z-10">
-        <div className="absolute top-0 left-1/4 w-64 h-64 sm:w-96 sm:h-96 bg-purple-500/10 rounded-full blur-[80px] sm:blur-[128px]" />
-        <div className="absolute bottom-1/4 right-1/4 w-48 h-48 sm:w-80 sm:h-80 bg-pink-500/10 rounded-full blur-[80px] sm:blur-[128px]" />
-      </div>
-
-      <div className="mx-auto max-w-6xl px-4 sm:px-6 md:px-8">
+      <div className="relative z-10 pt-20 sm:pt-24 pb-8 sm:pb-12">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 md:px-8">
         {/* Back link */}
         <AnimatedSection>
           <Link
@@ -482,9 +481,11 @@ export default function BlogPostPage() {
             </div>
           </AnimatedSection>
         )}
+        </div>
       </div>
 
-      <div className="mt-16">
+      {/* Footer */}
+      <div className="relative z-10">
         <FooterSection />
       </div>
     </main>

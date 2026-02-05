@@ -290,16 +290,12 @@ export default function BlogPage() {
     searchQuery || selectedCategory !== "All" || selectedTag;
 
   return (
-    <main className="min-h-screen bg-[#0E1A2B] pt-20 sm:pt-24 pb-16 sm:pb-20">
+    <main className="min-h-screen bg-transparent text-white overflow-hidden">
+      {/* Fixed particle background */}
       <FixedParticleBackground />
 
-      {/* Background effects */}
-      <div className="fixed inset-0 -z-10">
-        <div className="absolute top-0 left-1/4 w-64 h-64 sm:w-96 sm:h-96 bg-purple-500/10 rounded-full blur-[80px] sm:blur-[128px]" />
-        <div className="absolute bottom-1/4 right-1/4 w-48 h-48 sm:w-80 sm:h-80 bg-pink-500/10 rounded-full blur-[80px] sm:blur-[128px]" />
-      </div>
-
-      <div className="mx-auto max-w-6xl px-4 sm:px-6 md:px-8">
+      <div className="relative z-10 pt-20 sm:pt-24 pb-8 sm:pb-12">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 md:px-8">
         {/* Header */}
         <AnimatedSection className="text-center mb-10 sm:mb-14">
           <motion.div
@@ -527,9 +523,13 @@ export default function BlogPage() {
             </p>
           </div>
         </AnimatedSection>
+        </div>
       </div>
 
-      <FooterSection />
+      {/* Footer */}
+      <div className="relative z-10">
+        <FooterSection />
+      </div>
     </main>
   );
 }
