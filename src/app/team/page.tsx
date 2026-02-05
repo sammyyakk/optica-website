@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, useInView } from "motion/react";
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import Image from "next/image";
 import { FixedParticleBackground } from "@/components/ui/FixedParticleBackground";
 import { FooterSection } from "@/components/home/FooterSection";
@@ -107,7 +107,7 @@ const departmentHeads: TeamMember[] = [
   {
     name: "Sambhav Jain",
     role: "Social Media & Publicity",
-    image: "/team/sambhav.png",
+    image: "/team/sambhav.jpeg",
     linkedin: "#",
     instagram: "#",
   },
@@ -186,6 +186,35 @@ const roleColors: Record<string, string> = {
   "Social Media & Publicity": "from-pink-400 to-purple-400",
   Technical: "from-amber-400 to-orange-400",
 };
+
+// Helper function to shuffle an array (Fisher-Yates shuffle)
+function shuffleArray<T>(array: T[]): T[] {
+  const shuffled = [...array];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  return shuffled;
+}
+
+// Group department heads by role and return shuffled groups
+function getShuffledDepartmentHeads(heads: TeamMember[]): TeamMember[] {
+  // Group by role
+  const grouped: Record<string, TeamMember[]> = {};
+  heads.forEach((member) => {
+    if (!grouped[member.role]) {
+      grouped[member.role] = [];
+    }
+    grouped[member.role].push(member);
+  });
+
+  // Get array of groups and shuffle
+  const groups = Object.values(grouped);
+  const shuffledGroups = shuffleArray(groups);
+
+  // Flatten back to array
+  return shuffledGroups.flat();
+}
 
 function AnimatedSection({
   children,
@@ -444,6 +473,13 @@ function TeamMemberCard({
 }
 
 export default function TeamPage() {
+  // Randomize department heads order on each load
+  const [shuffledDepartmentHeads, setShuffledDepartmentHeads] = useState<TeamMember[]>([]);
+
+  useEffect(() => {
+    setShuffledDepartmentHeads(getShuffledDepartmentHeads(departmentHeads));
+  }, []);
+
   return (
     <main className="min-h-screen bg-transparent text-white overflow-hidden">
       {/* Fixed particle background */}
@@ -512,8 +548,8 @@ export default function TeamPage() {
           </AnimatedSection>
 
           <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
-            {departmentHeads.map((member, index) => (
-              <TeamMemberCard key={index} member={member} index={index} />
+            {shuffledDepartmentHeads.map((member, index) => (
+              <TeamMemberCard key={`${member.role}-${member.name}`} member={member} index={index} />
             ))}
           </div>
         </div>
