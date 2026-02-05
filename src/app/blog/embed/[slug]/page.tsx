@@ -1,15 +1,20 @@
-"use client";
-
-import { useMemo } from "react";
 import Image from "next/image";
-import { useParams } from "next/navigation";
-import { getPostBySlug } from "@/lib/blog/posts";
+import { getPostBySlug, getAllPosts } from "@/lib/blog/posts";
 import { CategoryIcon, FileTextIcon } from "@/components/blog/Icons";
 
-export default function EmbedSinglePostPage() {
-  const params = useParams();
-  const slug = params.slug as string;
-  const post = useMemo(() => getPostBySlug(slug), [slug]);
+// Generate static paths for all blog posts at build time
+export function generateStaticParams() {
+  const posts = getAllPosts();
+  return posts.map((post) => ({ slug: post.slug }));
+}
+
+export default async function EmbedSinglePostPage({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
+  const post = getPostBySlug(slug);
 
   if (!post) {
     return (
@@ -22,7 +27,9 @@ export default function EmbedSinglePostPage() {
         }}
       >
         <div className="text-center">
-          <div className="mb-3 flex justify-center"><FileTextIcon className="w-10 h-10 text-purple-400" /></div>
+          <div className="mb-3 flex justify-center">
+            <FileTextIcon className="w-10 h-10 text-purple-400" />
+          </div>
           <p style={{ color: "#9ca3af" }}>Article not found</p>
         </div>
       </div>
@@ -87,7 +94,10 @@ export default function EmbedSinglePostPage() {
             "linear-gradient(to right, rgba(139, 92, 246, 0.8), rgba(236, 72, 153, 0.8))",
         }}
       >
-        <span className="inline-flex items-center gap-1"><CategoryIcon category={post.category} className="w-3.5 h-3.5" /> {post.category}</span>
+        <span className="inline-flex items-center gap-1">
+          <CategoryIcon category={post.category} className="w-3.5 h-3.5" />{" "}
+          {post.category}
+        </span>
       </span>
 
       {/* Title */}

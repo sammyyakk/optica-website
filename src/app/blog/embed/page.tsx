@@ -1,12 +1,9 @@
-"use client";
-
-import { useMemo } from "react";
 import Image from "next/image";
 import { getAllPosts } from "@/lib/blog/posts";
 import { CategoryIcon } from "@/components/blog/Icons";
 
 export default function BlogEmbedPage() {
-  const posts = useMemo(() => getAllPosts().slice(0, 6), []);
+  const posts = getAllPosts().slice(0, 6);
 
   return (
     <div
@@ -93,7 +90,10 @@ export default function BlogEmbedPage() {
                         "linear-gradient(135deg, rgba(139, 92, 246, 0.3), rgba(236, 72, 153, 0.3))",
                     }}
                   >
-                    <CategoryIcon category={post.category} className="w-10 h-10" />
+                    <CategoryIcon
+                      category={post.category}
+                      className="w-10 h-10"
+                    />
                   </div>
                 )}
                 <div

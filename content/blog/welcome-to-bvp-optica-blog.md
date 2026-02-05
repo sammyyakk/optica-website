@@ -1,0 +1,39 @@
+---
+title: "Welcome to the BVP Optica Blog!"
+excerpt: "We're excited to launch our official blog — your new hub for optics, photonics, event recaps, tutorials, and everything happening at BVP Optica."
+coverImage: "/blog/welcome-cover.jpg"
+publishedAt: "2026-02-06T10:00:00+05:30"
+category: "Announcements"
+tags:
+  - welcome
+  - announcement
+  - blog launch
+featured: true
+pinned: true
+author:
+  name: "BVP Optica"
+  role: "Editorial Team"
+  image: "/glow_accent_logo.png"
+---
+
+We're thrilled to announce the launch of the official **BVP Optica Blog**! This space is designed to be your go-to resource for everything related to optics, photonics, and our vibrant student community.
+
+## What to Expect
+
+Our blog will feature a variety of content including:
+
+- **Event Recaps** — Detailed coverage of our workshops, seminars, and competitions
+- **Tutorials** — Step-by-step guides on optics concepts, lab experiments, and more
+- **Research Highlights** — Showcasing groundbreaking work by our members
+- **Industry Insights** — Trends and innovations in the world of optics & photonics
+- **Student Stories** — Experiences and journeys of our community members
+
+## Join the Conversation
+
+We believe knowledge grows when shared. Whether you're a student, researcher, or enthusiast, this blog is for you. Stay tuned for regular updates, and don't hesitate to reach out if you'd like to contribute!
+
+> "The important thing in science is not so much to obtain new facts as to discover new ways of thinking about them." — William Lawrence Bragg
+
+## Stay Connected
+
+Follow us on our social media channels and bookmark this page. We have exciting content lined up that you won't want to miss!

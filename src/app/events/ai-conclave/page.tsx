@@ -638,9 +638,9 @@ function CrazyBackground() {
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
-      setMousePos({ 
+      setMousePos({
         x: (e.clientX / window.innerWidth) * 100,
-        y: (e.clientY / window.innerHeight) * 100 
+        y: (e.clientY / window.innerHeight) * 100,
       });
     };
     window.addEventListener("mousemove", handleMouseMove);
@@ -699,7 +699,7 @@ function CrazyBackground() {
           x: (mousePos.x - 50) * 0.5,
           y: (mousePos.y - 50) * 0.5,
         }}
-        transition={{ 
+        transition={{
           scale: { duration: 18, repeat: Infinity, ease: "easeInOut" },
           x: { type: "spring", damping: 50, stiffness: 80 },
           y: { type: "spring", damping: 50, stiffness: 80 },
@@ -717,7 +717,13 @@ function CrazyBackground() {
             width: `${2 + (i % 3)}px`,
             height: `${2 + (i % 3)}px`,
             background:
-              i % 4 === 0 ? "#a855f7" : i % 4 === 1 ? "#ec4899" : i % 4 === 2 ? "#06b6d4" : "#fbbf24",
+              i % 4 === 0
+                ? "#a855f7"
+                : i % 4 === 1
+                  ? "#ec4899"
+                  : i % 4 === 2
+                    ? "#06b6d4"
+                    : "#fbbf24",
           }}
           animate={{
             y: [0, -100 - (i % 4) * 30, 0],

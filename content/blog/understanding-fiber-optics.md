@@ -1,0 +1,52 @@
+---
+title: "Understanding Fiber Optics: A Beginner's Guide"
+excerpt: "Dive into the fundamentals of fiber optics — learn how light travels through glass and revolutionizes modern communication."
+coverImage: "/blog/fiber-optics-cover.jpg"
+publishedAt: "2026-02-06T12:00:00+05:30"
+category: "Optics & Photonics"
+tags:
+  - fiber optics
+  - optics basics
+  - photonics
+  - tutorial
+featured: true
+author:
+  name: "Samyak Jain"
+  role: "Head of Technology"
+  image: "/team/samyak.png"
+  linkedin: "https://www.linkedin.com/in/sammyyakk/"
+  github: "https://github.com/sammyyakk"
+---
+
+Fiber optics is one of the most transformative technologies of the modern era. From high-speed internet to medical imaging, optical fibers have changed the way we live and communicate.
+
+## What Are Optical Fibers?
+
+An optical fiber is a thin, flexible strand of glass or plastic that transmits data as pulses of light. These fibers are incredibly thin — about the diameter of a human hair — yet capable of carrying vast amounts of information over long distances with minimal loss.
+
+## How Do They Work?
+
+The principle behind fiber optics is **total internal reflection (TIR)**. Light enters the fiber core (which has a higher refractive index) and bounces along the fiber, guided by the cladding (with a lower refractive index). This ensures the light signal stays within the fiber as it travels.
+
+### Key Components
+
+- **Core** — The central part where light travels
+- **Cladding** — Surrounds the core and reflects light back inward
+- **Buffer Coating** — Protective layer against moisture and damage
+
+## Types of Optical Fibers
+
+There are two main types:
+
+1. **Single-mode fiber (SMF)** — Small core (~9µm), one light path, used for long-distance telecom
+2. **Multi-mode fiber (MMF)** — Larger core (~50-62.5µm), multiple light paths, used for short distances
+
+## Applications
+
+Fiber optics are used in telecommunications, medical instruments (endoscopes), military and defense, industrial sensors, and even decorative lighting. The technology continues to evolve with developments in photonic crystal fibers and hollow-core fibers.
+
+> "Fiber optics is the nervous system of the information age."
+
+## What's Next?
+
+In our next article, we'll explore how fiber optic sensors work and their applications in structural health monitoring. Stay tuned!

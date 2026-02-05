@@ -11,7 +11,7 @@ export interface BlogPost {
   slug: string;
   title: string;
   excerpt: string;
-  content: string; // HTML content (supports rich text)
+  content: string; // HTML content (rendered from Markdown via remark)
   coverImage?: string;
   author: BlogAuthor;
   publishedAt: string; // ISO date string
