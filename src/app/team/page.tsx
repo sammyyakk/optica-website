@@ -71,14 +71,14 @@ const specialOfficers: TeamMember[] = [
 const technicalHeads: TeamMember[] = [
   {
     name: "Mayank Singh",
-    role: "Technical",
+    role: "Head of Technology",
     image: "/team/mayank.png",
     linkedin: "#",
     instagram: "#",
   },
   {
     name: "Samyak Jain",
-    role: "Technical",
+    role: "Head of Technology",
     image: "/team/samyak.png",
     linkedin: "https://www.linkedin.com/in/sammyyakk/",
     instagram: "https://www.instagram.com/sammyyakk/",
@@ -88,7 +88,7 @@ const technicalHeads: TeamMember[] = [
   },
   {
     name: "Saksham Malik",
-    role: "Technical",
+    role: "Head of Technology",
     image: "/team/saksham.jpeg",
     linkedin: "#",
     instagram: "#",
@@ -184,7 +184,7 @@ const roleColors: Record<string, string> = {
   "Logistics & Operations": "from-teal-400 to-green-400",
   "Outreach & Communication": "from-yellow-400 to-orange-400",
   "Social Media & Publicity": "from-pink-400 to-purple-400",
-  Technical: "from-amber-400 to-orange-400",
+  Technology: "from-amber-400 to-orange-400",
 };
 
 // Helper function to shuffle an array (Fisher-Yates shuffle)
@@ -474,7 +474,9 @@ function TeamMemberCard({
 
 export default function TeamPage() {
   // Randomize department heads order on each load
-  const [shuffledDepartmentHeads, setShuffledDepartmentHeads] = useState<TeamMember[]>([]);
+  const [shuffledDepartmentHeads, setShuffledDepartmentHeads] = useState<
+    TeamMember[]
+  >([]);
 
   useEffect(() => {
     setShuffledDepartmentHeads(getShuffledDepartmentHeads(departmentHeads));
@@ -530,7 +532,7 @@ export default function TeamPage() {
           {/* Technical Department - Special 3-column row */}
           <AnimatedSection delay={0.3} className="mb-8 sm:mb-10">
             <h2 className="font-heading text-xl sm:text-2xl md:text-3xl font-bold text-center bg-gradient-to-r from-amber-400 to-orange-400 bg-clip-text text-transparent">
-              Technical Department
+              Tech Department
             </h2>
           </AnimatedSection>
 
@@ -549,7 +551,11 @@ export default function TeamPage() {
 
           <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
             {shuffledDepartmentHeads.map((member, index) => (
-              <TeamMemberCard key={`${member.role}-${member.name}`} member={member} index={index} />
+              <TeamMemberCard
+                key={`${member.role}-${member.name}`}
+                member={member}
+                index={index}
+              />
             ))}
           </div>
         </div>

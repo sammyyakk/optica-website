@@ -144,25 +144,26 @@ function QuantumFoam({
   isMobile?: boolean;
 }) {
   const meshRef = useRef<THREE.Mesh>(null);
+  const frameRef = useRef(0);
 
-  // Reduced detail on mobile to save resources
+  // Optimized detail levels - slightly higher on mobile for better visuals
   const detail = isMobile
-    ? 8
+    ? 10
     : performanceTier === "low"
-      ? 12
+      ? 14
       : performanceTier === "medium"
         ? 20
         : 28;
-  // Increased noise strength on mobile/tablet for more visible effect
+  // Increased noise strength for more visible effect
   const uNoiseStrength = isMobile
-    ? 0.55
+    ? 0.6
     : performanceTier === "low"
-      ? 0.4
+      ? 0.45
       : performanceTier === "medium"
         ? 0.6
         : 0.8;
-  // Smaller quantum foam on mobile
-  const sphereSize = isMobile ? 5 : 7;
+  // Slightly larger quantum foam on mobile for better presence
+  const sphereSize = isMobile ? 5.5 : 7;
 
   const uniforms = useMemo(
     () => ({
@@ -173,10 +174,14 @@ function QuantumFoam({
   );
 
   useFrame(({ clock }) => {
-    if (meshRef.current) {
-      (meshRef.current.material as THREE.ShaderMaterial).uniforms.uTime.value =
-        clock.elapsedTime;
-    }
+    if (!meshRef.current) return;
+
+    // Frame skipping on mobile for performance (update every 2nd frame)
+    frameRef.current++;
+    if (isMobile && frameRef.current % 2 !== 0) return;
+
+    (meshRef.current.material as THREE.ShaderMaterial).uniforms.uTime.value =
+      clock.elapsedTime;
   });
 
   return (
@@ -263,11 +268,12 @@ function ParticleSwarm({
   isMobile?: boolean;
 }) {
   const pointsRef = useRef<THREE.Points>(null);
-  // Significantly reduced particle counts on mobile
+  const frameRef = useRef(0);
+  // Optimized particle counts - more particles on mobile for better visuals
   const particleCount = isMobile
-    ? 200
+    ? 350
     : performanceTier === "low"
-      ? 400
+      ? 500
       : performanceTier === "medium"
         ? 1200
         : 2500;
@@ -292,6 +298,10 @@ function ParticleSwarm({
 
   useFrame(({ clock }) => {
     if (!pointsRef.current) return;
+
+    // Frame skipping on mobile (update every 2nd frame)
+    frameRef.current++;
+    if (isMobile && frameRef.current % 2 !== 0) return;
 
     const pos = pointsRef.current.geometry.attributes.position
       .array as Float32Array;
@@ -368,7 +378,7 @@ function ParticleSwarm({
         />
       </bufferGeometry>
       <pointsMaterial
-        size={0.08}
+        size={isMobile ? 0.1 : 0.08}
         sizeAttenuation={true}
         color="#A48FF5"
         toneMapped={false}
@@ -386,11 +396,12 @@ function CrystalCluster({
   performanceTier?: PerformanceTier;
   isMobile?: boolean;
 }) {
-  // Reduced crystal count on mobile
+  const frameRef = useRef(0);
+  // Optimized crystal count for better visuals
   const crystalCount = isMobile
-    ? 5
+    ? 8
     : performanceTier === "low"
-      ? 8
+      ? 10
       : performanceTier === "medium"
         ? 14
         : 20;
@@ -426,10 +437,14 @@ function CrystalCluster({
   const groupRef = useRef<THREE.Group>(null);
 
   useFrame(({ clock }) => {
-    if (groupRef.current) {
-      groupRef.current.rotation.x = clock.elapsedTime * 0.1;
-      groupRef.current.rotation.y = clock.elapsedTime * 0.08;
-    }
+    if (!groupRef.current) return;
+
+    // Frame skipping on mobile (update every 2nd frame)
+    frameRef.current++;
+    if (isMobile && frameRef.current % 2 !== 0) return;
+
+    groupRef.current.rotation.x = clock.elapsedTime * 0.1;
+    groupRef.current.rotation.y = clock.elapsedTime * 0.08;
   });
 
   // Skip Float on low performance - it adds overhead
@@ -568,11 +583,11 @@ export default function Hero3D() {
   }, []);
 
   const dpr = isMobile
-    ? 0.6
+    ? 1.0
     : performanceTier === "low"
-      ? 0.75
+      ? 0.85
       : performanceTier === "medium"
-        ? 1
+        ? 1.2
         : 1.5;
 
   return (
@@ -652,13 +667,15 @@ export default function Hero3D() {
               </Environment>
             )}
 
-            {/* Bloom on ALL tiers for glow effect */}
+            {/* Bloom on ALL tiers for glow effect - optimized for mobile */}
             <EffectComposer multisampling={0}>
               <Bloom
-                luminanceThreshold={0}
-                luminanceSmoothing={0.9}
-                intensity={performanceTier === "high" ? 3 : 2.5}
-                levels={performanceTier === "high" ? 7 : 5}
+                luminanceThreshold={isMobile ? 0.1 : 0}
+                luminanceSmoothing={isMobile ? 0.7 : 0.9}
+                intensity={
+                  isMobile ? 2.0 : performanceTier === "high" ? 3 : 2.5
+                }
+                levels={isMobile ? 4 : performanceTier === "high" ? 7 : 5}
                 mipmapBlur
               />
             </EffectComposer>
