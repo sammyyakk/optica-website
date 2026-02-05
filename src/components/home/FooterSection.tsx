@@ -236,7 +236,7 @@ export function FooterSection() {
             <p className="text-gray-500 mb-2">
               © 2025 BVP Optica. All rights reserved.
             </p>
-            <p className="text-gray-500">
+            <p className="text-gray-500 mb-2">
               Made with <span className="text-pink-400">❤</span> by{" "}
               <a
                 href="https://www.github.com/sammyyakk"
@@ -245,6 +245,14 @@ export function FooterSection() {
                 className="text-purple-400 hover:text-purple-300 transition-colors"
               >
                 Samyak Jain
+              </a>
+            </p>
+            <p className="text-gray-500">
+              <a
+                href="/maintainers"
+                className="text-amber-400 hover:text-amber-300 transition-colors"
+              >
+                Meet the Website Maintainers
               </a>
             </p>
           </motion.div>
