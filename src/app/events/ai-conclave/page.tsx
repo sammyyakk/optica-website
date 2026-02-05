@@ -1202,13 +1202,15 @@ export default function AIConclaveEvent() {
               className="flex justify-center gap-4 mt-12"
             >
               {[
-                { icon: Icons.Instagram, label: "Instagram" },
-                { icon: Icons.LinkedIn, label: "LinkedIn" },
-                { icon: Icons.Twitter, label: "Twitter" },
+                { icon: Icons.Instagram, label: "Instagram", href: "https://instagram.com/bvpoptica" },
+                { icon: Icons.LinkedIn, label: "LinkedIn", href: "https://www.linkedin.com/company/bvp-optica/" },
+                { icon: Icons.Twitter, label: "Twitter", href: "https://twitter.com/bvpoptica" },
               ].map((social, i) => (
                 <motion.a
                   key={social.label}
-                  href="#"
+                  href={social.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   whileHover={{ scale: 1.2, rotate: 5 }}
                   className="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:text-white hover:border-purple-500/50 hover:bg-purple-500/10 transition-all"
                 >

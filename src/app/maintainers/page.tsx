@@ -32,12 +32,12 @@ const leadMaintainer: Maintainer = {
 
 const designMaintainers: Maintainer[] = [
   {
-    name: "Design Member 1",
+    name: "Khushi Mittal",
     role: "Design & Creative",
     title: "UI/UX Contributor",
-    image: undefined,
-    linkedin: "#",
-    instagram: "#",
+    image: "/maintainers/khushi.jpeg",
+    linkedin: "https://www.linkedin.com/in/khushi-mittal-a376a2390/",
+    instagram: "https://www.instagram.com/just_another_khushi/",
   },
   {
     name: "Gaurangi Chawla",
@@ -59,12 +59,12 @@ const contentMaintainers: Maintainer[] = [
     instagram: "https://www.instagram.com/_prateeksharma._/",
   },
   {
-    name: "Content Member 2",
+    name: "Yashika Kaushik",
     role: "Content & Documentation",
     title: "Documentation Lead",
-    image: undefined,
-    linkedin: "#",
-    instagram: "#",
+    image: "/maintainers/yashika.jpeg",
+    linkedin: "https://www.linkedin.com/in/yashika-kaushik-401850319/",
+    instagram: "https://www.instagram.com/_yashika_kaushik/",
   },
 ];
 
@@ -301,7 +301,7 @@ export default function MaintainersPage() {
       {/* Fixed particle background */}
       <FixedParticleBackground />
 
-      <div className="relative z-10 pt-20 sm:pt-24 pb-8 sm:pb-12">
+      <div className="relative z-10 pt-28 sm:pt-32 md:pt-36 pb-8 sm:pb-12">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 md:px-8">
           {/* Header */}
           <AnimatedSection className="text-center mb-4 sm:mb-6">

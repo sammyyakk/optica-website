@@ -36,7 +36,7 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: `${siteUrl}/events/ai-conclave-og.jpg`,
+        url: `${siteUrl}/events/ai-conclave-og.png`,
         width: 1200,
         height: 630,
         alt: "AI Conclave - BVP Optica AI Hackathon",
