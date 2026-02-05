@@ -56,13 +56,4 @@ export const CATEGORY_COLORS: Record<BlogCategory, string> = {
   General: "from-gray-400 to-slate-400",
 };
 
-export const CATEGORY_ICONS: Record<BlogCategory, string> = {
-  "Optics & Photonics": "🔬",
-  "Events & Recaps": "🎉",
-  Tutorials: "📖",
-  Research: "🧪",
-  Announcements: "📢",
-  "Student Life": "🎓",
-  "Industry Insights": "💡",
-  General: "📝",
-};
+// Category icons are React components — import from @/components/blog/Icons

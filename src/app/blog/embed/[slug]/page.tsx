@@ -4,7 +4,7 @@ import { useMemo } from "react";
 import Image from "next/image";
 import { useParams } from "next/navigation";
 import { getPostBySlug } from "@/lib/blog/posts";
-import { CATEGORY_ICONS } from "@/lib/blog/types";
+import { CategoryIcon, FileTextIcon } from "@/components/blog/Icons";
 
 export default function EmbedSinglePostPage() {
   const params = useParams();
@@ -22,7 +22,7 @@ export default function EmbedSinglePostPage() {
         }}
       >
         <div className="text-center">
-          <div className="text-4xl mb-3">📄</div>
+          <div className="mb-3 flex justify-center"><FileTextIcon className="w-10 h-10 text-purple-400" /></div>
           <p style={{ color: "#9ca3af" }}>Article not found</p>
         </div>
       </div>
@@ -33,7 +33,8 @@ export default function EmbedSinglePostPage() {
     <div
       className="min-h-screen p-5 sm:p-8"
       style={{
-        background: "linear-gradient(135deg, #0E1A2B 0%, #1a0a2e 50%, #0E1A2B 100%)",
+        background:
+          "linear-gradient(135deg, #0E1A2B 0%, #1a0a2e 50%, #0E1A2B 100%)",
         fontFamily: "'Inter', sans-serif",
         color: "#d1d5db",
       }}
@@ -86,7 +87,7 @@ export default function EmbedSinglePostPage() {
             "linear-gradient(to right, rgba(139, 92, 246, 0.8), rgba(236, 72, 153, 0.8))",
         }}
       >
-        {CATEGORY_ICONS[post.category]} {post.category}
+        <span className="inline-flex items-center gap-1"><CategoryIcon category={post.category} className="w-3.5 h-3.5" /> {post.category}</span>
       </span>
 
       {/* Title */}

@@ -3,7 +3,7 @@
 import { useMemo } from "react";
 import Image from "next/image";
 import { getAllPosts } from "@/lib/blog/posts";
-import { CATEGORY_ICONS } from "@/lib/blog/types";
+import { CategoryIcon } from "@/components/blog/Icons";
 
 export default function BlogEmbedPage() {
   const posts = useMemo(() => getAllPosts().slice(0, 6), []);
@@ -12,7 +12,8 @@ export default function BlogEmbedPage() {
     <div
       className="min-h-screen p-4 sm:p-6"
       style={{
-        background: "linear-gradient(135deg, #0E1A2B 0%, #1a0a2e 50%, #0E1A2B 100%)",
+        background:
+          "linear-gradient(135deg, #0E1A2B 0%, #1a0a2e 50%, #0E1A2B 100%)",
         fontFamily: "'Inter', sans-serif",
       }}
     >
@@ -28,7 +29,8 @@ export default function BlogEmbedPage() {
           <h2
             className="text-lg font-bold text-transparent bg-clip-text"
             style={{
-              backgroundImage: "linear-gradient(to right, #c4b5fd, #f9a8d4, #c4b5fd)",
+              backgroundImage:
+                "linear-gradient(to right, #c4b5fd, #f9a8d4, #c4b5fd)",
             }}
           >
             BVP Optica Blog
@@ -68,7 +70,8 @@ export default function BlogEmbedPage() {
             <article
               className="h-full overflow-hidden rounded-xl transition-all duration-300"
               style={{
-                background: "linear-gradient(135deg, rgba(88, 28, 135, 0.2), rgba(0, 0, 0, 0.3), rgba(88, 28, 135, 0.15))",
+                background:
+                  "linear-gradient(135deg, rgba(88, 28, 135, 0.2), rgba(0, 0, 0, 0.3), rgba(88, 28, 135, 0.15))",
                 backdropFilter: "blur(8px)",
                 border: "1px solid rgba(139, 92, 246, 0.15)",
               }}
@@ -86,18 +89,18 @@ export default function BlogEmbedPage() {
                   <div
                     className="w-full h-full flex items-center justify-center"
                     style={{
-                      background: "linear-gradient(135deg, rgba(139, 92, 246, 0.3), rgba(236, 72, 153, 0.3))",
+                      background:
+                        "linear-gradient(135deg, rgba(139, 92, 246, 0.3), rgba(236, 72, 153, 0.3))",
                     }}
                   >
-                    <span className="text-4xl">
-                      {CATEGORY_ICONS[post.category]}
-                    </span>
+                    <CategoryIcon category={post.category} className="w-10 h-10" />
                   </div>
                 )}
                 <div
                   className="absolute inset-0"
                   style={{
-                    background: "linear-gradient(to top, rgba(0,0,0,0.6), transparent)",
+                    background:
+                      "linear-gradient(to top, rgba(0,0,0,0.6), transparent)",
                   }}
                 />
                 <div className="absolute top-2 right-2">
@@ -105,7 +108,8 @@ export default function BlogEmbedPage() {
                     className="px-2 py-0.5 text-[10px] font-medium rounded-full text-white"
                     style={{
                       backgroundImage: `linear-gradient(to right, var(--tw-gradient-stops))`,
-                      background: "linear-gradient(to right, rgba(139, 92, 246, 0.8), rgba(236, 72, 153, 0.8))",
+                      background:
+                        "linear-gradient(to right, rgba(139, 92, 246, 0.8), rgba(236, 72, 153, 0.8))",
                     }}
                   >
                     {post.category}
