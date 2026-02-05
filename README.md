@@ -1,73 +1,243 @@
 # BVP Optica Website
 
-**BVP Optica** is the official student chapter of **Optica (formerly OSA)** at **Bharati Vidyapeeth’s College of Engineering, Delhi**. This website serves as a hub for students, faculty, and visitors to explore the chapter’s mission, activities, events, and membership opportunities.
+**BVP Optica** is the official student chapter of **Optica (formerly OSA)** at **Bharati Vidyapeeth's College of Engineering, Delhi**. This modern, fully responsive website showcases the chapter's mission, activities, events, and team.
 
 ---
 
-## Features
+## ✨ Features
 
-- **Home Page**: Overview of the chapter, latest events, achievements, and join section.
-- **About Page**: Mission, vision, faculty advisor message, and team details.
-- **Events Page**: Event listing with filter options (Workshops, Talks, Competitions, Visits).
-- **Research & Outreach**: Showcase of student papers, projects, and field visits.
-- **Join Us Page**: Membership benefits and registration form integration.
-- **Responsive Design**: Optimized for mobile, tablet, and desktop devices.
-- **Footer**: Contact details, social media links, and affiliation information.
-
----
-
-## Color Palette
-
-| Purpose        | Color           | Hex     |
-| -------------- | --------------- | ------- |
-| Primary        | Optica Purple   | #A890FF |
-| Secondary      | Quantum Violet  | #A890FF |
-| Background     | Optica Black    | #05040A |
-| Surface Glow   | Deep Surface    | #121123 |
-| Text Primary   | Polar White     | #F5F5F8 |
-| Text Secondary | Soft Lilac Gray | #ACAFCA |
-| White Elements | Pure White      | #FFFFFF |
+- **Cinematic 3D Hero**: WebGL-powered hero with quantum foam, crystal clusters, particle swarms, and rotating spectrum rings
+- **Snap Scroll Home Page**: Custom section-based snap scrolling with animated navigation rail
+- **Fully Responsive Design**: Optimized for mobile, tablet, and desktop with adaptive quality
+- **Dark Theme**: Consistent background with purple/pink gradient accents
+- **Performance Optimized**: Adaptive rendering quality based on device capabilities
+- **Team Page**: Core team + Department heads with detailed social links
+- **Events Page**: Comprehensive event listing with filtering
+- **About Page**: Mission, vision, faculty advisor details
+- **Mouse-Reactive Effects**: Interactive background elements that follow cursor movement
+- **Smooth Animations**: Framer Motion & GSAP-powered transitions and interactions
 
 ---
 
-## Typography
+## 🎨 Design System
 
-- **Headings**: Poppins (600–700)
-- **Body Text**: Inter (400)
-- **Accents / Event Titles**: Montserrat (500)
+### Color Palette
 
-All fonts are Google Fonts.
+```css
+--background-dark: #0e1a2b;
+--spectrum-purple: #a48ff5;
+--spectrum-violet: #6f4cff;
+--spectrum-pink: #e91e63;
+--gradient-primary: from-purple-400 to-pink-400;
+--gradient-accent: from-purple-600 to-pink-600;
+```
+
+### Typography
+
+- **Headings**: Poppins 600/700 (`font-heading`)
+- **Body**: Inter 400 (`font-body`)
+- **Accent**: Montserrat 500 (`font-accent`)
+
+All fonts loaded from `next/font/google` for optimal performance.
+
+### Component Patterns
+
+**Card Style** (gradient background with backdrop blur):
+```tsx
+className="bg-gradient-to-br from-purple-900/30 via-black/40 to-purple-900/20
+  backdrop-blur-sm rounded-xl border border-purple-500/20
+  hover:border-purple-400/40 transition-all duration-300"
+```
+
+**Gradient Text**:
+```tsx
+className="bg-gradient-to-r from-purple-300 via-pink-300 to-purple-400
+  bg-clip-text text-transparent"
+```
 
 ---
 
-## Technologies Used
+## 📱 Responsive Design
 
-- **Frontend**: React.js + Tailwind CSS (or HTML + Bootstrap 5)
-- **Hosting**: GitHub Pages / Netlify / BVCOE server
-- **Forms**: Google Forms / EmailJS
-- **Animations**: Framer Motion / Lottie
+| Breakpoint | Width    | Usage          |
+| ---------- | -------- | -------------- |
+| Default    | < 640px  | Mobile         |
+| `sm:`      | ≥ 640px  | Small tablets  |
+| `md:`      | ≥ 768px  | Tablets        |
+| `lg:`      | ≥ 1024px | Laptops        |
+| `xl:`      | ≥ 1280px | Desktops       |
 
----
+### Adaptive Quality (3D Performance)
 
-## Design Guidelines
+The Hero3D component adapts rendering quality based on device:
 
-- Rounded corners for cards and buttons (12–16 px)
-- Soft shadows for card elements (`box-shadow: 0 4px 12px rgba(0,0,0,0.1)`)
-- Subtle hover animations for interactivity
-- Fully responsive layout for all screen sizes
-- Collapsible mobile navigation
-
----
-
-## Reference Sites
-
-- [Optica.org](https://www.optica.org)
-- MIT Optics Society — [https://optics.mit.edu](https://optics.mit.edu)
-- IEEE Student Branch (IIT Delhi)
+| Setting | Mobile | Tablet | Desktop |
+| ------- | ------ | ------ | ------- |
+| DPR     | 1      | 1.5    | 2       |
+| Particles | 300  | 800    | 1500    |
+| Bloom   | ❌     | ❌     | ✅      |
 
 ---
 
-## Contact
+## 🚀 Getting Started
+
+### Prerequisites
+- Node.js 18+ 
+- npm 11.9.0+
+
+### Installation
+
+```bash
+# Clone repository
+git clone https://github.com/sammyyakk/optica-website.git
+cd optica-website
+
+# Install dependencies
+npm install
+
+# Run development server
+npm run dev
+```
+
+Open [http://localhost:3000](http://localhost:3000) to view in browser.
+
+### Build for Production
+
+```bash
+npm run build
+npm start
+```
+
+### Lint Code
+
+```bash
+npm run lint
+```
+
+---
+
+## 🛠️ Tech Stack
+
+| Category        | Technology                    | Version |
+| --------------- | ----------------------------- | ------- |
+| Framework       | Next.js (App Router)          | 15.5.12 |
+| React           | React + React DOM             | 19.2.4  |
+| Styling         | Tailwind CSS                  | 3.4.17  |
+| Animation       | Framer Motion (motion)        | 12.33.0 |
+| Animation       | GSAP                          | 3.14.2  |
+| 3D/WebGL        | Three.js + @react-three/fiber | 0.182.0 |
+| 3D Helpers      | @react-three/drei             | 10.7.7  |
+| Post-processing | @react-three/postprocessing   | 3.0.4   |
+| State Management| Zustand                       | 5.0.11  |
+| Type Safety     | TypeScript                    | 5.9.3   |
+| Email Service   | @emailjs/browser              | 4.4.1   |
+| UI Components   | Radix UI                      | Latest  |
+| Code Quality    | ESLint                        | 9.26.0  |
+
+## 📁 Project Structure
+
+```
+optica-website/
+├── src/
+│   ├── app/
+│   │   ├── layout.tsx              # Root layout with fonts, providers, metadata
+│   │   ├── page.tsx                # Home page with SectionSnapScroll
+│   │   ├── globals.css             # Tailwind imports, custom CSS
+│   │   ├── about/page.tsx          # About page with mission/vision
+│   │   ├── events/page.tsx         # Events listing with filtering
+│   │   ├── events/ai-conclave/     # AI Conclave hackathon event page
+│   │   └── team/page.tsx           # Team members with social links
+│   ├── components/
+│   │   ├── ui/
+│   │   │   ├── SectionSnapScroll.tsx    # Custom snap scroll with nav rail
+│   │   │   ├── FixedParticleBackground.tsx
+│   │   │   ├── CustomCursor.tsx
+│   │   │   └── ThemeToggle.tsx
+│   │   ├── layout/
+│   │   │   └── Navbar.tsx
+│   │   ├── home/
+│   │   │   ├── HeroSection.tsx
+│   │   │   ├── WhoWeAreSection.tsx
+│   │   │   ├── LifeAsMemberSection.tsx
+│   │   │   ├── FacultyAdvisorSection.tsx
+│   │   │   └── FooterSection.tsx
+│   │   ├── events/
+│   │   │   └── EventCards.tsx
+│   │   └── three/
+│   │       └── Hero3D.tsx (3D WebGL hero scene)
+│   └── lib/
+│       ├── accessibility/
+│       ├── animations/
+│       ├── theme/
+│       └── utils.ts
+├── public/
+├── tailwind.config.ts
+├── tsconfig.json
+├── next.config.js
+└── package.json
+```
+
+---
+
+## 📧 Contact & Social
+
+**Email:** [bvpoptica@gmail.com](mailto:bvpoptica@gmail.com)  
+**Address:** A-4, Paschim Vihar, New Delhi – 110063  
+**Social:** Instagram [@bvpoptica](https://instagram.com/bvpoptica), LinkedIn
+
+---
+
+## 👥 Development Team
+
+**Website Developer & Maintainer:** [Samyak Jain](https://github.com/sammyyakk)
+
+---
+
+## 📝 Git Workflow
+
+### Branch Naming
+- Feature branches: `feature/feature-name`
+- Bug fixes: `fix/bug-name`
+- Documentation: `docs/description`
+
+### Commit Messages
+Use conventional commits format:
+```
+feat: Add new component
+fix: Resolve mobile layout issue
+style: Update color scheme
+perf: Optimize 3D rendering
+docs: Update README
+refactor: Restructure component
+chore: Update dependencies
+```
+
+### Process
+
+1. **Create branch from main**:
+   ```bash
+   git checkout -b feature/your-feature
+   ```
+
+2. **Make changes and commit**:
+   ```bash
+   git add .
+   git commit -m "feat: Add feature description"
+   ```
+
+3. **Pull before push**:
+   ```bash
+   git pull origin main
+   git push origin feature/your-feature
+   ```
+
+4. **Create Pull Request** with clear description
+
+5. **Code Review** before merging to main
+
+---
+
+## 📄 Contact
 
 **Email:** [bvpoptica@gmail.com](mailto:bvpoptica@gmail.com)  
 **Address:** A-4, Paschim Vihar, New Delhi – 110063  
