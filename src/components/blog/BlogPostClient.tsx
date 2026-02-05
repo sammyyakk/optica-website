@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, useInView } from "motion/react";
-import { useRef, useState, useEffect, useMemo } from "react";
+import { useRef, useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { FixedParticleBackground } from "@/components/ui/FixedParticleBackground";
@@ -39,20 +39,12 @@ function AnimatedSection({
   );
 }
 
-function TableOfContents({ content }: { content: string }) {
+function TableOfContents({
+  headings,
+}: {
+  headings: { id: string; text: string; level: number }[];
+}) {
   const [activeId, setActiveId] = useState("");
-  const headings = useMemo(() => {
-    const matches = content.match(/<h[23][^>]*>(.*?)<\/h[23]>/gi) || [];
-    return matches.map((h, i) => {
-      const level = h.startsWith("<h3") ? 3 : 2;
-      const text = h.replace(/<[^>]*>/g, "");
-      const id = text
-        .toLowerCase()
-        .replace(/[^a-z0-9]+/g, "-")
-        .replace(/(^-|-$)/g, "");
-      return { id, text, level, index: i };
-    });
-  }, [content]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -203,29 +195,18 @@ function ShareButtons({ title, slug }: { title: string; slug: string }) {
   );
 }
 
-function processContent(content: string): string {
-  // Add IDs to headings for TOC navigation
-  return content.replace(
-    /<(h[23])([^>]*)>(.*?)<\/h[23]>/gi,
-    (match, tag, attrs, text) => {
-      const plainText = text.replace(/<[^>]*>/g, "");
-      const id = plainText
-        .toLowerCase()
-        .replace(/[^a-z0-9]+/g, "-")
-        .replace(/(^-|-$)/g, "");
-      return `<${tag}${attrs} id="${id}">${text}</${tag}>`;
-    },
-  );
-}
-
 interface BlogPostClientProps {
   post: BlogPost | null;
   relatedPosts: BlogPost[];
+  headings: { id: string; text: string; level: number }[];
+  children?: React.ReactNode;
 }
 
 export default function BlogPostClient({
   post,
   relatedPosts,
+  headings,
+  children,
 }: BlogPostClientProps) {
   const [scrollProgress, setScrollProgress] = useState(0);
 
@@ -241,7 +222,7 @@ export default function BlogPostClient({
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  if (!post) {
+  if (!post || !children) {
     return (
       <main className="min-h-screen bg-transparent text-white overflow-hidden">
         <FixedParticleBackground />
@@ -267,8 +248,6 @@ export default function BlogPostClient({
       </main>
     );
   }
-
-  const processedContent = processContent(post.content);
 
   return (
     <main className="min-h-screen bg-transparent text-white overflow-hidden">
@@ -432,22 +411,7 @@ export default function BlogPostClient({
           <div className="flex gap-10">
             {/* Main content */}
             <AnimatedSection className="flex-1 min-w-0" delay={0.15}>
-              <article
-                className="prose prose-invert prose-purple max-w-none
-                prose-headings:font-heading prose-headings:text-white prose-headings:scroll-mt-24
-                prose-h2:text-2xl prose-h2:mt-10 prose-h2:mb-4 prose-h2:border-b prose-h2:border-purple-500/20 prose-h2:pb-2
-                prose-h3:text-xl prose-h3:mt-8 prose-h3:mb-3
-                prose-p:text-gray-300 prose-p:leading-relaxed prose-p:mb-4
-                prose-a:text-purple-400 prose-a:no-underline hover:prose-a:text-purple-300 hover:prose-a:underline
-                prose-strong:text-white
-                prose-ul:text-gray-300 prose-ol:text-gray-300
-                prose-li:mb-1.5
-                prose-blockquote:border-l-purple-500 prose-blockquote:bg-purple-500/5 prose-blockquote:rounded-r-lg prose-blockquote:py-2 prose-blockquote:px-4 prose-blockquote:italic prose-blockquote:text-gray-400
-                prose-code:text-pink-400 prose-code:bg-pink-500/10 prose-code:rounded prose-code:px-1.5 prose-code:py-0.5 prose-code:text-sm
-                prose-pre:bg-black/50 prose-pre:border prose-pre:border-purple-500/20 prose-pre:rounded-xl
-                prose-img:rounded-xl prose-img:border prose-img:border-purple-500/20"
-                dangerouslySetInnerHTML={{ __html: processedContent }}
-              />
+              <article className="blog-content max-w-none">{children}</article>
 
               {/* Tags */}
               <div className="mt-10 pt-6 border-t border-purple-500/20">
@@ -484,7 +448,7 @@ export default function BlogPostClient({
             </AnimatedSection>
 
             {/* Table of Contents sidebar */}
-            <TableOfContents content={post.content} />
+            <TableOfContents headings={headings} />
           </div>
 
           {/* Related Posts */}

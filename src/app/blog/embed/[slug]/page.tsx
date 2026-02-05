@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { getPostBySlug, getAllPosts } from "@/lib/blog/posts";
 import { CategoryIcon, FileTextIcon } from "@/components/blog/Icons";
+import BlogPostMDXContent from "@/components/blog/BlogPostMDXContent";
 
 // Generate static paths for all blog posts at build time
 export function generateStaticParams() {
@@ -127,14 +128,9 @@ export default async function EmbedSinglePostPage({
       </div>
 
       {/* Content */}
-      <article
-        className="prose prose-sm prose-invert max-w-none"
-        style={{
-          fontSize: "14px",
-          lineHeight: "1.7",
-        }}
-        dangerouslySetInnerHTML={{ __html: post.content }}
-      />
+      <article className="blog-content blog-content--embed max-w-none">
+        <BlogPostMDXContent source={post.content} />
+      </article>
 
       {/* Footer */}
       <div

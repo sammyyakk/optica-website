@@ -1,21 +1,24 @@
 import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
-import { remark } from "remark";
-import remarkGfm from "remark-gfm";
-import remarkHtml from "remark-html";
 import type { BlogPost, BlogCategory } from "./types";
 
 // ============================================================
-// MARKDOWN-BASED BLOG SYSTEM
+// MDX-BASED BLOG SYSTEM
 // ============================================================
 // To add a new blog post:
-//   1. Create a .md file in /content/blog/
+//   1. Create a .md or .mdx file in /content/blog/
 //   2. Add YAML frontmatter (title, excerpt, category, tags, etc.)
-//   3. Write your content in Markdown below the frontmatter
+//   3. Write your content in Markdown / MDX below the frontmatter
 //   4. The filename becomes the URL slug
-//      e.g. my-first-post.md → /blog/my-first-post
+//      e.g. my-first-post.mdx → /blog/my-first-post
 //   5. Set draft: true in frontmatter to hide from public
+//
+// MDX files can use custom components directly:
+//   <Callout type="info" title="Note">Some callout content</Callout>
+//   <YouTube id="dQw4w9WgXcQ" />
+//   <Badge>New</Badge>
+//   <Steps><Step number={1} title="First">…</Step></Steps>
 //
 // Supported frontmatter fields:
 //   title       (required) — Post title
@@ -40,20 +43,11 @@ function calculateReadingTime(text: string): number {
   return Math.max(1, Math.ceil(words / 200));
 }
 
-function markdownToHtmlSync(markdown: string): string {
-  // Use processSync for synchronous rendering
-  const result = remark()
-    .use(remarkGfm)
-    .use(remarkHtml, { sanitize: false })
-    .processSync(markdown);
-  return result.toString();
-}
-
 function getMarkdownFiles(): string[] {
   if (!fs.existsSync(BLOG_DIR)) return [];
   return fs
     .readdirSync(BLOG_DIR)
-    .filter((file) => file.endsWith(".md"))
+    .filter((file) => file.endsWith(".md") || file.endsWith(".mdx"))
     .sort();
 }
 
@@ -62,8 +56,8 @@ function parsePost(filename: string): BlogPost | null {
   const fileContents = fs.readFileSync(filePath, "utf-8");
   const { data, content: rawContent } = matter(fileContents);
 
-  // Slug comes from filename (remove .md extension)
-  const slug = filename.replace(/\.md$/, "");
+  // Slug comes from filename (remove .md or .mdx extension)
+  const slug = filename.replace(/\.mdx?$/, "");
 
   // Validate required fields
   if (!data.title || !data.excerpt || !data.category || !data.author) {
@@ -73,14 +67,12 @@ function parsePost(filename: string): BlogPost | null {
     return null;
   }
 
-  // Convert markdown → HTML
-  const htmlContent = markdownToHtmlSync(rawContent);
-
+  // Return raw markdown/MDX content — MDX serialization happens at page level
   return {
     slug,
     title: data.title,
     excerpt: data.excerpt,
-    content: htmlContent,
+    content: rawContent,
     coverImage: data.coverImage || undefined,
     author: {
       name: data.author.name,
@@ -94,7 +86,7 @@ function parsePost(filename: string): BlogPost | null {
     updatedAt: data.updatedAt,
     category: data.category as BlogCategory,
     tags: data.tags || [],
-    readingTime: data.readingTime || calculateReadingTime(htmlContent),
+    readingTime: data.readingTime || calculateReadingTime(rawContent),
     featured: data.featured || false,
     pinned: data.pinned || false,
     draft: data.draft || false,

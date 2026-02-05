@@ -11,7 +11,7 @@ export interface BlogPost {
   slug: string;
   title: string;
   excerpt: string;
-  content: string; // HTML content (rendered from Markdown via remark)
+  content: string; // Raw markdown/MDX content (serialized to MDX at page level)
   coverImage?: string;
   author: BlogAuthor;
   publishedAt: string; // ISO date string
