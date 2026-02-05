@@ -120,6 +120,36 @@ const Icons = {
       <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z" />
     </svg>
   ),
+  Rocket: ({ className = "w-6 h-6" }: { className?: string }) => (
+    <svg
+      className={className}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z" />
+      <path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z" />
+      <path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0" />
+      <path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5" />
+    </svg>
+  ),
+  Flag: ({ className = "w-6 h-6" }: { className?: string }) => (
+    <svg
+      className={className}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z" />
+      <line x1="4" x2="4" y1="22" y2="15" />
+    </svg>
+  ),
   // Social icons
   Instagram: ({ className = "w-5 h-5" }: { className?: string }) => (
     <svg
@@ -1202,9 +1232,21 @@ export default function AIConclaveEvent() {
               className="flex justify-center gap-4 mt-12"
             >
               {[
-                { icon: Icons.Instagram, label: "Instagram", href: "https://instagram.com/bvpoptica" },
-                { icon: Icons.LinkedIn, label: "LinkedIn", href: "https://www.linkedin.com/company/bvp-optica/" },
-                { icon: Icons.Twitter, label: "Twitter", href: "https://twitter.com/bvpoptica" },
+                {
+                  icon: Icons.Instagram,
+                  label: "Instagram",
+                  href: "https://instagram.com/bvpoptica",
+                },
+                {
+                  icon: Icons.LinkedIn,
+                  label: "LinkedIn",
+                  href: "https://www.linkedin.com/company/bvp-optica/",
+                },
+                {
+                  icon: Icons.Twitter,
+                  label: "Twitter",
+                  href: "https://twitter.com/bvpoptica",
+                },
               ].map((social, i) => (
                 <motion.a
                   key={social.label}
@@ -1333,15 +1375,57 @@ export default function AIConclaveEvent() {
             <AnimatedSection className="text-center mb-16">
               <GlitchText className="font-heading text-5xl sm:text-6xl md:text-7xl font-black italic">
                 <span className="bg-gradient-to-r from-purple-400 via-pink-400 to-cyan-400 bg-clip-text text-transparent">
-                  timeline
+                  TIMELINE
                 </span>
               </GlitchText>
             </AnimatedSection>
 
             {/* Timeline with vertical line */}
-            <div className="relative">
+            <div className="relative pt-14 pb-14">
               {/* Vertical line */}
-              <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-[2px] bg-gradient-to-b from-purple-500 via-pink-500 to-cyan-500 md:-translate-x-1/2" />
+              <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-[2px] -translate-x-[1px] bg-gradient-to-b from-purple-500 via-pink-500 to-cyan-500" />
+
+              {/* Start Icon - Rocket */}
+              <div className="absolute left-4 md:left-1/2 w-10 h-10 -translate-x-1/2 top-0 z-20">
+                <motion.div
+                  initial={{ opacity: 0, scale: 0 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ type: "spring", delay: 0.2 }}
+                  className="relative w-full h-full"
+                >
+                  <div className="absolute inset-0 bg-purple-500 rounded-full blur-lg opacity-60" />
+                  <div className="relative w-full h-full rounded-full bg-gradient-to-br from-purple-500 to-pink-500 border-2 border-purple-300 flex items-center justify-center">
+                    <Icons.Rocket className="w-5 h-5 text-white" />
+                  </div>
+                  <motion.div
+                    className="absolute inset-0 rounded-full border-2 border-purple-400"
+                    animate={{ scale: [1, 1.8], opacity: [0.6, 0] }}
+                    transition={{ duration: 2, repeat: Infinity }}
+                  />
+                </motion.div>
+              </div>
+
+              {/* End Icon - Flag */}
+              <div className="absolute left-4 md:left-1/2 w-10 h-10 -translate-x-1/2 bottom-0 z-20">
+                <motion.div
+                  initial={{ opacity: 0, scale: 0 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ type: "spring", delay: 0.5 }}
+                  className="relative w-full h-full"
+                >
+                  <div className="absolute inset-0 bg-cyan-500 rounded-full blur-lg opacity-60" />
+                  <div className="relative w-full h-full rounded-full bg-gradient-to-br from-cyan-500 to-emerald-500 border-2 border-cyan-300 flex items-center justify-center">
+                    <Icons.Flag className="w-5 h-5 text-white" />
+                  </div>
+                  <motion.div
+                    className="absolute inset-0 rounded-full border-2 border-cyan-400"
+                    animate={{ scale: [1, 1.8], opacity: [0.6, 0] }}
+                    transition={{ duration: 2, repeat: Infinity, delay: 0.5 }}
+                  />
+                </motion.div>
+              </div>
 
               <div className="space-y-12 md:space-y-16">
                 {[
@@ -1540,7 +1624,7 @@ export default function AIConclaveEvent() {
             <AnimatedSection className="text-center mb-16">
               <GlitchText className="font-heading text-5xl sm:text-6xl md:text-7xl font-black italic mb-4">
                 <span className="bg-gradient-to-r from-green-400 via-cyan-400 to-purple-400 bg-clip-text text-transparent">
-                  themes
+                  THEMES
                 </span>
               </GlitchText>
               <p className="text-gray-400 max-w-2xl mx-auto">
