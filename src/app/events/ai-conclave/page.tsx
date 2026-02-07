@@ -651,15 +651,15 @@ function CrazyBackground() {
     <div className="fixed inset-0 -z-10 overflow-hidden bg-[#030014]">
       {/* Animated grid with pulse */}
       <motion.div
-        className="absolute inset-0 opacity-15"
+        className="absolute inset-0"
         style={{
           backgroundImage: `
-            linear-gradient(rgba(139,92,246,0.3) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(139,92,246,0.3) 1px, transparent 1px)
+            linear-gradient(rgba(139,92,246,0.6) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(139,92,246,0.6) 1px, transparent 1px)
           `,
           backgroundSize: "80px 80px",
         }}
-        animate={{ opacity: [0.1, 0.2, 0.1] }}
+        animate={{ opacity: [0.15, 0.3, 0.15] }}
         transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
       />
 
