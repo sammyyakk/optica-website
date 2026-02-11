@@ -18,13 +18,15 @@ function AnimatedSection({
   children,
   className = "",
   delay = 0,
+  amount = 0.2,
 }: {
   children: React.ReactNode;
   className?: string;
   delay?: number;
+  amount?: number;
 }) {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, amount: 0.2 });
+  const isInView = useInView(ref, { once: true, amount });
 
   return (
     <motion.div
@@ -410,7 +412,7 @@ export default function BlogPostClient({
           {/* Content area with TOC */}
           <div className="flex gap-10">
             {/* Main content */}
-            <AnimatedSection className="flex-1 min-w-0" delay={0.15}>
+            <AnimatedSection className="flex-1 min-w-0" delay={0.15} amount={0.01}>
               <article className="blog-content max-w-none">{children}</article>
 
               {/* Tags */}
