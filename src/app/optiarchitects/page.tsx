@@ -295,7 +295,7 @@ function MaintainerCard({
   );
 }
 
-export default function MaintainersPage() {
+export default function OptiArchitectsPage() {
   return (
     <main className="min-h-screen bg-transparent text-white overflow-hidden">
       {/* Fixed particle background */}
@@ -306,7 +306,7 @@ export default function MaintainersPage() {
           {/* Header */}
           <AnimatedSection className="text-center mb-4 sm:mb-6">
             <h1 className="font-heading text-3xl sm:text-4xl md:text-6xl font-bold mb-4 sm:mb-6 bg-gradient-to-r from-amber-300 via-yellow-300 to-orange-400 bg-clip-text text-transparent">
-              Website Maintainers
+              Website OptiArchitects
             </h1>
           </AnimatedSection>
 
@@ -336,7 +336,7 @@ export default function MaintainersPage() {
               {/* Lead Maintainer */}
               <div>
                 <h2 className="font-heading text-lg sm:text-xl font-bold text-center bg-gradient-to-r from-amber-400 via-yellow-400 to-orange-400 bg-clip-text text-transparent mb-4">
-                  Creator & Lead Maintainer
+                  Creator & Lead OptiArchitect
                 </h2>
                 <div className="max-w-xs mx-auto">
                   <MaintainerCard maintainer={leadMaintainer} index={0} />
