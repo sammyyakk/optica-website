@@ -83,7 +83,7 @@ export default function Navbar() {
     { name: "Events", href: "/events", isRoute: true },
     { name: "Team", href: "/team", isRoute: true },
     { name: "Blog", href: "/blog", isRoute: true },
-    { name: "Maintainers", href: "/maintainers", isRoute: true },
+    { name: "OptiArchitects", href: "/optiarchitects", isRoute: true },
     {
       name: "Join",
       href: "https://www.optica.org/membership/join/individual/",

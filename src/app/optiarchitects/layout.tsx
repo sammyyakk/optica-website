@@ -1,6 +1,6 @@
 export { metadata } from "./metadata";
 
-export default function MaintainersLayout({
+export default function OptiArchitectsLayout({
   children,
 }: {
   children: React.ReactNode;

@@ -249,10 +249,10 @@ export function FooterSection() {
             </p>
             <p className="text-gray-500">
               <a
-                href="/maintainers"
+                href="/optiarchitects"
                 className="text-amber-400 hover:text-amber-300 transition-colors"
               >
-                Meet the Website Maintainers
+                Meet the Website OptiArchitects
               </a>
             </p>
           </motion.div>
