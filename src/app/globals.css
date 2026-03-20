@@ -285,3 +285,12 @@ small, .text-sm {
 .blog-content--embed h3 {
   font-size: 1.1rem !important;
 }
+
+/* Hide scrollbar for horizontal scrolling elements but keep functional */
+.hide-scrollbar {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}

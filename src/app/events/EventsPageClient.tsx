@@ -39,10 +39,14 @@ export default function EventsPageClient({
   upcomingEvents,
   featuredEvents,
 }: EventsPageClientProps) {
-  // Filter featured upcoming events for carousel
-  const carouselEvents = featuredEvents.filter((event) =>
+  // Fallback to latest events if no featured upcoming events exist so the carousel is always visible
+  let carouselEvents = featuredEvents.filter((event) =>
     upcomingEvents.some((upcoming) => upcoming.id === event.id)
   );
+
+  if (carouselEvents.length === 0) {
+    carouselEvents = featuredEvents.length > 0 ? featuredEvents : allEvents.slice(0, 5);
+  }
 
   return (
     <main className="min-h-screen bg-transparent text-white overflow-hidden">
@@ -59,10 +63,6 @@ export default function EventsPageClient({
           </AnimatedSection>
 
           <AnimatedSection delay={0.15} className="text-center mb-8 sm:mb-12">
-            <p className="text-purple-200/80 italic text-base sm:text-lg mb-2">
-              &ldquo;Perfect execution? Check. Awesome time? Double
-              check.&rdquo;
-            </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-2 text-gray-400 text-sm sm:text-base">
               <p className="max-w-2xl mx-auto px-2">
                 Explore our diverse range of events from ideathons to research
