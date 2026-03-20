@@ -1,0 +1,35 @@
+{
+  "id": "orientation-documentary",
+  "slug": "orientation-documentary",
+  "title": "Orientation & Documentary",
+  "subtitle": "The primary goal of this engaging session was to introduce our incoming members to the essence of Optica, provide insight into our upcoming events and treat participants to an enlightening documentary",
+  "description": "Title: Optica Unveiled: Orientation Session and Documentary Screening Event Objective: The primary goal of this engaging session was to introduce our incoming members to the essence of Optica, provide insight into our upcoming events and treat participants to an enlightening documentary. Benefits of Joining the Event: The event successfully achieved its objective by providing freshers with a holistic understanding of Optica, fostering a sense of belonging, and igniting enthusiasm for future enga",
+  "category": "seminar",
+  "date": "2022-09-15",
+  "time": "2022-09-15 | 10:00 AM onwards",
+  "location": "Bharati Vidyapeeth's College of Engineering, New Delhi",
+  "coverImage": "",
+  "gallery": null,
+  "highlights": [
+    "Ridhi Gupta (Core)",
+    "Laksh Gambhir (President)"
+  ],
+  "status": "completed",
+  "featured": false,
+  "registrationLink": null,
+  "registrationOpen": false,
+  "maxParticipants": null,
+  "currentParticipants": null,
+  "organizers": [
+    {
+      "name": "BVP Optica Team",
+      "role": "Event Organizers"
+    }
+  ],
+  "tags": [
+    "seminar",
+    "optica",
+    "bvp",
+    "2022-23"
+  ]
+}

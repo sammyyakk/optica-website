@@ -1,0 +1,40 @@
+{
+  "id": "industrial-visit-airtel-network-experience-centre",
+  "slug": "industrial-visit-airtel-network-experience-centre",
+  "title": "Industrial Visit \u2014 Airtel Network Experience Centre",
+  "subtitle": "To provide students with industrial exposure and practical insight into real-world telecommunications and network technologies.",
+  "description": "Students of BVP OSA, along with the faculty in-charge, visited the Airtel Network Experience Centre in Manesar. The visit aimed to familiarize participants with industry practices, network infrastructure, and technological applications used in modern communication systems.",
+  "category": "visit",
+  "date": "2019-09-15",
+  "time": "2019-09-15 | 10:00 AM onwards",
+  "location": "Airtel Network Experience Centre, Manesar",
+  "coverImage": "/events/covers/industrial-visit-airtel-network-experience-centre-cover.jpg",
+  "gallery": [
+    "/events/galleries/industrial-visit-airtel-network-experience-centre-1.jpg"
+  ],
+  "highlights": [
+    "Guided visit to the Airtel Network Experience Center",
+    "Observation of network and communication technologies",
+    "Educational industrial exposure for society members",
+    "Opportunity to observe real-world telecom infrastructure",
+    "Faculty-guided learning experience"
+  ],
+  "status": "completed",
+  "featured": true,
+  "registrationLink": null,
+  "registrationOpen": false,
+  "maxParticipants": null,
+  "currentParticipants": null,
+  "organizers": [
+    {
+      "name": "BVP Optica Team",
+      "role": "Event Organizers"
+    }
+  ],
+  "tags": [
+    "visit",
+    "optica",
+    "bvp",
+    "2019-20"
+  ]
+}

@@ -1,0 +1,45 @@
+{
+  "id": "orientation",
+  "slug": "orientation",
+  "title": "Orientation",
+  "subtitle": "To introduce newly admitted students to BVP Optica, its vision, activities, and opportunities related to optics, photonics, research, and technical development.",
+  "description": "BVP Optica organized an Orientation Session for freshers to familiarize them with the society\u2019s work culture and initiatives. The session provided an overview of the society\u2019s focus on research, innovation, and skill development, helping students understand the role and purpose of the society within the college.",
+  "category": "seminar",
+  "date": "2023-09-15",
+  "time": "2023-09-15 | 10:00 AM onwards",
+  "location": "Bharati Vidyapeeth's College of Engineering, New Delhi",
+  "coverImage": "/events/covers/orientation-cover.jpeg",
+  "gallery": [
+    "/events/galleries/orientation-1.jpeg",
+    "/events/galleries/orientation-2.jpeg",
+    "/events/galleries/orientation-3.jpeg",
+    "/events/galleries/orientation-4.jpeg",
+    "/events/galleries/orientation-5.jpeg"
+  ],
+  "highlights": [
+    "Presentation showcasing previous events, workshops, and industrial visits",
+    "Introduction to research opportunities and faculty mentorship",
+    "Interactive discussion with students about participation and involvement",
+    "Introduction to BVP Optica\u2019s research-focused culture",
+    "Showcase of past events and achievements",
+    "Information about industrial visits and technical exposure"
+  ],
+  "status": "completed",
+  "featured": false,
+  "registrationLink": null,
+  "registrationOpen": false,
+  "maxParticipants": null,
+  "currentParticipants": null,
+  "organizers": [
+    {
+      "name": "BVP Optica Team",
+      "role": "Event Organizers"
+    }
+  ],
+  "tags": [
+    "seminar",
+    "optica",
+    "bvp",
+    "2023-24"
+  ]
+}

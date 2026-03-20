@@ -1,0 +1,36 @@
+{
+  "id": "techno-a-thlon",
+  "slug": "techno-a-thlon",
+  "title": "Techno-A-Thlon",
+  "subtitle": "The objective of this event was to test the overall capability of the participant in the tech field.",
+  "description": "Title of the Event: Techno-A-ThlonObjective:The objective of this event was to test the overall capability of the participant in the tech field. It encompassed as many technical skills as possible, which brought a very holistic approach to the event. Tech-A-Thlon challenged participants to prove their technical might.It consisted of 3 Rounds - \u25cf Round 1 ( Quiz ) - About 40 questions were given to test the General Aptitude of participants.Time limit of 20 Minutes.\u25cf Round 2 ( Code Debugging ) - In",
+  "category": "quiz",
+  "date": "2021-09-15",
+  "time": "2021-09-15 | 10:00 AM onwards",
+  "location": "Bharati Vidyapeeth's College of Engineering, New Delhi",
+  "coverImage": "",
+  "gallery": null,
+  "highlights": [
+    "The objective of this event was to test the overall capability of the participant in the tech field. It encompassed as many technical skills as possib...",
+    "Tech-A-Thlon challenged participants to prove their technical might.It consisted of 3 Rounds -",
+    "\u25cf Round 1 ( Quiz ) - About 40 questions were given to test the General Aptitude of participants.Time limit of 20 Minutes."
+  ],
+  "status": "completed",
+  "featured": false,
+  "registrationLink": null,
+  "registrationOpen": false,
+  "maxParticipants": null,
+  "currentParticipants": null,
+  "organizers": [
+    {
+      "name": "BVP Optica Team",
+      "role": "Event Organizers"
+    }
+  ],
+  "tags": [
+    "quiz",
+    "optica",
+    "bvp",
+    "2021-22"
+  ]
+}

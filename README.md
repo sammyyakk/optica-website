@@ -797,7 +797,299 @@ src/
 
 ---
 
-## �📧 Contact & Social
+## 📅 Event System — Complete Guide
+
+The BVP Optica website features a comprehensive event showcase powered by **JSON data files**. Events are stored as individual JSON files — no database, no CMS. Just create a file, add images, and it's live.
+
+### How It Works
+
+```
+data/events/
+├── inauguration-of-bvp-osa-student-chapter.json   → /events/inauguration-of-bvp-osa-student-chapter
+├── quantumspark-quantum-photonics-ideathon.json   → /events/quantumspark-quantum-photonics-ideathon
+├── aries-observatory-visit-nainital.json           → /events/aries-observatory-visit-nainital
+└── your-new-event.json                             → /events/your-new-event
+```
+
+Each `.json` file in `data/events/` automatically becomes an event page. The `slug` field in the JSON determines the URL.
+
+---
+
+### Creating a New Event
+
+#### Step 1: Create the JSON file
+
+Create a new `.json` file in `data/events/`. Use kebab-case for the filename:
+
+```
+data/events/my-awesome-event.json
+```
+
+#### Step 2: Fill in the event data
+
+Here's the complete template with all fields:
+
+```json
+{
+  "id": "my-awesome-event",
+  "slug": "my-awesome-event",
+  "title": "My Awesome Event",
+  "subtitle": "A short tagline for the event (1-2 sentences)",
+  "description": "Full description of the event. This appears on the event detail page. You can include multiple paragraphs and detailed information about what happened, objectives, outcomes, etc.",
+  "category": "seminar",
+  "date": "2026-03-15",
+  "endDate": "2026-03-16",
+  "time": "10:00 AM - 4:00 PM",
+  "location": "Bharati Vidyapeeth's College of Engineering, New Delhi",
+  "coverImage": "/events/covers/my-awesome-event-cover.jpg",
+  "gallery": [
+    "/events/galleries/my-awesome-event-1.jpg",
+    "/events/galleries/my-awesome-event-2.jpg"
+  ],
+  "highlights": [
+    "Key point or activity #1",
+    "Key point or activity #2",
+    "Key point or activity #3",
+    "Notable achievement or outcome"
+  ],
+  "status": "completed",
+  "featured": false,
+  "registrationLink": null,
+  "registrationOpen": false,
+  "maxParticipants": null,
+  "currentParticipants": 50,
+  "organizers": [
+    {
+      "name": "BVP Optica Team",
+      "role": "Event Organizers"
+    }
+  ],
+  "tags": [
+    "seminar",
+    "optica",
+    "bvp",
+    "2025-26"
+  ]
+}
+```
+
+#### Field Reference
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `id` | string | ✅ | Unique identifier (same as filename without .json) |
+| `slug` | string | ✅ | URL path (use same value as id) |
+| `title` | string | ✅ | Event name |
+| `subtitle` | string | ✅ | Short tagline (shown on cards) |
+| `description` | string | ✅ | Full description (shown on detail page) |
+| `category` | string | ✅ | One of: `ideathon`, `seminar`, `quiz`, `debate`, `visit`, `competition` |
+| `date` | string | ✅ | ISO date format: `YYYY-MM-DD` |
+| `endDate` | string | ❌ | For multi-day events |
+| `time` | string | ✅ | Human-readable time (e.g., "10:00 AM - 4:00 PM") |
+| `location` | string | ✅ | Venue name or "Online" |
+| `coverImage` | string | ❌ | Path to cover image (leave empty `""` for gradient fallback) |
+| `gallery` | array | ❌ | Array of image paths for event gallery |
+| `highlights` | array | ✅ | Key points/features (shown as bullet cards) |
+| `status` | string | ✅ | One of: `upcoming`, `ongoing`, `completed` |
+| `featured` | boolean | ✅ | Show in featured carousel (`true`/`false`) |
+| `registrationLink` | string | ❌ | Registration URL (only for upcoming events) |
+| `registrationOpen` | boolean | ❌ | Is registration currently open |
+| `maxParticipants` | number | ❌ | Maximum capacity (if applicable) |
+| `currentParticipants` | number | ❌ | Number of attendees |
+| `organizers` | array | ❌ | Array of organizer objects |
+| `tags` | array | ✅ | Searchable tags (include year like "2025-26") |
+
+#### Allowed Categories
+
+| Category | Use For | Gradient Colors |
+|----------|---------|-----------------|
+| `ideathon` | Innovation challenges, hackathons | Purple → Pink |
+| `seminar` | Talks, webinars, workshops, lectures | Blue → Purple |
+| `quiz` | Quiz competitions, trivia events | Pink → Orange |
+| `debate` | Debate competitions, panel discussions | Orange → Yellow |
+| `visit` | Industrial visits, lab tours, field trips | Green → Teal |
+| `competition` | Robotics, coding, photography contests | Teal → Blue |
+
+---
+
+### Adding Event Images
+
+#### Cover Images
+
+1. Place the image in `public/events/covers/`
+2. Name it: `{slug}-cover.{jpg|png|jpeg}`
+3. Reference in JSON: `"/events/covers/my-event-cover.jpg"`
+
+**Recommended:** 1200×630px, JPEG or PNG, under 500KB
+
+#### Gallery Images
+
+1. Place images in `public/events/galleries/`
+2. Name them: `{slug}-1.jpg`, `{slug}-2.jpg`, etc.
+3. Reference in JSON array:
+   ```json
+   "gallery": [
+     "/events/galleries/my-event-1.jpg",
+     "/events/galleries/my-event-2.jpg"
+   ]
+   ```
+
+#### Events Without Images
+
+If you don't have images for an event, leave `coverImage` as an empty string:
+```json
+"coverImage": ""
+```
+
+The website will display a gradient background based on the event category.
+
+---
+
+### Event Status Guidelines
+
+| Status | When to Use | Registration |
+|--------|-------------|--------------|
+| `upcoming` | Event hasn't happened yet | Can have registration link |
+| `ongoing` | Currently happening (multi-day) | Registration may be closed |
+| `completed` | Event has finished | No registration (set to `null`) |
+
+**Important:** For past events, always set:
+```json
+"status": "completed",
+"registrationLink": null,
+"registrationOpen": false
+```
+
+---
+
+### Featured Events & Carousel
+
+Events with `"featured": true` appear in the carousel on the Events page. Use this for:
+- Upcoming major events you want to highlight
+- Recent significant events
+
+The carousel auto-advances every 5 seconds and pauses on hover.
+
+---
+
+### Event File Architecture
+
+```
+data/events/
+└── your-event-slug.json             ← Event data file
+
+public/events/
+├── covers/                          ← Cover images
+│   └── your-event-slug-cover.jpg
+└── galleries/                       ← Gallery images
+    ├── your-event-slug-1.jpg
+    └── your-event-slug-2.jpg
+
+src/
+├── components/events/
+│   ├── EventCards.tsx               ← Event grid with filtering
+│   ├── EventCarousel.tsx            ← Featured events carousel
+│   ├── EventStatusBadge.tsx         ← Status indicator (upcoming/ongoing/completed)
+│   └── EventRegistrationButton.tsx  ← Registration CTA button
+├── lib/events/
+│   ├── events.ts                    ← Data loading & filtering functions
+│   └── types.ts                     ← Event, EventCategory, EventStatus types
+└── app/events/
+    ├── page.tsx                     ← /events listing (server component)
+    └── [slug]/
+        ├── page.tsx                 ← /events/:slug detail page
+        └── EventDetailClient.tsx    ← Event detail UI (client component)
+```
+
+---
+
+### Quick-Start Checklist
+
+```
+✅  Create file:           data/events/my-event.json
+✅  Add required fields:    id, slug, title, subtitle, description, category, date, time, location, highlights, status, featured, tags
+✅  Add cover image:        public/events/covers/my-event-cover.jpg (optional)
+✅  Set correct status:     "completed" for past events, "upcoming" for future
+✅  Preview locally:        npm run dev → http://localhost:3000/events/my-event
+✅  Commit & push:          git add . && git commit -m "feat: add event — Event Title" && git push
+```
+
+---
+
+### Example: Adding a New Event
+
+**1. Create the JSON file:**
+```bash
+touch data/events/optical-invasion-2026.json
+```
+
+**2. Add event data:**
+```json
+{
+  "id": "optical-invasion-2026",
+  "slug": "optical-invasion-2026",
+  "title": "Optical Invasion 2026",
+  "subtitle": "The annual flagship event of BVP Optica featuring workshops, competitions, and expert talks",
+  "description": "Optical Invasion is BVP Optica's flagship annual event bringing together students, researchers, and industry experts. This year's edition featured hands-on workshops on photonics, a robotics competition, ideathon, quiz, and guest lectures from leading optical scientists.",
+  "category": "competition",
+  "date": "2026-04-15",
+  "endDate": "2026-04-17",
+  "time": "9:00 AM - 6:00 PM",
+  "location": "BVCOE Campus, New Delhi",
+  "coverImage": "/events/covers/optical-invasion-2026-cover.jpg",
+  "gallery": [
+    "/events/galleries/optical-invasion-2026-1.jpg",
+    "/events/galleries/optical-invasion-2026-2.jpg"
+  ],
+  "highlights": [
+    "3-day flagship event with 500+ participants",
+    "Hands-on photonics workshop by industry experts",
+    "Robotics and drone competitions",
+    "Ideathon with cash prizes worth ₹50,000",
+    "Guest lecture by IIT Delhi professor"
+  ],
+  "status": "upcoming",
+  "featured": true,
+  "registrationLink": "https://unstop.com/optical-invasion-2026",
+  "registrationOpen": true,
+  "maxParticipants": 500,
+  "currentParticipants": 324,
+  "organizers": [
+    {
+      "name": "BVP Optica",
+      "role": "Lead Organizer"
+    },
+    {
+      "name": "IEEE Student Branch",
+      "role": "Co-Organizer"
+    }
+  ],
+  "tags": [
+    "optical-invasion",
+    "flagship",
+    "competition",
+    "2025-26"
+  ]
+}
+```
+
+**3. Add cover image:**
+```bash
+cp my-image.jpg public/events/covers/optical-invasion-2026-cover.jpg
+```
+
+**4. Preview and commit:**
+```bash
+npm run dev
+# Check http://localhost:3000/events/optical-invasion-2026
+git add data/events/optical-invasion-2026.json public/events/covers/
+git commit -m "feat: add Optical Invasion 2026 event"
+git push
+```
+
+---
+
+## 📧 Contact & Social
 
 **Email:** [bvpoptica@gmail.com](mailto:bvpoptica@gmail.com)  
 **Address:** A-4, Paschim Vihar, New Delhi – 110063  

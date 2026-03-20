@@ -1,0 +1,43 @@
+{
+  "id": "iiit-delhi-cai-lab-visit",
+  "slug": "iiit-delhi-cai-lab-visit",
+  "title": "IIIT Delhi CAI Lab Visit",
+  "subtitle": "To provide students with exposure to advanced research environments and practical applications in robotics, artificial intelligence, and interdisciplinary technologies through an academic lab visit.",
+  "description": "Members of BVP-OPTICA visited the Centre for Artificial Intelligence (CAI) at IIIT Delhi for an academic tour of their robotics and AI laboratories. The visit included guided demonstrations of ongoing projects, research infrastructure, and practical lab setups, followed by an insightful seminar conducted in the IIIT Delhi seminar hall by an international faculty member via Zoom.",
+  "category": "seminar",
+  "date": "2024-09-15",
+  "time": "2024-09-15 | 10:00 AM onwards",
+  "location": "IIIT Delhi",
+  "coverImage": "/events/covers/iiit-delhi-cai-lab-visit-cover.jpg",
+  "gallery": [
+    "/events/galleries/iiit-delhi-cai-lab-visit-1.jpg",
+    "/events/galleries/iiit-delhi-cai-lab-visit-2.jpg",
+    "/events/galleries/iiit-delhi-cai-lab-visit-3.jpg",
+    "/events/galleries/iiit-delhi-cai-lab-visit-4.jpg",
+    "/events/galleries/iiit-delhi-cai-lab-visit-5.jpg"
+  ],
+  "highlights": [
+    "Guided tour of Robotics and AI research labs at IIIT Delhi\u2022 Observation of real-time research setups and student projects\u2022 Seminar session by foreign faculty conducted in the seminar hall\u2022 Interactive learning experience with refreshments provided",
+    "Participation:",
+    "OPTICA core members and volunteers participated in the academic visit and seminar session.",
+    "First-hand exposure to IIIT Delhi\u2019s CAI research labs\u2022 Insightful seminar by international faculty member\u2022 Educational and exploratory academic experience\u2022 Informal interaction and learning environment for students"
+  ],
+  "status": "completed",
+  "featured": false,
+  "registrationLink": null,
+  "registrationOpen": false,
+  "maxParticipants": null,
+  "currentParticipants": null,
+  "organizers": [
+    {
+      "name": "BVP Optica Team",
+      "role": "Event Organizers"
+    }
+  ],
+  "tags": [
+    "seminar",
+    "optica",
+    "bvp",
+    "2024-25"
+  ]
+}

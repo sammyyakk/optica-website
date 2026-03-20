@@ -1,0 +1,43 @@
+{
+  "id": "case-o-craze",
+  "slug": "case-o-craze",
+  "title": "Case-O-Craze",
+  "subtitle": "To encourage students to explore sustainable methods for a better future by proposing innovative green energy solutions to real-world problems, while promoting critical thinking, creativity, and envir",
+  "description": "Case-O-Craze was an idea presentation competition where teams analyzed given problem statements related to sustainability and renewable energy. Participants presented their solutions before judges, focusing on practical, innovative, and impactful green energy approaches.",
+  "category": "competition",
+  "date": "2024-09-15",
+  "time": "2024-09-15 | 10:00 AM onwards",
+  "location": "Bharati Vidyapeeth's College of Engineering, New Delhi",
+  "coverImage": "/events/covers/case-o-craze-cover.JPG",
+  "gallery": [
+    "/events/galleries/case-o-craze-1.JPG",
+    "/events/galleries/case-o-craze-2.jpg",
+    "/events/galleries/case-o-craze-3.JPG",
+    "/events/galleries/case-o-craze-4.JPG",
+    "/events/galleries/case-o-craze-5.JPG"
+  ],
+  "highlights": [
+    "Problem statement analysis on sustainability themes",
+    "Team-based solution development",
+    "Idea presentation in front of judges",
+    "Feedback and evaluation based on practicality and innovation"
+  ],
+  "status": "completed",
+  "featured": false,
+  "registrationLink": null,
+  "registrationOpen": false,
+  "maxParticipants": null,
+  "currentParticipants": null,
+  "organizers": [
+    {
+      "name": "BVP Optica Team",
+      "role": "Event Organizers"
+    }
+  ],
+  "tags": [
+    "competition",
+    "optica",
+    "bvp",
+    "2024-25"
+  ]
+}

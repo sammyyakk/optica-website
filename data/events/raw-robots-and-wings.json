@@ -1,0 +1,44 @@
+{
+  "id": "raw-robots-and-wings",
+  "slug": "raw-robots-and-wings",
+  "title": "R.A.W (Robots and Wings)",
+  "subtitle": "Line-Following Robot Challenge and Drone Obstacle Course combining robotics and aerodynamics",
+  "description": "R.A.W (Robots and Wings) combined creativity and technical skills by engaging participants in two thrilling competitions: a Line-Following Robot Challenge and a Drone Obstacle Course. Organized jointly by BVP Optica and TechInnovate, this event aimed to foster practical understanding of robotics, aerodynamics, and embedded systems, while promoting teamwork, innovation, and problem-solving in real-world engineering applications.",
+  "category": "competition",
+  "date": "2025-10-09",
+  "time": "10:00 AM - 3:00 PM",
+  "location": "B302, B402, College Ground, Basketball Court",
+  "coverImage": "",
+  "gallery": [],
+  "highlights": [
+    "Line-Following Robot Challenge for autonomous navigation",
+    "Drone Obstacle Course for flight control mastery",
+    "Hands-on experience in sensor calibration and microcontroller programming",
+    "16 teams competed across both challenges",
+    "Joint collaboration between BVP Optica and TechInnovate",
+    "Real-time problem-solving under competitive conditions"
+  ],
+  "status": "completed",
+  "featured": false,
+  "registrationLink": null,
+  "registrationOpen": false,
+  "maxParticipants": null,
+  "currentParticipants": 16,
+  "organizers": [
+    {
+      "name": "BVP Optica",
+      "role": "Lead Organizer"
+    },
+    {
+      "name": "TechInnovate",
+      "role": "Co-Organizer"
+    }
+  ],
+  "tags": [
+    "competition",
+    "robotics",
+    "drones",
+    "engineering",
+    "2025-26"
+  ]
+}

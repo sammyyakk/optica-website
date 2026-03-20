@@ -1,0 +1,34 @@
+{
+  "id": "confluence",
+  "slug": "confluence",
+  "title": "Confluence",
+  "subtitle": "Confluence 3.",
+  "description": "Title of the event: Confluence 3.0 - Spectrum SlamObjective of the event:Annual competition held to give adequate exposure to ECE Dept. students of the industry. Benefit in terms of learning/skill/knowledge obtained: For second-year ECE students, participating in CONFLUENCE 3.0: Spectrum Slam offered priceless advantages. The event, themed &quot;Collaborative Solutions for a Sustainable Future,&quot; fostered creativity through contests like the Ideathon, Hackathon, and Project Showcase. In addi",
+  "category": "ideathon",
+  "date": "2022-09-15",
+  "time": "2022-09-15 | 10:00 AM onwards",
+  "location": "Bharati Vidyapeeth's College of Engineering, New Delhi",
+  "coverImage": "",
+  "gallery": null,
+  "highlights": [
+    "Annual competition held to give adequate exposure to ECE Dept. students of the industry. Benefit in terms of learning/skill/knowledge obtained: For se..."
+  ],
+  "status": "completed",
+  "featured": false,
+  "registrationLink": null,
+  "registrationOpen": false,
+  "maxParticipants": null,
+  "currentParticipants": null,
+  "organizers": [
+    {
+      "name": "BVP Optica Team",
+      "role": "Event Organizers"
+    }
+  ],
+  "tags": [
+    "ideathon",
+    "optica",
+    "bvp",
+    "2022-23"
+  ]
+}

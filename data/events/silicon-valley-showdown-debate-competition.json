@@ -1,0 +1,39 @@
+{
+  "id": "silicon-valley-showdown-debate-competition",
+  "slug": "silicon-valley-showdown-debate-competition",
+  "title": "Silicon Valley Showdown (Debate Competition)",
+  "subtitle": "To encourage critical thinking, technical awareness, and public speaking skills among students by engaging them in structured debates around innovation, technology, and industry-related themes.",
+  "description": "BVP-OPTICA organized Silicon Valley Showdown, a debate competition designed to challenge participants to think like innovators and industry leaders. The event consisted of two rounds \u2014 a Technical Debate round followed by The CEO Courtroom, where participants defended their ideas and arguments in a simulated executive setting.",
+  "category": "debate",
+  "date": "2024-09-15",
+  "time": "2024-09-15 | 10:00 AM onwards",
+  "location": "Bharati Vidyapeeth's College of Engineering, New Delhi",
+  "coverImage": "/events/covers/silicon-valley-showdown-debate-competition-cover.png",
+  "gallery": [
+    "/events/galleries/silicon-valley-showdown-debate-competition-1.png"
+  ],
+  "highlights": [
+    "Round 1: Technical Debate on innovation and technology-driven topics",
+    "Round 2: CEO Courtroom \u2013 participants defended ideas as decision-makers",
+    "Interactive and competitive debate environment",
+    "Participation:A total of 58 registrations were received through Unstop. Students participated in teams of 1\u20134 members, engaging in thoughtful discussions and competitive debate rounds."
+  ],
+  "status": "completed",
+  "featured": false,
+  "registrationLink": null,
+  "registrationOpen": false,
+  "maxParticipants": null,
+  "currentParticipants": null,
+  "organizers": [
+    {
+      "name": "BVP Optica Team",
+      "role": "Event Organizers"
+    }
+  ],
+  "tags": [
+    "debate",
+    "optica",
+    "bvp",
+    "2024-25"
+  ]
+}

@@ -1,0 +1,43 @@
+{
+  "id": "roboleague-bvest-2024",
+  "slug": "roboleague-bvest-2024",
+  "title": "RoboLeague \u2014 BVEST 2024",
+  "subtitle": "To promote innovation and teamwork by challenging participants to design, build, and program robots capable of competing in a Robo-Soccer match.",
+  "description": "The BVCOE basketball court was transformed into a Robo-Soccer arena where teams competed using self-built robots. Robots aimed to push the ball into the opponent\u2019s goal while defending their own, following soccer-style rules across multiple rounds.",
+  "category": "debate",
+  "date": "2024-09-15",
+  "time": "2024-09-15 | 10:00 AM onwards",
+  "location": "Bharati Vidyapeeth's College of Engineering, New Delhi",
+  "coverImage": "/events/covers/roboleague-bvest-2024-cover.jpg",
+  "gallery": [
+    "/events/galleries/roboleague-bvest-2024-1.jpg",
+    "/events/galleries/roboleague-bvest-2024-2.JPG",
+    "/events/galleries/roboleague-bvest-2024-3.JPG",
+    "/events/galleries/roboleague-bvest-2024-4.jpg",
+    "/events/galleries/roboleague-bvest-2024-5.jpg"
+  ],
+  "highlights": [
+    "Head-to-head Robo-Soccer matches",
+    "Multiple competitive rounds with timeouts",
+    "Real-time robot adjustments and strategy implementation",
+    "Participation:10 teams participated, with strong engagement from students and spectators across the college."
+  ],
+  "status": "completed",
+  "featured": false,
+  "registrationLink": null,
+  "registrationOpen": false,
+  "maxParticipants": null,
+  "currentParticipants": null,
+  "organizers": [
+    {
+      "name": "BVP Optica Team",
+      "role": "Event Organizers"
+    }
+  ],
+  "tags": [
+    "debate",
+    "optica",
+    "bvp",
+    "2024-25"
+  ]
+}

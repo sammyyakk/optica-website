@@ -1,0 +1,34 @@
+{
+  "id": "pll-webinar",
+  "slug": "pll-webinar",
+  "title": "PLL Webinar",
+  "subtitle": "The objective of this event was to get the students acquainted with the On-Chip Clock Multiplier (PLL) on OSU180.",
+  "description": "Title of the event: PLL Webinar Objective:The objective of this event was to get the students acquainted with the On-Chip Clock Multiplier (PLL) on OSU180. BVP Optica organised an online workshop on Phased Locked Loop to get the students acquainted with the On-Chip Clock Multiplier (PLL) on OSU180. The workshop began with the introduction of ASIC design flow, PLLs and On-Chip Clock Multipliers. Theory and fundamental concepts like CMOS Implementation, Transistor Sizing, 2nd order control system,",
+  "category": "seminar",
+  "date": "2021-09-15",
+  "time": "2021-09-15 | 10:00 AM onwards",
+  "location": "Bharati Vidyapeeth's College of Engineering, New Delhi",
+  "coverImage": "",
+  "gallery": null,
+  "highlights": [
+    "BVP Optica organised an online workshop on Phased Locked Loop to get the students acquainted with the On-Chip Clock Multiplier (PLL) on OSU"
+  ],
+  "status": "completed",
+  "featured": false,
+  "registrationLink": null,
+  "registrationOpen": false,
+  "maxParticipants": null,
+  "currentParticipants": null,
+  "organizers": [
+    {
+      "name": "BVP Optica Team",
+      "role": "Event Organizers"
+    }
+  ],
+  "tags": [
+    "seminar",
+    "optica",
+    "bvp",
+    "2021-22"
+  ]
+}

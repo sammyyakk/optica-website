@@ -1,0 +1,41 @@
+{
+  "id": "recruitment-drive-bvp-osa-student-chapter",
+  "slug": "recruitment-drive-bvp-osa-student-chapter",
+  "title": "Recruitment Drive \u2014 BVP OSA Student Chapter",
+  "subtitle": "To introduce the newly formed BVP OSA Student Chapter to students and encourage participation by recruiting interested members.",
+  "description": "A recruitment drive was conducted to spread awareness about the BVP OSA Student Chapter and its activities. The team interacted with students, explained the vision of the society, and encouraged them to join and contribute to upcoming technical and research-oriented initiatives.",
+  "category": "seminar",
+  "date": "2018-09-15",
+  "time": "2018-09-15 | 10:00 AM onwards",
+  "location": "Bharati Vidyapeeth's College of Engineering, New Delhi",
+  "coverImage": "/events/covers/recruitment-drive-bvp-osa-student-chapter-cover.jpg",
+  "gallery": [
+    "/events/galleries/recruitment-drive-bvp-osa-student-chapter-1.jpg"
+  ],
+  "highlights": [
+    "Student interaction and society introduction",
+    "Discussion about chapter goals and opportunities",
+    "First phase of student outreach for the chapter",
+    "Direct interaction between core team and students",
+    "Strong interest shown in joining the society",
+    "under the BVP OSA Student Chapter."
+  ],
+  "status": "completed",
+  "featured": true,
+  "registrationLink": null,
+  "registrationOpen": false,
+  "maxParticipants": null,
+  "currentParticipants": null,
+  "organizers": [
+    {
+      "name": "BVP Optica Team",
+      "role": "Event Organizers"
+    }
+  ],
+  "tags": [
+    "seminar",
+    "optica",
+    "bvp",
+    "2018-19"
+  ]
+}

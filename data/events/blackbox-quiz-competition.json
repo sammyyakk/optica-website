@@ -1,0 +1,36 @@
+{
+  "id": "blackbox-quiz-competition",
+  "slug": "blackbox-quiz-competition",
+  "title": "BlackBox Quiz Competition",
+  "subtitle": "BlackBox Quiz Competition Objective of the Event:To conceptualize, organize, and successfully host a comprehensive quiz event designed specifically for Science and Technology enthusiasts, fostering in",
+  "description": "Title of the Event: BlackBox Quiz Competition Objective of the Event:To conceptualize, organize, and successfully host a comprehensive quiz event designed specifically for Science and Technology enthusiasts, fostering intellectual engagement and academic curiosity among students.Benefits in terms of learning, skills, and knowledge gained:Our recent Science and Technology quiz was far more than a competitive academic event; it served as a dynamic platform for experiential learning and intellectua",
+  "category": "quiz",
+  "date": "2022-09-15",
+  "time": "2022-09-15 | 10:00 AM onwards",
+  "location": "Bharati Vidyapeeth's College of Engineering, New Delhi",
+  "coverImage": "",
+  "gallery": null,
+  "highlights": [
+    "To conceptualize, organize, and successfully host a comprehensive quiz event designed specifically for Science and Technology enthusiasts, fostering i...",
+    "Our recent Science and Technology quiz was far more than a competitive academic event; it served as a dynamic platform for experiential learning and i...",
+    "The quiz environment encouraged analytical reasoning, logical thinking, rapid problem-solving, and effective decision-making under time constraints. S..."
+  ],
+  "status": "completed",
+  "featured": false,
+  "registrationLink": null,
+  "registrationOpen": false,
+  "maxParticipants": null,
+  "currentParticipants": null,
+  "organizers": [
+    {
+      "name": "BVP Optica Team",
+      "role": "Event Organizers"
+    }
+  ],
+  "tags": [
+    "quiz",
+    "optica",
+    "bvp",
+    "2022-23"
+  ]
+}

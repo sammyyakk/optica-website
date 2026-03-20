@@ -1,0 +1,41 @@
+{
+  "id": "laser-room",
+  "slug": "laser-room",
+  "title": "Laser Room",
+  "subtitle": "To create an engaging and interactive activity that promotes coordination, focus, and problem-solving skills among participants through a fun, game-based setup.",
+  "description": "Laser Room was conducted as an interactive activity where a room was designed with laser beams forming a maze-like structure. Participants were required to navigate from one end of the room to the other without touching the lasers, making it both a challenging and enjoyable experience.",
+  "category": "seminar",
+  "date": "2019-10-11",
+  "time": "2019-10-11 | 10:00 AM onwards",
+  "location": "Bharati Vidyapeeth's College of Engineering, New Delhi",
+  "coverImage": "/events/covers/laser-room-cover.png",
+  "gallery": [
+    "/events/galleries/laser-room-1.png"
+  ],
+  "highlights": [
+    "Setup of a laser-based maze inside the TT Room",
+    "Participants attempted to cross the room without interrupting the laser paths",
+    "Unique laser maze setup inside TT Room",
+    "Fun and challenging activity for participants",
+    "High engagement and enthusiasm among students",
+    "Conducted during BVEST 2019 (11 October 2019)"
+  ],
+  "status": "completed",
+  "featured": false,
+  "registrationLink": null,
+  "registrationOpen": false,
+  "maxParticipants": null,
+  "currentParticipants": null,
+  "organizers": [
+    {
+      "name": "BVP Optica Team",
+      "role": "Event Organizers"
+    }
+  ],
+  "tags": [
+    "seminar",
+    "optica",
+    "bvp",
+    "2020-21"
+  ]
+}

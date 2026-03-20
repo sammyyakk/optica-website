@@ -1,0 +1,36 @@
+{
+  "id": "git-set-go",
+  "slug": "git-set-go",
+  "title": "Git set go",
+  "subtitle": "TITLE OF THE EVENT: Git Set Go \u2013 Hands-on Workshop on Git &amp; GitHub.",
+  "description": "1. TITLE OF THE EVENT: Git Set Go \u2013 Hands-on Workshop on Git &amp; GitHub.EVENT DETAILS: The \u201cGit Set Go\u201d workshop was conducted over two days with the objective of introducing students to version control systems and collaborative software development using Git and GitHub.DAY 1 (26 February 2026): An interactive session was conducted to introduce students to the fundamentals of version control systems. Students learned basic Git commands such as repository initialization, staging, committing cha",
+  "category": "seminar",
+  "date": "2026-02-26",
+  "time": "2026-02-26 | 10:00 AM onwards",
+  "location": "Bharati Vidyapeeth's College of Engineering, New Delhi",
+  "coverImage": "",
+  "gallery": null,
+  "highlights": [
+    "DAY 1 (26 February 2026): An interactive session was conducted to introduce students to the fundamentals of version control systems. Students learned ...",
+    "DAY 2 (27 February 2026): A hands-on practical workshop was conducted where students gained experience working with GitHub. Participants learned how t...",
+    "The objective of the \u201cGit Set Go\u201d workshop was to provide students with a strong foundation in Git and GitHub, which are essential tools in modern sof..."
+  ],
+  "status": "completed",
+  "featured": false,
+  "registrationLink": null,
+  "registrationOpen": false,
+  "maxParticipants": null,
+  "currentParticipants": null,
+  "organizers": [
+    {
+      "name": "BVP Optica Team",
+      "role": "Event Organizers"
+    }
+  ],
+  "tags": [
+    "seminar",
+    "optica",
+    "bvp",
+    "2025-26"
+  ]
+}

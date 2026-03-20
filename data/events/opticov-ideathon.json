@@ -1,0 +1,41 @@
+{
+  "id": "opticov-ideathon",
+  "slug": "opticov-ideathon",
+  "title": "OptiCOV (Ideathon)",
+  "subtitle": "To encourage innovative thinking and problem-solving among students by developing ideas to address challenges posed by the COVID-19 pandemic.",
+  "description": "OptiCOV was an ideathon organized by BVP OSA where participants were invited to propose creative and practical solutions related to the COVID-19 situation. The event provided a platform for students to apply their knowledge and contribute ideas toward tackling real-world problems during the pandemic.",
+  "category": "ideathon",
+  "date": "2020-04-16",
+  "time": "2020-04-16 | 10:00 AM onwards",
+  "location": "Bharati Vidyapeeth's College of Engineering, New Delhi",
+  "coverImage": "/events/covers/opticov-ideathon-cover.jpg",
+  "gallery": [
+    "/events/galleries/opticov-ideathon-1.jpg"
+  ],
+  "highlights": [
+    "Ideation and submission of innovative solutions related to COVID-19",
+    "Evaluation of ideas based on creativity, feasibility, and impact",
+    "Theme focused on COVID-19 problem-solving",
+    "Ideathon format encouraging innovation and research-based thinking",
+    "Cash rewards for top-performing participants",
+    "Conducted on 16 April 2020"
+  ],
+  "status": "completed",
+  "featured": false,
+  "registrationLink": null,
+  "registrationOpen": false,
+  "maxParticipants": null,
+  "currentParticipants": null,
+  "organizers": [
+    {
+      "name": "BVP Optica Team",
+      "role": "Event Organizers"
+    }
+  ],
+  "tags": [
+    "ideathon",
+    "optica",
+    "bvp",
+    "2020-21"
+  ]
+}

@@ -1,0 +1,45 @@
+{
+  "id": "maang-webinar",
+  "slug": "maang-webinar",
+  "title": "MAANG Webinar",
+  "subtitle": "To guide students on building a successful career path towards top technology companies by providing insights into industry expectations, preparation strategies, and career development.",
+  "description": "BVP-OPTICA organized an online webinar titled \u201cHow to Crack MAANG\u201d featuring Mr. Ashutosh Singhal, Software Engineer at Google and Ex-President of BVP OPTICA. The session focused on helping students understand the roadmap to working at leading tech companies such as Microsoft, Apple, Amazon, Netflix, and Google. The speaker shared practical guidance, career insights, and personal experiences to motivate participants.",
+  "category": "seminar",
+  "date": "2023-09-15",
+  "time": "2023-09-15 | 10:00 AM onwards",
+  "location": "Bharati Vidyapeeth's College of Engineering, New Delhi",
+  "coverImage": "/events/covers/maang-webinar-cover.png",
+  "gallery": [
+    "/events/galleries/maang-webinar-1.png",
+    "/events/galleries/maang-webinar-2.png",
+    "/events/galleries/maang-webinar-3.png",
+    "/events/galleries/maang-webinar-4.png",
+    "/events/galleries/maang-webinar-5.png"
+  ],
+  "highlights": [
+    "Live online webinar session with guest speaker",
+    "Discussion on career roadmap and preparation strategies",
+    "Interactive Q&amp;A session with participants",
+    "Guest speaker: Mr. Ashutosh Singhal (Software Engineer, Google)",
+    "Practical insights into cracking MAANG-level opportunities",
+    "Interactive online session with student engagement"
+  ],
+  "status": "completed",
+  "featured": false,
+  "registrationLink": null,
+  "registrationOpen": false,
+  "maxParticipants": null,
+  "currentParticipants": null,
+  "organizers": [
+    {
+      "name": "BVP Optica Team",
+      "role": "Event Organizers"
+    }
+  ],
+  "tags": [
+    "seminar",
+    "optica",
+    "bvp",
+    "2023-24"
+  ]
+}

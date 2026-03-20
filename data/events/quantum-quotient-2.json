@@ -1,0 +1,39 @@
+{
+  "id": "quantum-quotient-2",
+  "slug": "quantum-quotient-2",
+  "title": "Quantum Quotient 2",
+  "subtitle": "To promote interest in physics, optics, and general science through an engaging online quiz format conducted via Instagram stories and a final mega quiz hosted on Unstop.",
+  "description": "Quantum Quotient 2.0 was an online quiz initiative by BVP-OPTICA designed to encourage learning and participation through social media engagement. The event consisted of weekly quiz questions posted every Wednesday and Sunday on Instagram stories, covering general science topics. The series concluded with a Mega Quiz conducted on Unstop on 20th February, focused on Optics and Photonics.",
+  "category": "quiz",
+  "date": "2024-09-15",
+  "time": "2024-09-15 | 10:00 AM onwards",
+  "location": "Bharati Vidyapeeth's College of Engineering, New Delhi",
+  "coverImage": "/events/covers/quantum-quotient-2-cover.png",
+  "gallery": [
+    "/events/galleries/quantum-quotient-2-1.png"
+  ],
+  "highlights": [
+    "Weekly MCQ-based quizzes conducted on Instagram stories",
+    "Interactive participation from students through social media",
+    "A final Mega Quiz hosted on Unstop platform",
+    "Certificates awarded to participants of the Mega Quiz"
+  ],
+  "status": "completed",
+  "featured": false,
+  "registrationLink": null,
+  "registrationOpen": false,
+  "maxParticipants": null,
+  "currentParticipants": null,
+  "organizers": [
+    {
+      "name": "BVP Optica Team",
+      "role": "Event Organizers"
+    }
+  ],
+  "tags": [
+    "quiz",
+    "optica",
+    "bvp",
+    "2024-25"
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "id": "membership-drive",
+  "slug": "membership-drive",
+  "title": "Membership Drive",
+  "subtitle": "The objective of this event was to onboard members for the society.",
+  "description": "Title of the event : Membership DriveObjective: The objective of this event was to onboard members for the society. The students with their great enthusiasm reported and registered themselves for the BVP Optica Membership drive. The programme aimed to enhance students\u2019 familiarity with the workings of our subchapter and the team behind it. They were informed that participating in an Optica student chapter will help them develop technical knowledge, leadership experience and lasting relationships",
+  "category": "seminar",
+  "date": "2021-09-15",
+  "time": "2021-09-15 | 10:00 AM onwards",
+  "location": "Bharati Vidyapeeth's College of Engineering, New Delhi",
+  "coverImage": "",
+  "gallery": null,
+  "highlights": [
+    "The objective of this event was to onboard members for the society. The students with their great enthusiasm reported and registered themselves for th..."
+  ],
+  "status": "completed",
+  "featured": false,
+  "registrationLink": null,
+  "registrationOpen": false,
+  "maxParticipants": null,
+  "currentParticipants": null,
+  "organizers": [
+    {
+      "name": "BVP Optica Team",
+      "role": "Event Organizers"
+    }
+  ],
+  "tags": [
+    "seminar",
+    "optica",
+    "bvp",
+    "2021-22"
+  ]
+}

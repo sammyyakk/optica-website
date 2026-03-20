@@ -1,0 +1,41 @@
+{
+  "id": "ions-india-2020-abstract-submission-promotion",
+  "slug": "ions-india-2020-abstract-submission-promotion",
+  "title": "IONS India 2020 \u2014 Abstract Submission Promotion",
+  "subtitle": "To encourage students to participate in IONS India 2020 by promoting abstract submissions and research engagement in optics and photonics.",
+  "description": "BVP OSA (now BVP OPTICA) promoted the International OSA Network of Students (IONS) India 2020 event held at IIT Delhi from 29 February to 2 March 2020. The initiative aimed to spread awareness about the event and motivate students to submit research abstracts and take part in a global academic platform focused on optics and photonics.",
+  "category": "seminar",
+  "date": "2020-03-02",
+  "time": "2020-03-02 | 10:00 AM onwards",
+  "location": "Bharati Vidyapeeth's College of Engineering, New Delhi",
+  "coverImage": "/events/covers/ions-india-2020-abstract-submission-promotion-cover.png",
+  "gallery": [
+    "/events/galleries/ions-india-2020-abstract-submission-promotion-1.png"
+  ],
+  "highlights": [
+    "Promotion of Call for Papers / abstract submission",
+    "Sharing event details through social media outreach",
+    "Encouraging student participation in research-focused discussions",
+    "Event hosted at IIT Delhi (29 Feb \u2013 2 Mar 2020)",
+    "Participation opportunity alongside global optics communities",
+    "Talks and sessions by multiple international speakers"
+  ],
+  "status": "completed",
+  "featured": true,
+  "registrationLink": null,
+  "registrationOpen": false,
+  "maxParticipants": null,
+  "currentParticipants": null,
+  "organizers": [
+    {
+      "name": "BVP Optica Team",
+      "role": "Event Organizers"
+    }
+  ],
+  "tags": [
+    "seminar",
+    "optica",
+    "bvp",
+    "2019-20"
+  ]
+}
