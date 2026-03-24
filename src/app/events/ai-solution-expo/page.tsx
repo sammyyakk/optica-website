@@ -706,8 +706,8 @@ function CrazyBackground() {
         }}
       />
 
-      {/* Floating particles - increased to 30 */}
-      {[...Array(30)].map((_, i) => (
+      {/* Floating particles - increased to 100 */}
+      {[...Array(100)].map((_, i) => (
         <motion.div
           key={i}
           className="absolute rounded-full"
@@ -1102,7 +1102,7 @@ const tracks: Track[] = [
     hexColor: "green",
     problems: [
       {
-        title: "AI-Based Visibility Estimator",
+        title: "AI-Based Visibility Estimator in Fog, Dust, or Smog",
         shortDescription:
           "Estimate visibility in fog, dust, or smog conditions",
         problemStatement:
@@ -1128,7 +1128,7 @@ const tracks: Track[] = [
         icon: "Cloud",
       },
       {
-        title: "Zero-Waste Vision",
+        title: "The “Zero-Waste” Vision (Computer Vision)",
         shortDescription: "AI-powered waste classification system",
         problemStatement:
           "Inefficient waste segregation remains a major barrier to effective recycling.",
@@ -1210,7 +1210,7 @@ const tracks: Track[] = [
         icon: "FileCheck",
       },
       {
-        title: "Invisible Fraud Detector",
+        title: "The “Invisible” Fraud Detector",
         shortDescription: "Real-time behavioral fraud detection",
         problemStatement:
           "Traditional fraud detection systems generate high false-positive rates.",
@@ -1229,7 +1229,7 @@ const tracks: Track[] = [
 const faqs = [
   {
     q: "Who can participate?",
-    a: "Students from any recognized engineering or technical institute. Inter-college teams are allowed.",
+    a: "Engineering Students, Postgraduate, Undergraduate, Arts, Commerce, Sciences & Others. Inter-college teams are allowed.",
   },
   {
     q: "What is the team size?",
@@ -1249,7 +1249,7 @@ export default function AIConclaveEvent() {
   const [activeTrack, setActiveTrack] = useState(0);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const [selectedProblem, setSelectedProblem] = useState<Problem | null>(null);
-  const registrationDeadline = new Date("2026-02-14T12:00:00+05:30");
+  const registrationDeadline = new Date("2026-04-04T08:21:00+05:30");
 
   return (
     <main className="min-h-screen text-white overflow-hidden">
@@ -1305,7 +1305,7 @@ export default function AIConclaveEvent() {
                     WebkitTextStroke: "1px rgba(168,85,247,0.3)",
                   }}
                 >
-                  AI CONCLAVE
+                  AI SOLUTION EXPO
                 </span>
               </GlitchText>
             </motion.div>
@@ -1353,7 +1353,7 @@ export default function AIConclaveEvent() {
               className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center px-4 sm:px-0"
             >
               <motion.a
-                href="https://unstop.com/hackathons/ai-conclave-bvcoe-1632921"
+                href="https://unstop.com/hackathons/ai-solution-expo-bvcoe-1662938"
                 target="_blank"
                 rel="noopener noreferrer"
                 whileHover={{ scale: 1.05 }}
@@ -1491,12 +1491,10 @@ export default function AIConclaveEvent() {
                 <div className="flex flex-col md:flex-row md:items-center gap-6">
                   <div className="flex-1">
                     <h3 className="font-heading text-2xl sm:text-3xl font-black text-white mb-4">
-                      AI CONCLAVE 2026
+                      AI SOLUTION EXPO 2026
                     </h3>
                     <p className="text-gray-300 text-sm sm:text-base leading-relaxed mb-4">
-                      A multidisciplinary AI hackathon focused on applying
-                      Artificial Intelligence to solve real-world challenges
-                      across Environment, Healthcare, and Fintech domains.
+                      The AI Hackathon is a multidisciplinary technical competition focused on applying Artificial Intelligence to solve real-world challenges across critical domains such as Environment, Healthcare, and Fintech. The event encourages participants to design innovative, ethical, and scalable AI-driven solutions that demonstrate both technical depth and societal impact.
                     </p>
                     <div className="flex flex-wrap gap-2">
                       {["AI/ML", "Hackathon", "₹10K+ Prizes"].map((tag, i) => (
@@ -1533,9 +1531,9 @@ export default function AIConclaveEvent() {
                     </p>
                   </div>
                   <h4 className="font-heading text-xl font-bold text-white mb-1">
-                    Feb 14-18, 2026
+                    Mar 21 - Apr 14, 2026
                   </h4>
-                  <p className="text-gray-500 text-sm">5 days of innovation</p>
+                  <p className="text-gray-500 text-sm">25 days of innovation</p>
                 </div>
               </NeonCard>
 
@@ -1551,10 +1549,10 @@ export default function AIConclaveEvent() {
                     </p>
                   </div>
                   <h4 className="font-heading text-lg font-bold text-white mb-1">
-                    BVCOE Campus
+                    BVCOE & Unstop
                   </h4>
                   <p className="text-gray-500 text-sm">
-                    Paschim Vihar, New Delhi
+                    Online & Offline Rounds
                   </p>
                 </div>
               </NeonCard>
@@ -1574,7 +1572,7 @@ export default function AIConclaveEvent() {
                     1-4 Members
                   </h4>
                   <p className="text-gray-500 text-sm">
-                    Open to all college students
+                    Undergrad & Postgrad Students
                   </p>
                 </div>
               </NeonCard>
@@ -1643,42 +1641,42 @@ export default function AIConclaveEvent() {
               <div className="space-y-12 md:space-y-16">
                 {[
                   {
-                    date: "Feb 14, 2026",
-                    time: "12:00 PM IST",
+                    date: "Mar 21 - Apr 01, 2026",
+                    time: "12:00 AM - 12:00 AM IST",
+                    label: "Submission Round",
+                    description:
+                      "Submit your presentation (max 10 slides) covering problem definition, AI approach, and a working prototype/demo on Unstop.",
+                    venue: "Online - Unstop Platform",
+                    icon: Icons.Laptop,
+                    color: "purple",
+                  },
+                  {
+                    date: "Apr 04, 2026",
+                    time: "08:21 AM IST",
                     label: "Registration Deadline",
                     description:
                       "Last date to register your team on Unstop. Make sure all team members are added.",
                     venue: "Online - Unstop Platform",
                     icon: Icons.ClipboardPen,
-                    color: "purple",
-                  },
-                  {
-                    date: "Feb 16, 2026",
-                    time: "10:00 AM - 6:00 PM IST",
-                    label: "Online Round",
-                    description:
-                      "Submit your presentation (max 10 slides) with problem definition, AI approach, and working prototype/demo.",
-                    venue: "Online Submission",
-                    icon: Icons.Laptop,
                     color: "pink",
                   },
                   {
-                    date: "Feb 17, 2026",
-                    time: "8:00 PM IST",
-                    label: "Results Announced",
+                    date: "Apr 10 - 11, 2026",
+                    time: "06:00 PM - 12:00 AM IST",
+                    label: "Online Round",
                     description:
-                      "Shortlisted teams for the offline finals will be announced via email and on the Unstop platform.",
-                    venue: "Unstop Platform",
+                      "Present your ideas through your choice of medium on Discord. Judgement based on articulation and relevance.",
+                    venue: "Discord",
                     icon: Icons.Megaphone,
                     color: "cyan",
                   },
                   {
-                    date: "Feb 18, 2026",
-                    time: "9:00 AM - 5:00 PM IST",
+                    date: "Apr 14, 2026",
+                    time: "12:00 PM - 08:00 PM IST",
                     label: "Offline Finals",
                     description:
-                      "Present your solution to the jury panel. Top 3 teams will be awarded prizes and certificates.",
-                    venue: "BVCOE, Paschim Vihar, New Delhi",
+                      "Generic offline or on-campus round. Present your final solution to the jury panel.",
+                    venue: "BVCOE Campus",
                     icon: Icons.Trophy,
                     color: "amber",
                   },
@@ -2078,7 +2076,7 @@ export default function AIConclaveEvent() {
 
                     {/* CTA */}
                     <a
-                      href="https://unstop.com/hackathons/ai-conclave-bvcoe-1632921"
+                      href="https://unstop.com/hackathons/ai-solution-expo-bvcoe-1662938"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-purple-600 to-pink-600 text-white font-medium hover:from-purple-500 hover:to-pink-500 transition-all"
@@ -2280,11 +2278,20 @@ export default function AIConclaveEvent() {
                       className="p-4 rounded-xl bg-purple-500/10 border border-purple-500/30"
                     >
                       <p className="text-purple-400 text-sm mb-1 flex items-center gap-1.5">
-                        <Icons.Mail className="w-4 h-4" /> EMAIL
+                        <Icons.Users className="w-4 h-4" /> CONTACT
                       </p>
-                      <p className="text-white font-medium">
-                        bvpoptica@gmail.com
-                      </p>
+                      <div className="space-y-3">
+                        <div>
+                          <p className="text-white font-medium">Gaurav Sharma</p>
+                          <p className="text-gray-400 text-sm">gauravsharma6420@gmail.com</p>
+                          <p className="text-gray-400 text-sm">+91 76785 71234</p>
+                        </div>
+                        <div>
+                          <p className="text-white font-medium">Anand Verma</p>
+                          <p className="text-gray-400 text-sm">anandambastha72@gmail.com</p>
+                          <p className="text-gray-400 text-sm">+91 87508 76278</p>
+                        </div>
+                      </div>
                     </motion.div>
                     <motion.div
                       whileHover={{ x: 5 }}
@@ -2294,11 +2301,14 @@ export default function AIConclaveEvent() {
                         <Icons.MapPin className="w-4 h-4" /> VENUE
                       </p>
                       <p className="text-white font-medium">
-                        BVCOE, Paschim Vihar, Delhi
+                        Bharati Vidyapeeth&apos;s College of Engineering
+                      </p>
+                      <p className="text-gray-400 text-sm">
+                        West Delhi, Delhi, India
                       </p>
                     </motion.div>
                     <motion.a
-                      href="https://unstop.com/hackathons/ai-conclave-bvcoe-1632921"
+                      href="https://unstop.com/hackathons/ai-solution-expo-bvcoe-1662938"
                       target="_blank"
                       rel="noopener noreferrer"
                       whileHover={{ scale: 1.02 }}
