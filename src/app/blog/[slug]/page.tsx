@@ -33,10 +33,14 @@ export async function generateMetadata({
       type: "article",
       title: post.title,
       description: post.excerpt,
+      url: `/blog/${slug}`,
       publishedTime: post.publishedAt,
       modifiedTime: post.updatedAt || post.publishedAt,
       authors: [post.author.name],
       tags: post.tags,
+    },
+    alternates: {
+      canonical: `/blog/${slug}`,
     },
     twitter: {
       card: "summary_large_image",

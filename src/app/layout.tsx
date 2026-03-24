@@ -90,7 +90,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_IN",
-    url: siteUrl,
+    url: "/",
     siteName: "BVP Optica",
     title: "BVP Optica - Student Chapter | Optics & Photonics Society",
     description:
@@ -133,7 +133,7 @@ export const metadata: Metadata = {
     },
   },
   alternates: {
-    canonical: siteUrl,
+    canonical: "/",
   },
   category: "education",
   classification: "Student Organization",
@@ -200,8 +200,7 @@ export default function RootLayout({
     >
       <head>
         <link rel="manifest" href="/manifest.json" />
-        <link rel="canonical" href="https://www.bvpoptica.com" />
-        <meta name="theme-color" content="#0E1A2B" />
+                <meta name="theme-color" content="#0E1A2B" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta
           name="apple-mobile-web-app-status-bar-style"

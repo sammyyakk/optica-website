@@ -71,7 +71,7 @@ export default async function Image({ params }: { params: Promise<{ slug: string
     }
   }
 
-  return new ImageResponse(
+    return new ImageResponse(
     (
       <div
         style={{
@@ -81,12 +81,10 @@ export default async function Image({ params }: { params: Promise<{ slug: string
           flexDirection: "column",
           justifyContent: "space-between",
           padding: "80px",
-          background: coverImageSrc 
-            ? "linear-gradient(to right, rgba(14, 26, 43, 1) 0%, rgba(14, 26, 43, 0.9) 60%, rgba(14, 26, 43, 0.4) 100%)"
-            : "linear-gradient(to bottom right, #0e1a2b, #1a0b2e)",
-          color: "white",
+          backgroundColor: "#0e1a2b",
           fontFamily: "sans-serif",
           position: "relative",
+          overflow: "hidden",
         }}
       >
         {coverImageSrc && (
@@ -98,10 +96,10 @@ export default async function Image({ params }: { params: Promise<{ slug: string
               position: "absolute",
               top: 0,
               left: 0,
-              width: "100%",
-              height: "100%",
+              width: "1200px",
+              height: "630px",
               objectFit: "cover",
-              zIndex: -1,
+              zIndex: 0,
             }}
           />
         )}
@@ -112,33 +110,33 @@ export default async function Image({ params }: { params: Promise<{ slug: string
               position: "absolute",
               top: 0,
               left: 0,
-              width: "100%",
-              height: "100%",
-              background: "linear-gradient(to right, #0e1a2b 0%, rgba(14, 26, 43, 0.85) 50%, rgba(14, 26, 43, 0.2) 100%)",
-              zIndex: -1,
+              width: "1200px",
+              height: "630px",
+              backgroundColor: "rgba(14, 26, 43, 0.82)", // Even darker background for contrast
+              zIndex: 1,
             }}
           />
         )}
 
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", zIndex: 1 }}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", zIndex: 2, width: "100%" }}>
           <div style={{ fontSize: 36, fontWeight: "bold", color: "#a48ff5", letterSpacing: "2px", display: "flex", alignItems: "center" }}>
             <span style={{ color: "#e91e63", marginRight: "12px" }}>●</span> BVP OPTICA
           </div>
-          <div style={{ fontSize: 24, fontWeight: "bold", color: "#e91e63", background: "rgba(233, 30, 99, 0.15)", padding: "10px 24px", borderRadius: "100px", border: "1px solid rgba(233, 30, 99, 0.3)" }}>
+          <div style={{ fontSize: 24, fontWeight: "bold", color: "#e91e63", background: "rgba(233, 30, 99, 0.15)", padding: "10px 24px", borderRadius: "100px", border: "1px solid rgba(233, 30, 99, 0.3)", display: "flex" }}>
             {post.category}
           </div>
         </div>
 
-        <div style={{ display: "flex", flexDirection: "column", gap: "24px", flex: 1, justifyContent: "center", paddingTop: "60px", zIndex: 1 }}>
-          <div style={{ fontSize: 72, fontWeight: "bold", lineHeight: 1.1, maxWidth: "1000px" }}>
+        <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", zIndex: 2, width: "100%", paddingTop: "50px", paddingBottom: "30px" }}>
+          <div style={{ fontSize: 64, fontWeight: "bold", lineHeight: 1.1, color: "white", marginBottom: "30px", maxWidth: "1000px" }}>
             {post.title}
           </div>
-          <div style={{ fontSize: 32, color: "#cbd5e1", maxWidth: "800px", lineHeight: 1.4 }}>
+          <div style={{ fontSize: 32, color: "#cbd5e1", lineHeight: 1.4, maxWidth: "900px" }}>
             {post.excerpt.length > 130 ? post.excerpt.substring(0, 130) + "..." : post.excerpt}
           </div>
         </div>
 
-        <div style={{ display: "flex", alignItems: "center", gap: "24px", zIndex: 1 }}>
+        <div style={{ display: "flex", alignItems: "center", zIndex: 2, width: "100%" }}>
           {authorImageSrc ? (
             // eslint-disable-next-line @next/next/no-img-element
             <img 
@@ -146,15 +144,15 @@ export default async function Image({ params }: { params: Promise<{ slug: string
               alt={post.author.name}
               width={80} 
               height={80}
-              style={{ borderRadius: "40px", objectFit: "cover", border: "3px solid #a48ff5" }}
+              style={{ borderRadius: "40px", objectFit: "cover", border: "3px solid #a48ff5", marginRight: "24px" }}
             />
           ) : (
-            <div style={{ width: 80, height: 80, borderRadius: 40, background: "linear-gradient(135deg, #a48ff5, #e91e63)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 36, fontWeight: "bold" }}>
+            <div style={{ width: 80, height: 80, borderRadius: 40, background: "linear-gradient(135deg, #a48ff5, #e91e63)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 36, fontWeight: "bold", marginRight: "24px", color: "white" }}>
               {post.author.name.charAt(0)}
             </div>
           )}
-          <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
-            <div style={{ fontSize: 32, fontWeight: "bold", display: "flex", color: "white" }}>{post.author.name}</div>
+          <div style={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
+            <div style={{ fontSize: 32, fontWeight: "bold", color: "white", marginBottom: "8px", display: "flex" }}>{post.author.name}</div>
             <div style={{ fontSize: 24, color: "#a48ff5", display: "flex" }}>{post.author.role}</div>
           </div>
         </div>

@@ -28,8 +28,8 @@ export default function Image() {
           </div>
         </div>
 
-        <div style={{ display: "flex", flexDirection: "column", gap: "24px", alignItems: "center", zIndex: 1 }}>
-          <div style={{ fontSize: 96, fontWeight: "bold", lineHeight: 1.1, maxWidth: "1000px", color: "white" }}>
+        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", zIndex: 1 }}>
+          <div style={{ fontSize: 96, fontWeight: "bold", lineHeight: 1.1, maxWidth: "1000px", color: "white", marginBottom: "24px" }}>
             The Optica Blog
           </div>
           <div style={{ fontSize: 36, color: "#cbd5e1", maxWidth: "800px", lineHeight: 1.5, textAlign: "center" }}>
