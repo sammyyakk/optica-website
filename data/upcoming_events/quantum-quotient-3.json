@@ -1,0 +1,87 @@
+{
+  "id": "quantum-quotient-3",
+  "slug": "quantum-quotient-3",
+  "title": "Quantum Quotient 3.0",
+  "subtitle": "The ultimate optics and photonics quiz challenge.",
+  "description": "Get ready for the next edition of Quantum Quotient—a thrilling quizzing competition designed to test your expertise in optics and photonics. This high-energy, fast-paced challenge pushes the boundaries by testing not just your knowledge, but your ability to apply it under pressure. 30 questions, 30 minutes—do you have what it takes?",
+  "category": "quiz",
+  "date": "2026-03-27",
+  "time": "2026-03-27 | 7:00 PM - 7:30 PM IST",
+  "location": "Online (Unstop Platform)",
+  "coverImage": "/events/covers/quantum-quotient-3-cover.jpg",
+  "gallery": [],
+  "highlights": [
+    "30 MCQs covering optics and photonics",
+    "30-minute fast-paced challenge",
+    "Individual participation only",
+    "Recognition and rewards for top scorers",
+    "Warm-up round on Instagram (March 22)"
+  ],
+  "status": "upcoming",
+  "featured": true,
+  "registrationLink": "https://unstop.com/quizzes/quantum-quotient-30-bharati-vidyapeeth-s-college-of-engineering-delhi-1303445",
+  "registrationOpen": true,
+  "registrationDeadline": "2026-03-25T00:30:00+05:30",
+  "maxParticipants": null,
+  "currentParticipants": 0,
+  "organizers": [
+    {
+      "name": "Akshat Arora",
+      "role": "Event Coordinator",
+      "email": "akshat.ayaan5@gmail.com",
+      "phone": "+91 84700 84661"
+    },
+    {
+      "name": "Anand Ambastha",
+      "role": "Event Coordinator",
+      "email": "anand.kumar-coend@bvp.edu.in"
+    }
+  ],
+  "timeline": [
+    {
+      "date": "2026-03-21",
+      "time": "12:00 AM IST",
+      "event": "Registration Opens",
+      "description": "Registration opens on Unstop platform"
+    },
+    {
+      "date": "2026-03-22",
+      "time": "10:00 AM - 10:30 AM IST",
+      "event": "Warm-Up Round",
+      "description": "Practice session on Instagram @bvpoptica"
+    },
+    {
+      "date": "2026-03-25",
+      "time": "12:30 AM IST",
+      "event": "Registration Deadline",
+      "description": "Last date to register for the competition"
+    },
+    {
+      "date": "2026-03-27",
+      "time": "7:00 PM - 7:30 PM IST",
+      "event": "Final Quiz Round",
+      "description": "Main quiz competition with 30 MCQs in 30 minutes"
+    }
+  ],
+  "rules": [
+    "Individual participation only",
+    "No external resources, calculators, or internet searches allowed during the quiz",
+    "Registration deadline: March 25, 2026, 12:30 AM IST",
+    "30 questions to be completed in 30 minutes",
+    "Winners determined by accuracy and speed"
+  ],
+  "eligibility": [
+    "Engineering Students (UG & PG)",
+    "Management Students",
+    "Students from Arts, Commerce, Sciences backgrounds",
+    "Open to all interested in optics and photonics"
+  ],
+  "tags": [
+    "quiz",
+    "optics",
+    "photonics",
+    "competition",
+    "individual",
+    "upcoming"
+  ]
+}
