@@ -15,14 +15,28 @@ export async function getAllEvents(): Promise<Event[]> {
   }
 
   const eventsDirectory = path.join(process.cwd(), "data/events");
+  const upcomingDirectory = path.join(process.cwd(), "data/upcoming_events");
   
   try {
-    const filenames = await fs.readdir(eventsDirectory);
-    const jsonFiles = filenames.filter((name) => name.endsWith(".json"));
+    const getJsonFiles = async (dir: string) => {
+      try {
+        const filenames = await fs.readdir(dir);
+        return filenames
+          .filter((name) => name.endsWith(".json"))
+          .map((name) => path.join(dir, name));
+      } catch (_error) {
+        // Directory might not exist yet
+        return [];
+      }
+    };
+
+    const pastEventFiles = await getJsonFiles(eventsDirectory);
+    const upcomingEventFiles = await getJsonFiles(upcomingDirectory);
+    
+    const allFiles = [...pastEventFiles, ...upcomingEventFiles];
 
     const events = await Promise.all(
-      jsonFiles.map(async (filename) => {
-        const filePath = path.join(eventsDirectory, filename);
+      allFiles.map(async (filePath) => {
         const fileContents = await fs.readFile(filePath, "utf8");
         const event: Event = JSON.parse(fileContents);
         return event;

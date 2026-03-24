@@ -37,16 +37,9 @@ function AnimatedSection({
 export default function EventsPageClient({
   allEvents,
   upcomingEvents,
-  featuredEvents,
 }: EventsPageClientProps) {
-  // Fallback to latest events if no featured upcoming events exist so the carousel is always visible
-  let carouselEvents = featuredEvents.filter((event) =>
-    upcomingEvents.some((upcoming) => upcoming.id === event.id)
-  );
-
-  if (carouselEvents.length === 0) {
-    carouselEvents = featuredEvents.length > 0 ? featuredEvents : allEvents.slice(0, 5);
-  }
+  // Only show upcoming events in the carousel
+  const carouselEvents = upcomingEvents;
 
   return (
     <main className="min-h-screen bg-transparent text-white overflow-hidden">
@@ -74,12 +67,12 @@ export default function EventsPageClient({
             </div>
           </AnimatedSection>
 
-          {/* Featured Upcoming Events Carousel */}
+          {/* Upcoming Events Carousel */}
           {carouselEvents.length > 0 && (
             <AnimatedSection delay={0.25} className="mb-12 sm:mb-16">
               <div className="mb-6">
                 <h2 className="font-heading text-2xl sm:text-3xl font-bold text-center bg-gradient-to-r from-purple-300 to-pink-300 bg-clip-text text-transparent">
-                  Featured Upcoming Events
+                  Upcoming Events
                 </h2>
               </div>
               <EventCarousel events={carouselEvents} autoAdvanceInterval={5000} />

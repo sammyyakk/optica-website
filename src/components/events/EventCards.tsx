@@ -15,6 +15,7 @@ const categories = [
   { value: "debate", label: "Debates" },
   { value: "visit", label: "Visits" },
   { value: "competition", label: "Competitions" },
+  { value: "exhibition", label: "Exhibitions" },
 ];
 
 interface EventCardsProps {

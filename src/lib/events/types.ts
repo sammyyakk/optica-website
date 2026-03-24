@@ -2,7 +2,7 @@
  * Event data types for BVP Optica events
  */
 
-export type EventCategory = "ideathon" | "seminar" | "quiz" | "debate" | "visit" | "competition";
+export type EventCategory = "ideathon" | "seminar" | "quiz" | "debate" | "visit" | "competition" | "exhibition";
 export type EventStatus = "upcoming" | "ongoing" | "completed";
 
 export interface EventOrganizer {
@@ -45,6 +45,7 @@ export const categoryGradients: Record<EventCategory, string> = {
   debate: "from-orange-400 to-yellow-400",
   visit: "from-green-400 to-teal-400",
   competition: "from-teal-400 to-blue-400",
+  exhibition: "from-cyan-400 to-purple-400",
 };
 
 /**

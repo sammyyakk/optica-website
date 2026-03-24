@@ -1,0 +1,39 @@
+{
+  "id": "ai-solution-expo",
+  "slug": "ai-solution-expo",
+  "title": "AI Solution Expo",
+  "subtitle": "Showcasing the next generation of AI-driven solutions and innovations.",
+  "description": "The AI Solution Expo is an upcoming flagship event where students will present innovative AI models, research projects, and deep learning solutions to real-world problems. Participants will have the opportunity to interact with industry experts, attend hands-on workshops, and win exciting prizes.",
+  "category": "exhibition",
+  "date": "2026-05-15",
+  "time": "2026-05-15 | 10:00 AM onwards",
+  "location": "Bharati Vidyapeeth's College of Engineering, New Delhi",
+  "coverImage": "/events/covers/from-data-to-decisions-ai-agents-in-action-gen-ai-cover.jpeg",
+  "gallery": [],
+  "highlights": [
+    "Project showcases from top teams",
+    "Interactive AI demonstrations",
+    "Networking with industry leaders",
+    "Workshops on generative AI and ML",
+    "Prizes and certificates for top solutions"
+  ],
+  "status": "upcoming",
+  "featured": true,
+  "registrationLink": "#",
+  "registrationOpen": true,
+  "maxParticipants": 200,
+  "currentParticipants": 0,
+  "organizers": [
+    {
+      "name": "BVP Optica Team",
+      "role": "Event Organizers"
+    }
+  ],
+  "tags": [
+    "ai",
+    "machine-learning",
+    "expo",
+    "innovation",
+    "upcoming"
+  ]
+}
