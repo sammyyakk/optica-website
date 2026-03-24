@@ -120,7 +120,7 @@ export default async function Image({ params }: { params: Promise<{ slug: string
 
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", zIndex: 2, width: "100%" }}>
           <div style={{ fontSize: 36, fontWeight: "bold", color: "#a48ff5", letterSpacing: "2px", display: "flex", alignItems: "center" }}>
-            <span style={{ color: "#e91e63", marginRight: "12px" }}>⦾</span> BVP OPTICA
+            BVP OPTICA
           </div>
           <div style={{ fontSize: 24, fontWeight: "bold", color: "#e91e63", background: "rgba(233, 30, 99, 0.15)", padding: "10px 24px", borderRadius: "100px", border: "1px solid rgba(233, 30, 99, 0.3)", display: "flex" }}>
             {post.category}
@@ -128,10 +128,10 @@ export default async function Image({ params }: { params: Promise<{ slug: string
         </div>
 
         <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", zIndex: 2, width: "100%", paddingTop: "30px", paddingBottom: "30px" }}>
-          <div style={{ fontSize: 32, fontWeight: "bold", lineHeight: 1.1, color: "white", marginBottom: "30px", maxWidth: "1000px" }}>
+          <div style={{ fontSize: 50, fontWeight: "bold", lineHeight: 1.1, color: "white", marginBottom: "30px", maxWidth: "1000px" }}>
             {post.title}
           </div>
-          <div style={{ fontSize: 24, color: "#cbd5e1", lineHeight: 1.4, maxWidth: "900px" }}>
+          <div style={{ fontSize: 35, color: "#cbd5e1", lineHeight: 1.4, maxWidth: "900px" }}>
             {post.excerpt.length > 130 ? post.excerpt.substring(0, 130) + "..." : post.excerpt}
           </div>
         </div>

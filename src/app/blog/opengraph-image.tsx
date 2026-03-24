@@ -24,7 +24,7 @@ export default function Image() {
       >
         <div style={{ display: "flex", alignItems: "center", marginBottom: "40px" }}>
           <div style={{ fontSize: 48, fontWeight: "bold", color: "#a48ff5", letterSpacing: "4px", display: "flex", alignItems: "center" }}>
-            <span style={{ color: "#e91e63", marginRight: "16px" }}>●</span> BVP OPTICA
+            BVP OPTICA
           </div>
         </div>
 
@@ -33,7 +33,7 @@ export default function Image() {
             The Optica Blog
           </div>
           <div style={{ fontSize: 36, color: "#cbd5e1", maxWidth: "800px", lineHeight: 1.5, textAlign: "center" }}>
-            Stories, tutorials, event recaps, and insights from the world of optics and photonics.
+            Insights from the world of Optics & Photonics | Stories | Tutorials | Event Recaps 
           </div>
         </div>
       </div>
