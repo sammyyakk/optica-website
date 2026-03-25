@@ -436,7 +436,7 @@ function NeonCard({
 }: {
   children: React.ReactNode;
   className?: string;
-  glowColor?: "blue" | "purple" | "cyan" | "green";
+  glowColor?: "blue" | "purple" | "cyan" | "green" | "red";
   delay?: number;
 }) {
   const colors = {
@@ -459,6 +459,11 @@ function NeonCard({
       border: "border-green-500/30",
       bg: "from-green-900/20",
       glow: "bg-green-500/20",
+    },
+    red: {
+      border: "border-red-500/30",
+      bg: "from-red-900/20",
+      glow: "bg-red-500/20",
     },
   };
 
@@ -483,7 +488,7 @@ function NeonCard({
 }
 
 // Countdown Timer
-function CountdownTimer({ targetDate }: { targetDate: Date }) {
+function CountdownTimer({ targetDate, expired = false }: { targetDate: Date; expired?: boolean }) {
   const [timeLeft, setTimeLeft] = useState({
     days: 0,
     hours: 0,
@@ -491,6 +496,7 @@ function CountdownTimer({ targetDate }: { targetDate: Date }) {
     seconds: 0,
   });
   const [mounted, setMounted] = useState(false);
+  const [vibrate, setVibrate] = useState(false);
 
   useEffect(() => {
     setMounted(true);
@@ -518,6 +524,16 @@ function CountdownTimer({ targetDate }: { targetDate: Date }) {
     return () => clearInterval(timer);
   }, [targetDate]);
 
+  // Vibration effect for expired state
+  useEffect(() => {
+    if (!expired) return;
+    const vibrateInterval = setInterval(() => {
+      setVibrate(true);
+      setTimeout(() => setVibrate(false), 500);
+    }, 3000);
+    return () => clearInterval(vibrateInterval);
+  }, [expired]);
+
   if (!mounted) return null;
 
   const timeUnits = [
@@ -528,7 +544,11 @@ function CountdownTimer({ targetDate }: { targetDate: Date }) {
   ];
 
   return (
-    <div className="flex justify-center gap-3 sm:gap-4">
+    <motion.div
+      className="flex justify-center gap-3 sm:gap-4"
+      animate={vibrate ? { x: [-3, 3, -3, 3, 0] } : {}}
+      transition={{ duration: 0.4 }}
+    >
       {timeUnits.map((unit, index) => (
         <motion.div
           key={unit.label}
@@ -539,19 +559,19 @@ function CountdownTimer({ targetDate }: { targetDate: Date }) {
         >
           <div className="relative">
             <motion.div
-              className="absolute -inset-2 rounded-xl bg-gradient-to-r from-blue-500 via-purple-500 to-cyan-500 opacity-40 blur-lg"
+              className={`absolute -inset-2 rounded-xl ${expired ? "bg-gradient-to-r from-red-500 via-red-600 to-red-500" : "bg-gradient-to-r from-blue-500 via-purple-500 to-cyan-500"} opacity-40 blur-lg`}
               animate={{
-                opacity: [0.2, 0.5, 0.2],
+                opacity: expired ? [0.4, 0.8, 0.4] : [0.2, 0.5, 0.2],
               }}
               transition={{
-                duration: 2,
+                duration: expired ? 1 : 2,
                 repeat: Infinity,
                 delay: index * 0.2,
               }}
             />
-            <div className="relative w-14 h-14 sm:w-20 sm:h-20 rounded-xl bg-black/80 border-2 border-blue-500/50 flex items-center justify-center overflow-hidden">
+            <div className={`relative w-14 h-14 sm:w-20 sm:h-20 rounded-xl bg-black/80 border-2 ${expired ? "border-red-500/50" : "border-blue-500/50"} flex items-center justify-center overflow-hidden`}>
               <motion.div
-                className="absolute inset-0 bg-gradient-to-br from-blue-600/20 via-transparent to-purple-600/20"
+                className={`absolute inset-0 ${expired ? "bg-gradient-to-br from-red-600/20 via-transparent to-red-600/20" : "bg-gradient-to-br from-blue-600/20 via-transparent to-purple-600/20"}`}
                 animate={{ rotate: [0, 360] }}
                 transition={{
                   duration: 10,
@@ -566,20 +586,20 @@ function CountdownTimer({ targetDate }: { targetDate: Date }) {
                   animate={{ y: 0, opacity: 1 }}
                   exit={{ y: 30, opacity: 0 }}
                   transition={{ duration: 0.3 }}
-                  className="font-mono text-xl sm:text-4xl font-bold text-white relative z-10"
-                  style={{ textShadow: "0 0 20px rgba(59, 130, 246, 0.8)" }}
+                  className={`font-mono text-xl sm:text-4xl font-bold ${expired ? "text-red-400" : "text-white"} relative z-10`}
+                  style={{ textShadow: expired ? "0 0 20px rgba(239, 68, 68, 0.8)" : "0 0 20px rgba(59, 130, 246, 0.8)" }}
                 >
                   {String(unit.value).padStart(2, "0")}
                 </motion.span>
               </AnimatePresence>
             </div>
           </div>
-          <span className="text-[10px] sm:text-xs text-gray-400 mt-2 tracking-widest">
+          <span className={`text-[10px] sm:text-xs ${expired ? "text-red-400" : "text-gray-400"} mt-2 tracking-widest`}>
             {unit.label}
           </span>
         </motion.div>
       ))}
-    </div>
+    </motion.div>
   );
 }
 
@@ -786,10 +806,10 @@ export default function QuantumQuotient3() {
               transition={{ delay: 0.8 }}
               className="mb-12"
             >
-              <p className="text-sm text-gray-400 mb-4 tracking-wider">
-                REGISTRATION CLOSES IN
+              <p className="text-sm text-red-400 mb-4 tracking-wider">
+                REGISTRATION CLOSED
               </p>
-              <CountdownTimer targetDate={registrationDeadline} />
+              <CountdownTimer targetDate={registrationDeadline} expired />
             </motion.div>
 
             {/* CTA Buttons */}
@@ -799,33 +819,23 @@ export default function QuantumQuotient3() {
               transition={{ delay: 1 }}
               className="flex flex-col sm:flex-row gap-4 justify-center"
             >
-              <motion.a
-                href="https://unstop.com/quizzes/quantum-quotient-30-bharati-vidyapeeth-s-college-of-engineering-delhi-1303445"
-                target="_blank"
-                rel="noopener noreferrer"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="relative px-10 py-5 rounded-2xl font-bold text-lg overflow-hidden group"
+              <motion.div
+                className="relative px-10 py-5 rounded-2xl font-bold text-lg overflow-hidden group cursor-not-allowed opacity-80"
               >
-                <motion.div
-                  className="absolute inset-0 rounded-2xl bg-gradient-to-r from-blue-500 via-purple-500 to-cyan-500"
-                  animate={{
-                    backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
-                  }}
-                  transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
-                  style={{ backgroundSize: "200% 100%" }}
-                />
-                <span className="relative z-10 flex items-center gap-2 text-white">
+                <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-red-600 via-red-500 to-red-600" />
+                <span className="relative z-10 flex items-center gap-2 text-white/80">
                   <Icons.Target className="w-5 h-5" />
-                  Register Now
-                  <motion.span
-                    animate={{ x: [0, 5, 0] }}
-                    transition={{ duration: 0.8, repeat: Infinity }}
-                  >
-                    <Icons.ArrowRight className="w-5 h-5" />
-                  </motion.span>
+                  <span className="relative">
+                    Registration Closed
+                    <motion.span
+                      className="absolute left-0 top-1/2 h-0.5 bg-white"
+                      initial={{ width: 0 }}
+                      animate={{ width: "100%" }}
+                      transition={{ duration: 0.8, delay: 1.2 }}
+                    />
+                  </span>
                 </span>
-              </motion.a>
+              </motion.div>
 
               <motion.a
                 href="https://www.instagram.com/bvpoptica/"
@@ -1237,7 +1247,7 @@ export default function QuantumQuotient3() {
         <section className="py-20 px-4 sm:px-6">
           <div className="max-w-4xl mx-auto text-center">
             <QuantumRipple>
-              <NeonCard glowColor="blue">
+              <NeonCard glowColor="red">
                 <div className="p-12">
                   <motion.div
                     initial={{ opacity: 0, scale: 0.8 }}
@@ -1246,27 +1256,29 @@ export default function QuantumQuotient3() {
                     transition={{ duration: 0.5 }}
                   >
                     <h2 className="font-heading text-4xl sm:text-5xl font-black text-white mb-6">
-                      Ready to Test Your{" "}
-                      <span className="bg-gradient-to-r from-blue-400 via-purple-500 to-cyan-400 bg-clip-text text-transparent">
-                        Quantum Knowledge?
+                      Registration{" "}
+                      <span className="bg-gradient-to-r from-red-400 via-red-500 to-red-400 bg-clip-text text-transparent">
+                        Closed
                       </span>
                     </h2>
                     <p className="text-gray-300 text-lg mb-8">
-                      Register now and prove your mastery of optics and
-                      photonics!
+                      Registration has closed. Stay tuned for the results!
                     </p>
-                    <motion.a
-                      href="https://unstop.com/quizzes/quantum-quotient-30-bharati-vidyapeeth-s-college-of-engineering-delhi-1303445"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                      className="inline-flex items-center gap-3 px-10 py-5 rounded-2xl font-bold text-lg bg-gradient-to-r from-blue-500 via-purple-500 to-cyan-500 text-white"
+                    <motion.div
+                      className="inline-flex items-center gap-3 px-10 py-5 rounded-2xl font-bold text-lg bg-gradient-to-r from-red-600 via-red-500 to-red-600 text-white/80 cursor-not-allowed opacity-80"
                     >
                       <Icons.Atom className="w-6 h-6" />
-                      Register on Unstop
-                      <Icons.ArrowRight className="w-5 h-5" />
-                    </motion.a>
+                      <span className="relative">
+                        Registration Closed
+                        <motion.span
+                          className="absolute left-0 top-1/2 h-0.5 bg-white"
+                          initial={{ width: 0 }}
+                          whileInView={{ width: "100%" }}
+                          viewport={{ once: true }}
+                          transition={{ duration: 0.8, delay: 0.5 }}
+                        />
+                      </span>
+                    </motion.div>
                   </motion.div>
                 </div>
               </NeonCard>
