@@ -2,8 +2,8 @@
   "id": "agnipath",
   "slug": "agnipath",
   "title": "Agnipath",
-  "subtitle": "This event pushes the boundaries of robotics with autonomous robots racing through obstacles of three different difficulty levels, demanding precision and strategic thinking for the ultimate victory.",
-  "description": "Event: AgnipathObjective: This event pushes the boundaries of robotics with autonomous robots racing through obstacles of three different difficulty levels, demanding precision and strategic thinking for the ultimate victory.Benefits in terms of learning/skill/knowledge obtained: Innovation, engineering skills and programming acumen were on full display at the AGNI-PATH robotics competition organized by BVP Optica . The event hosted three tracks each providing a different degree of difficulty wh",
+  "subtitle": "An exciting robotics competition that challenged participants to design and control autonomous robots across varying difficulty levels. The event encouraged innovation, precision, and strategic thinking while showcasing technical and programming excellence.",
+  "description": "Event: Agnipath \n Objective: This event pushes the boundaries of robotics with autonomous robots racing through obstacles of three different difficulty levels, demanding precision and strategic thinking for the ultimate victory. Benefits in terms of learning/skill/knowledge obtained: Innovation, engineering skills and programming acumen was on full display at the AGNI-PATH robotics competition organized by BVP Optica . The event hosted three tracks each providing a different degree of difficulty, allowing participants to test and enhance their problem-solving abilities.",
   "category": "visit",
   "date": "2023-09-15",
   "time": "2023-09-15 | 10:00 AM onwards",
@@ -11,7 +11,9 @@
   "coverImage": "",
   "gallery": null,
   "highlights": [
-    "This event pushes the boundaries of robotics with autonomous robots racing through obstacles of three different difficulty levels, demanding precision"
+    "Promote innovation and technical skills.",
+    "Three tracks with varying difficulty levels",
+    "Programming, engineering, and strategy"
   ],
   "status": "completed",
   "featured": false,

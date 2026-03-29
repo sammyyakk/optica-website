@@ -2,8 +2,8 @@
   "id": "pll-webinar",
   "slug": "pll-webinar",
   "title": "PLL Webinar",
-  "subtitle": "The objective of this event was to get the students acquainted with the On-Chip Clock Multiplier (PLL) on OSU180.",
-  "description": "Title of the event: PLL Webinar Objective:The objective of this event was to get the students acquainted with the On-Chip Clock Multiplier (PLL) on OSU180. BVP Optica organised an online workshop on Phased Locked Loop to get the students acquainted with the On-Chip Clock Multiplier (PLL) on OSU180. The workshop began with the introduction of ASIC design flow, PLLs and On-Chip Clock Multipliers. Theory and fundamental concepts like CMOS Implementation, Transistor Sizing, 2nd order control system,",
+  "subtitle": "A technical webinar focused on introducing students to Phase Locked Loops (PLL) and on-chip clock multipliers in modern electronics. The session combined theoretical concepts with practical design insights, enhancing understanding of ASIC design and CMOS fundamentals.",
+  "description": "Title of the event: PLL Webinar \n Objective: The objective of this event was to get the students acquainted with the On-Chip Clock Multiplier (PLL) on OSU180. BVP Optica organised an online workshop on Phased Locked Loop to get the students acquainted with the On-Chip Clock Multiplier (PLL) on OSU180. The workshop began with the introduction of ASIC design flow, PLLs and On-Chip Clock Multipliers. Theory and fundamental concepts like CMOS Implementation, Transistor Sizing, 2nd order control system, providing participants with both theoretical knowledge and practical insights.",
   "category": "seminar",
   "date": "2021-09-15",
   "time": "2021-09-15 | 10:00 AM onwards",
@@ -11,7 +11,10 @@
   "coverImage": "",
   "gallery": null,
   "highlights": [
-    "BVP Optica organised an online workshop on Phased Locked Loop to get the students acquainted with the On-Chip Clock Multiplier (PLL) on OSU"
+    "Understanding of On-Chip Clock Multipliers on OSU180.",
+    "Explanation of CMOS implementation and transistor sizing.",
+    "Online workshop format with detailed theoretical insights.",
+    "Enhanced understanding of VLSI and integrated circuit design."
   ],
   "status": "completed",
   "featured": false,

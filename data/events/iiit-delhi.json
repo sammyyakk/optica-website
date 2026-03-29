@@ -2,8 +2,8 @@
   "id": "iiit-delhi",
   "slug": "iiit-delhi",
   "title": "IIIT Delhi",
-  "subtitle": "The objective of this event was to teach students about the Li-fi technology which is being used for communication and get hands-on experience on Li-fi Technology.",
-  "description": "Title of the event: IIIT Delhi trip Objective: The objective of this event was to teach students about the Li-fi technology which is being used for communication and get hands-on experience on Li-fi Technology. Students of BVP Optica visited the Visual Light Communication Lab at the Innovation and Incubation Center of IIIT Delhi on 12th April 2022. Mr Deepak Solanki, the Founder and CEO of Velmenni which is a startup in the field of LiFi Technology, explained the applications along with the futu",
+  "subtitle": "An educational industrial visit focused on emerging Li-Fi technology, offering students practical exposure and insights into next-generation communication systems. The session bridged theoretical knowledge with real-world applications.",
+  "description": "Title of the event: IIIT Delhi trip \n Objective: The objective of this event was to teach students about the Li-fi technology which is being used for communication and get hands-on experience on Li-fi Technology. Students of BVP Optica visited the Visual Light Communication Lab at the Innovation and Incubation Center of IIIT Delhi on 12th April 2022. Mr Deepak Solanki, the Founder and CEO of Velmenni which is a startup in the field of LiFi Technology, explained the applications along with the future scope of Li-Fi in communication systems.",
   "category": "visit",
   "date": "2022-04-12",
   "time": "2022-04-12 | 10:00 AM onwards",
@@ -11,7 +11,9 @@
   "coverImage": "",
   "gallery": null,
   "highlights": [
-    "The objective of this event was to teach students about the Li-fi technology which is being used for communication and get hands-on experience on Li-f..."
+    "Explanation of data transmission using modulated light from LED sources ",
+    "Live video transmission using LED modulation and photodiode reception ",
+    "Interaction with industry experts from Velmenni "
   ],
   "status": "completed",
   "featured": false,

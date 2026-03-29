@@ -1,9 +1,9 @@
 {
   "id": "confluence",
   "slug": "confluence",
-  "title": "Confluence",
-  "subtitle": "Confluence 3.",
-  "description": "Title of the event: Confluence 3.0 - Spectrum SlamObjective of the event:Annual competition held to give adequate exposure to ECE Dept. students of the industry. Benefit in terms of learning/skill/knowledge obtained: For second-year ECE students, participating in CONFLUENCE 3.0: Spectrum Slam offered priceless advantages. The event, themed &quot;Collaborative Solutions for a Sustainable Future,&quot; fostered creativity through contests like the Ideathon, Hackathon, and Project Showcase. In addi",
+  "title": "Confluence 3.0",
+  "subtitle": "An annual technical event that enhances ECE students skills through innovation, collaboration, and real-world problem-solving.",
+  "description": "Title of the event: Confluence 3.0 - Spectrum Slam \n Objective of the event: Annual competition held to give adequate exposure to ECE Dept. students of the industry. \n Benefits in terms of learning/skill/knowledge obtained: For second-year ECE students, participating in CONFLUENCE 3.0: Spectrum Slam offered valuable learning oppurtunities. The event, themed \"Collaborative Solutions for a Sustainable Future\" fostered creativity through contests like the Ideathon, Hackathon, and Project Showcase. In addition, participants enhanced their technical knowledge, teamwork, and problem-solving abilities while gaining practical experience and confidence in applying concepts to real-world challenges.",
   "category": "ideathon",
   "date": "2022-09-15",
   "time": "2022-09-15 | 10:00 AM onwards",
@@ -11,7 +11,7 @@
   "coverImage": "",
   "gallery": null,
   "highlights": [
-    "Annual competition held to give adequate exposure to ECE Dept. students of the industry. Benefit in terms of learning/skill/knowledge obtained: For se..."
+    "Annual competition held to give adequate exposure to ECE Dept. students of the industry."
   ],
   "status": "completed",
   "featured": false,

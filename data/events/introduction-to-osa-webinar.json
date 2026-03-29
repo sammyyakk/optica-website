@@ -2,8 +2,8 @@
   "id": "introduction-to-osa-webinar",
   "slug": "introduction-to-osa-webinar",
   "title": "Introduction to OSA webinar",
-  "subtitle": "The objective of this event was to spread awareness among students about optics and related technologies and the functioning of OSA.",
-  "description": "Title of the event : Introduction to OSA webinarObjective: The objective of this event was to spread awareness among students about optics and related technologies and the functioning of OSA. The programme sought to enlighten students on our campus with Optica. They were told that it is a professional society of individuals and companies with an interest in optics and photonics. It publishes journals and organizes conferences and exhibitions. It currently has about 488,000 customers in 183 count",
+  "subtitle": "An introductory webinar aimed at spreading awareness about optics and photonics while familiarizing students with the role and impact of OSA. The session highlighted how professional societies contribute to research, innovation, and global collaboration in the field of optics.",
+  "description": "Title of the event : Introduction to OSA webinar \n Objective: The objective of this event was to spread awareness among students about optics and related technologies and the functioning of OSA. The programme sought to enlighten students on our campus with Optica. They were told that it is a professional society of individuals and companies with an interest in optics and photonics. It publishes journals and organizes conferences and exhibitions. It currently has about 488,000 customers in 183 countries. It also encouraged students to explore the field further and engage with the global optics community.",
   "category": "seminar",
   "date": "2021-09-15",
   "time": "2021-09-15 | 10:00 AM onwards",
@@ -11,7 +11,10 @@
   "coverImage": "",
   "gallery": null,
   "highlights": [
-    "The objective of this event was to spread awareness among students about optics and related technologies and the functioning of OSA. The programme sou..."
+    "Awareness about latest advancements in optics and related technologies",
+    "Information on research opportunities and career paths in optics and photonics",
+    "Interactive session that enhanced student engagement and curiosity",
+    "Discussion on journals, conferences, and global networking opportunities"
   ],
   "status": "completed",
   "featured": false,

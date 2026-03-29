@@ -2,8 +2,8 @@
   "id": "webinar",
   "slug": "webinar",
   "title": "Webinar",
-  "subtitle": "How to Crack MAANG: Find your path to work for top MNCs like Meta, Apple, Amazon, Netflix, or Google (MAANG) Objective of the event: The event centred on providing attendees with strategic insights an",
-  "description": "Title of the event: How to Crack MAANG: Find your path to work for top MNCs like Meta, Apple, Amazon, Netflix, or Google (MAANG) Objective of the event: The event centred on providing attendees with strategic insights and essential skills needed to enter MAANG, a top tech company. Through expert guidance, the focus was on navigating the competitive landscape and equipping individuals with the knowledge required to successfully secure positions in these esteemed organisations. Benefit in terms of",
+  "subtitle": "An insightful session focused on guiding students toward careers in top tech companies like MAANG. The event provided strategic direction, industry insights, and essential skills required to navigate the competitive hiring landscape successfully.",
+  "description": "Title of the event: How to Crack MAANG- Find your path to work for top MNCs like Meta, Apple, Amazon, Netflix, or Google (MAANG) \n Objective of the event: The objective was to provide attendees with strategic insights and essential skills needed to secure roles in leading tech companies such as Meta, Apple, Amazon, Netflix, and Google. Through expert guidance, participants learned how to navigate the competitive job market and prepare effectively for high-level opportunities.",
   "category": "seminar",
   "date": "2022-09-15",
   "time": "2022-09-15 | 10:00 AM onwards",
@@ -11,8 +11,9 @@
   "coverImage": "",
   "gallery": null,
   "highlights": [
-    "The event centred on providing attendees with strategic insights and essential skills needed to enter MAANG, a top tech company. Through expert guidan...",
-    "Mr. Ashutosh Singhal (Software Engineer at Google and Ex-President of BVP Optica)"
+    "Career guidance for top tech companies.",
+    "Focus: Skills, strategy, and interview preparation",
+    "Better career direction and readiness"
   ],
   "status": "completed",
   "featured": false,
