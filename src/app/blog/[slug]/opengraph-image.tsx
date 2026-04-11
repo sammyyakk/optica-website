@@ -6,6 +6,38 @@ import { Buffer } from "buffer";
 
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
+const MAX_INLINE_IMAGE_BYTES = 250_000;
+
+async function toDataUrl(imagePathOrUrl: string): Promise<string | undefined> {
+  try {
+    if (imagePathOrUrl.startsWith("http")) {
+      const res = await fetch(imagePathOrUrl);
+      if (!res.ok) return undefined;
+      const arrayBuffer = await res.arrayBuffer();
+      if (arrayBuffer.byteLength > MAX_INLINE_IMAGE_BYTES) return undefined;
+      const buffer = Buffer.from(arrayBuffer);
+      const mimeType = imagePathOrUrl.toLowerCase().endsWith(".png")
+        ? "image/png"
+        : "image/jpeg";
+      return `data:${mimeType};base64,${buffer.toString("base64")}`;
+    }
+
+    const normalizedPath = imagePathOrUrl.startsWith("/")
+      ? imagePathOrUrl.slice(1)
+      : imagePathOrUrl;
+    const absolutePath = path.join(process.cwd(), "public", normalizedPath);
+    const fileSize = fs.statSync(absolutePath).size;
+    if (fileSize > MAX_INLINE_IMAGE_BYTES) return undefined;
+    const imageBuffer = fs.readFileSync(absolutePath);
+    const mimeType = imagePathOrUrl.toLowerCase().endsWith(".png")
+      ? "image/png"
+      : "image/jpeg";
+    return `data:${mimeType};base64,${imageBuffer.toString("base64")}`;
+  } catch (e) {
+    console.error("Failed to load image for OG:", e);
+    return undefined;
+  }
+}
 
 export default async function Image({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
@@ -23,53 +55,10 @@ export default async function Image({ params }: { params: Promise<{ slug: string
   }
 
   let authorImageSrc = undefined;
-  if (post.author.image) {
-    try {
-      if (post.author.image.startsWith("http")) {
-        // Fetch external image
-        const res = await fetch(post.author.image);
-        const arrayBuffer = await res.arrayBuffer();
-        const buffer = Buffer.from(arrayBuffer);
-        const base64Image = buffer.toString("base64");
-        const mimeType = post.author.image.toLowerCase().endsWith(".png") ? "image/png" : "image/jpeg";
-        authorImageSrc = `data:${mimeType};base64,${base64Image}`;
-      } else {
-        // Read local image
-        // Remove leading slash if present to avoid absolute path issues with path.join
-        const normalizedPath = post.author.image.startsWith("/") ? post.author.image.slice(1) : post.author.image;
-        const imagePath = path.join(process.cwd(), "public", normalizedPath);
-        const imageBuffer = fs.readFileSync(imagePath);
-        const base64Image = imageBuffer.toString("base64");
-        const mimeType = post.author.image.toLowerCase().endsWith(".png") ? "image/png" : "image/jpeg";
-        authorImageSrc = `data:${mimeType};base64,${base64Image}`;
-      }
-    } catch (e) {
-      console.error("Failed to load author image for OG:", e);
-    }
-  }
+  if (post.author.image) authorImageSrc = await toDataUrl(post.author.image);
 
   let coverImageSrc = undefined;
-  if (post.coverImage) {
-    try {
-      if (post.coverImage.startsWith("http")) {
-        const res = await fetch(post.coverImage);
-        const arrayBuffer = await res.arrayBuffer();
-        const buffer = Buffer.from(arrayBuffer);
-        const base64Cover = buffer.toString("base64");
-        const mimeType = post.coverImage.toLowerCase().endsWith(".png") ? "image/png" : "image/jpeg";
-        coverImageSrc = `data:${mimeType};base64,${base64Cover}`;
-      } else {
-        const normalizedPath = post.coverImage.startsWith("/") ? post.coverImage.slice(1) : post.coverImage;
-        const coverPath = path.join(process.cwd(), "public", normalizedPath);
-        const coverBuffer = fs.readFileSync(coverPath);
-        const base64Cover = coverBuffer.toString("base64");
-        const mimeType = post.coverImage.toLowerCase().endsWith(".png") ? "image/png" : "image/jpeg";
-        coverImageSrc = `data:${mimeType};base64,${base64Cover}`;
-      }
-    } catch (e) {
-      console.error("Failed to load cover image for OG:", e);
-    }
-  }
+  if (post.coverImage) coverImageSrc = await toDataUrl(post.coverImage);
 
     return new ImageResponse(
     (
