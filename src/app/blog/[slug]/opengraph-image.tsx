@@ -101,7 +101,8 @@ export default async function Image({ params }: { params: Promise<{ slug: string
               left: 0,
               width: "1200px",
               height: "630px",
-              backgroundColor: "rgba(14, 26, 43, 0.82)", // Even darker background for contrast
+              background:
+                "linear-gradient(135deg, rgba(14, 26, 43, 0.88) 0%, rgba(14, 26, 43, 0.8) 45%, rgba(14, 26, 43, 0.9) 100%)",
               zIndex: 1,
             }}
           />
