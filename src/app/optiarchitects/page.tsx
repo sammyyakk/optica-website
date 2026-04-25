@@ -68,6 +68,14 @@ const contentMaintainers: Maintainer[] = [
   },
 ];
 
+const blogMaintainer: Maintainer = {
+  name: "Dhriti Goswami",
+  role: "Blog & Writing",
+  title: "Blog Lead",
+  image: "/team/dhriti.jpeg",
+  linkedin: "https://www.linkedin.com/in/dhriti-goswami-a5b489381/",
+};
+
 const codeMaintainers: Maintainer[] = [
   {
     name: "Aastha Gupta",
@@ -84,12 +92,14 @@ const roleColors: Record<string, string> = {
   "Design & Creative": "from-purple-400 to-blue-400",
   "Content & Documentation": "from-orange-400 to-pink-400",
   "Code & Development": "from-green-400 to-cyan-400",
+  "Blog & Writing": "from-emerald-400 to-teal-400",
 };
 
-// All maintainers combined for horizontal row (lead in center - position 3 of 6)
+// All maintainers combined for horizontal row (lead in center - index 3 of 7)
 const allMaintainers: Maintainer[] = [
   designMaintainers[0],
   codeMaintainers[0],
+  blogMaintainer,
   leadMaintainer,
   designMaintainers[1],
   contentMaintainers[0],
@@ -355,6 +365,16 @@ export default function OptiArchitectsPage() {
                 </h2>
                 <div className="max-w-xs mx-auto">
                   <MaintainerCard maintainer={leadMaintainer} index={0} />
+                </div>
+              </div>
+
+              {/* Blog & Writing */}
+              <div>
+                <h2 className="font-heading text-lg sm:text-xl font-bold text-center bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent mb-4">
+                  Blog & Writing
+                </h2>
+                <div className="max-w-xs mx-auto">
+                  <MaintainerCard maintainer={blogMaintainer} index={0} />
                 </div>
               </div>
 
