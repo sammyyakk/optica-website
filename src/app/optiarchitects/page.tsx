@@ -95,15 +95,16 @@ const roleColors: Record<string, string> = {
   "Blog & Writing": "from-emerald-400 to-teal-400",
 };
 
-// All maintainers combined for horizontal row (lead in center - index 3 of 7)
+// All maintainers combined for horizontal row (Samyak in center - index 3 of 7)
+// Order: Khushi, Gaurangi, Dhriti, Samyak, Aastha, Yashika, Prateek
 const allMaintainers: Maintainer[] = [
   designMaintainers[0],
-  codeMaintainers[0],
+  designMaintainers[1],
   blogMaintainer,
   leadMaintainer,
-  designMaintainers[1],
-  contentMaintainers[0],
+  codeMaintainers[0],
   contentMaintainers[1],
+  contentMaintainers[0],
 ];
 
 function AnimatedSection({
@@ -174,7 +175,7 @@ function MaintainerCard({
         {/* Avatar */}
         <div className="relative mx-auto mb-3 sm:mb-4">
           <motion.div
-            className={`w-24 h-24 sm:w-28 sm:h-28 lg:w-32 lg:h-32 mx-auto rounded-full bg-gradient-to-br ${goldenGradient} p-1 overflow-hidden`}
+            className={`w-20 h-20 sm:w-24 sm:h-24 lg:w-28 lg:h-28 mx-auto rounded-full bg-gradient-to-br ${goldenGradient} p-1 overflow-hidden`}
             animate={{
               boxShadow: [
                 "0 0 20px rgba(251, 191, 36, 0.3)",
@@ -211,18 +212,18 @@ function MaintainerCard({
           </motion.div>
           {/* Glow behind avatar */}
           <div
-            className={`absolute inset-0 w-24 h-24 sm:w-28 sm:h-28 lg:w-32 lg:h-32 mx-auto rounded-full bg-gradient-to-br ${goldenGradient} opacity-30 blur-xl -z-10`}
+            className={`absolute inset-0 w-20 h-20 sm:w-24 sm:h-24 lg:w-28 lg:h-28 mx-auto rounded-full bg-gradient-to-br ${goldenGradient} opacity-30 blur-xl -z-10`}
           />
         </div>
 
         {/* Maintainer Info */}
-        <h3 className="font-heading text-sm sm:text-base lg:text-lg font-bold text-center mb-1 bg-gradient-to-r from-yellow-300 via-amber-200 to-yellow-300 bg-clip-text text-transparent">
+        <h3 className="font-heading text-sm lg:text-base font-bold text-center mb-1 h-10 flex items-center justify-center leading-tight bg-gradient-to-r from-yellow-300 via-amber-200 to-yellow-300 bg-clip-text text-transparent">
           {maintainer.name}
         </h3>
-        <p className="font-accent text-xs sm:text-sm text-center bg-gradient-to-r from-yellow-400 via-amber-400 to-yellow-500 bg-clip-text text-transparent font-medium mb-1">
+        <p className="font-accent text-xs sm:text-sm text-center bg-gradient-to-r from-yellow-400 via-amber-400 to-yellow-500 bg-clip-text text-transparent font-medium mb-1 truncate">
           {maintainer.title}
         </p>
-        <p className="font-accent text-xs text-center text-gray-400 mb-3 sm:mb-4">
+        <p className="font-accent text-xs text-center text-gray-400 mb-3 sm:mb-4 truncate">
           {maintainer.role}
         </p>
 
@@ -349,7 +350,7 @@ export default function OptiArchitectsPage() {
               {allMaintainers.map((maintainer, index) => (
                 <div
                   key={maintainer.name}
-                  className="w-48 xl:w-56 flex-shrink-0"
+                  className="w-40 xl:w-48 flex-shrink-0"
                 >
                   <MaintainerCard maintainer={maintainer} index={index} />
                 </div>
@@ -394,13 +395,13 @@ export default function OptiArchitectsPage() {
                 </div>
               </div>
 
-              {/* Content & Documentation */}
+              {/* Code & Development */}
               <div>
-                <h2 className="font-heading text-lg sm:text-xl font-bold text-center bg-gradient-to-r from-orange-400 to-pink-400 bg-clip-text text-transparent mb-4">
-                  Content & Documentation
+                <h2 className="font-heading text-lg sm:text-xl font-bold text-center bg-gradient-to-r from-green-400 to-cyan-400 bg-clip-text text-transparent mb-4">
+                  Code & Development
                 </h2>
-                <div className="grid grid-cols-2 gap-3 max-w-md mx-auto">
-                  {contentMaintainers.map((maintainer, index) => (
+                <div className="max-w-xs mx-auto">
+                  {codeMaintainers.map((maintainer, index) => (
                     <MaintainerCard
                       key={maintainer.name}
                       maintainer={maintainer}
@@ -410,13 +411,13 @@ export default function OptiArchitectsPage() {
                 </div>
               </div>
 
-              {/* Code & Development */}
+              {/* Content & Documentation */}
               <div>
-                <h2 className="font-heading text-lg sm:text-xl font-bold text-center bg-gradient-to-r from-green-400 to-cyan-400 bg-clip-text text-transparent mb-4">
-                  Code & Development
+                <h2 className="font-heading text-lg sm:text-xl font-bold text-center bg-gradient-to-r from-orange-400 to-pink-400 bg-clip-text text-transparent mb-4">
+                  Content & Documentation
                 </h2>
-                <div className="max-w-xs mx-auto">
-                  {codeMaintainers.map((maintainer, index) => (
+                <div className="grid grid-cols-2 gap-3 max-w-md mx-auto">
+                  {contentMaintainers.map((maintainer, index) => (
                     <MaintainerCard
                       key={maintainer.name}
                       maintainer={maintainer}
