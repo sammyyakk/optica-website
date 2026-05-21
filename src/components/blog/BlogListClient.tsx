@@ -521,7 +521,7 @@ export default function BlogListClient({
               </p>
               <div className="bg-black/50 rounded-lg p-4 max-w-2xl mx-auto text-left">
                 <code className="text-xs sm:text-sm text-green-400 break-all">
-                  {`<iframe src="${"https://www.bvpoptica.com"}/blog/embed" width="100%" height="600" frameborder="0" style="border-radius:12px;border:1px solid rgba(139,92,246,0.2)"></iframe>`}
+                {`<iframe src="${typeof window !== "undefined" ? window.location.origin : "https://www.bvpoptica.com"}/blog/embed" width="100%" height="600" frameborder="0" style="border-radius:12px;border:1px solid rgba(139,92,246,0.2)"></iframe>`}
                 </code>
               </div>
               <p className="text-gray-500 text-xs mt-3">

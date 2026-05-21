@@ -11,7 +11,7 @@ export function Tabs({
   items: string[];
   children: React.ReactNode;
 }) {
-  console.log("Tabs items received:", items); // add
+  if (process.env.NODE_ENV !== "production") console.log("Tabs items received:", items);
   const [active, setActive] = React.useState(0);
   const childrenArray = React.Children.toArray(children);
 

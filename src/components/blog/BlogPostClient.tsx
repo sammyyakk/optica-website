@@ -444,7 +444,7 @@ export default function BlogPostClient({
                 </h4>
                 <div className="bg-black/40 rounded-lg p-3">
                   <code className="text-xs text-green-400 break-all">
-                    {`<iframe src="https://www.bvpoptica.com/blog/embed/${post.slug}" width="100%" height="500" frameborder="0" style="border-radius:12px;border:1px solid rgba(139,92,246,0.2)"></iframe>`}
+                    {`<iframe src="${typeof window !== "undefined" ? window.location.origin : "https://www.bvpoptica.com"}/blog/embed/${post.slug}" width="100%" height="500" frameborder="0" style="border-radius:12px;border:1px solid rgba(139,92,246,0.2)"></iframe>`}
                   </code>
                 </div>
               </div>
