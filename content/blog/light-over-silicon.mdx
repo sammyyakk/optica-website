@@ -1,6 +1,6 @@
 ---
 title: "Light Over Silicon: The Chip That Computes Without Electricity"
-excerpt: "A look at photonic computing and how it may change AI hardware."
+excerpt: "Silicon-based GPUs are hitting fundamental limits. A look at how photonic chips, computing with light instead of electricity, could reshape the future of AI hardware."
 publishedAt: "2026-05-19T01:13:00+05:30"
 category: "Research"
 tags:
@@ -8,6 +8,16 @@ tags:
   - silicon
   - ai
   - computing
+  - photonic computing
+  - gpu
+  - hardware
+  - optical computing
+  - npu
+  - deep learning
+  - data center
+  - research
+  - photonics
+  - interference
 author:
   name: "Dhriti Goswami"
   role: "Executive"
@@ -21,21 +31,23 @@ draft: false
 readingTime: 5
 ---
 
-**Light Over Silicon: The Chip That Computes Without Electricity**
-
 ## Introduction -
 
+<Callout type="info" title="At a Glance">
 By 2026, most of the modern AI has one unavoidable dependency --"GPUs(graphics processing unit)". Whether it is generating images , videos by handling calculations in parallel or training large LLMs, GPU plays a huge part in this .
 
 But with rising use of silicon based transistors , cracks are impossible to ignore.
+</Callout>
 
 <BlogImage
   src="/blog/light-over-silicon/1.png"
   alt="image1"
-  caption="Image 1"
+  caption="Figure 1: Modern GPUs handling parallel AI workloads — silicon transistors at the core of every major model"
   width={1200}
   height={630}
 />
+
+<Divider />
 
 ## GPUs Are Hitting A Wall -
 
@@ -43,47 +55,68 @@ Since the very beginning , AI has that same fundamental architecture , silicon t
 
 Major Problem Faced --
 
-1.  **Memory Wall :** processors are improving far more quickly than memory systems. In AI workloads, especially deep learning, the processor constantly waits for data to arrive from VRAM before it can do anything meaningful. That waiting time is now one of the biggest performance limiters in the entire stack.
-
-2.  **Power Consumption** : The only thing that a GPU produces is information which is massless in nature so it cannot hold any energy which was used to create it and so , the input power =output power in form of heat and thus , the efficiency is impacted.
+<Steps>
+  <Step number={1} title="Memory Wall">
+    processors are improving far more quickly than memory systems. In AI workloads, especially deep learning, the processor constantly waits for data to arrive from VRAM before it can do anything meaningful. That waiting time is now one of the biggest performance limiters in the entire stack.
+  </Step>
+  <Step number={2} title="Power Consumption">
+    The only thing that a GPU produces is information which is massless in nature so it cannot hold any energy which was used to create it and so , the input power =output power in form of heat and thus , the efficiency is impacted.
+  </Step>
+</Steps>
 
 <BlogImage
   src="/blog/light-over-silicon/gpu-hitting-wall.png"
   alt="image2"
-  caption="Image 2"
+  caption="Figure 2: GPUs hitting a wall — the memory bottleneck and thermal inefficiency limiting AI scaling"
   width={1200}
   height={630}
 />
 
+<Divider />
+
 ## Photonic Computing -
 
-It is the new generation of chips which instead of pushing electrons through the logic gates uses photons as mathematical computation.
+It is the new generation of chips which instead of pushing electrons through the logic gates uses <Badge color="purple">photons</Badge> as mathematical computation.
 
+<Callout type="success" title="The Major Advantage">
 **The Major Advantage:** since mass of a photon is zero, it is not impacted by electrical resistance and can potentially reduce heat generation, thus increasing the efficiency.
+</Callout>
 
 Idea --
 
 <BlogImage
   src="/blog/light-over-silicon/photonic-computing.png"
   alt="image3"
-  caption="Image 3"
+  caption="Figure 3: Photonic computing concept — light routed through waveguides replaces electron-based transistor logic"
   width={1200}
   height={630}
 />
 
+<Divider />
+
 ## How Light Can Speed Up Computation-
 
-Traditionally on a GPU, running a complex AI workload -say, a non-linear function or a transformer inference pass - requires millions of transistors flipping across multiple clock cycles just to brute-force the multiplication.
+Traditionally on a <Badge>GPU</Badge>, running a complex AI workload -say, a non-linear function or a transformer inference pass - requires millions of transistors flipping across multiple clock cycles just to brute-force the multiplication.
 
-But on a photonic chip, light is incident on the crystalline surface and as different wavelengths intersect, they naturally produce **interference patterns**. That interference pattern is the mathematical answer. The math solves itself as the light passes through - instantly, with no clock cycles needed.
+<Callout type="tip" title="How Photonic Chips Compute">
+But on a photonic chip, light is incident on the crystalline surface and as different wavelengths intersect, they naturally produce **interference patterns**. That interference pattern is the mathematical answer. The math solves itself as the light passes through - instantly, with no clock cycles needed.
+</Callout>
+
+<Divider />
 
 ## Real Hardware, Not Just Theory-
 
 What makes this shift more interesting is that it's no longer purely academic.
 
-QANT's native processing unit - their NPU is based on this fundamental and claims 3,000% higher efficiency and 5,000% higher compute.
+QANT's native processing unit - their <Badge color="pink">NPU</Badge> is based on this fundamental and claims 3,000% higher efficiency and 5,000% higher compute.
 
-They have packed their photonic chip into a standard **19-inch rack-mountable server** and have deployed it at the **Leibniz Supercomputing Center** in Germany - one of Europe's premier high-performance computing facilities.
+<StatGrid>
+  <Stat value="3,000%" label="Higher efficiency claimed" />
+  <Stat value="5,000%" label="Higher compute claimed" />
+  <Stat value="1st" label="Commercial photonic AI in a live data center" />
+</StatGrid>
+
+They have packed their photonic chip into a standard **19-inch rack-mountable server** and have deployed it at the **Leibniz Supercomputing Center** in Germany - one of Europe's premier high-performance computing facilities.
 
 This marks the world's first commercial analog photonic AI processor installed inside a fully operational data center.
 
@@ -97,17 +130,21 @@ And importantly, they are designed to fit the existing infrastructure-
 
 3.  **Software accessibility layers**
 
+<Divider />
+
 ## Bridging Photonic Hardware and AI Software-
 
 Inorder to use these chips , it was important to learn photonics engineering but since , nobody adopts a new architecture if it requires rewriting the entire AI ecosystem.
 
-Hence ,to solve that, companies like QANT have developed (QPAL) abstraction layers that allow developers to use familiar frameworks such as PyTorch and Python-based workflows, while the system internally handles the conversion from digital software commands into analog light wave operations.
+Hence ,to solve that, companies like QANT have developed <Badge color="blue">(QPAL)</Badge> abstraction layers that allow developers to use familiar frameworks such as <Badge color="green">PyTorch</Badge> and Python-based workflows, while the system internally handles the conversion from digital software commands into analog light wave operations.
+
+<Divider />
 
 ## The Hidden Problem: The Conversion Bottleneck-
 
 Photonic Chips are fast in computing but face a major storage issue .
 
-Since, they are not able to store data , they have to refer to traditional electronic memory systems (like DRAM or VRAM) for:
+Since, they are not able to store data , they have to refer to traditional electronic memory systems (like <Badge>DRAM</Badge> or <Badge>VRAM</Badge>) for:
 
 -   Model weights
 
@@ -120,7 +157,7 @@ So every workload becomes a hybrid pipeline:
 <BlogImage
   src="/blog/light-over-silicon/hidden-prblm.png"
   alt="image4"
-  caption="Image 4"
+  caption="Figure 4: The hybrid pipeline — photonic computation paired with electronic memory introduces conversion overhead at every step"
   width={1200}
   height={630}
 />
@@ -133,11 +170,15 @@ Thus , each transition introduces:
 
 -   **System complexity**
 
+<Callout type="warning" title="The Conversion Penalty">
 This is often called the **conversion penalty**, and it can reduce or even erase the gains from optical speed if the workload requires constant memory access.
+</Callout>
 
 Due to this , QANT's NPU is currently deployed as a coprocessor alongside traditional hardware.
 
 **Solution** to this is still in research , scientists aim to create optical versions of SRAM, allowing microscopic loops of light to act as ultra-fast temporary cache memory directly on the chip without ever converting back to electricity.
+
+<Divider />
 
 ## Benefits And Challenges
 
@@ -162,11 +203,18 @@ Due to this , QANT's NPU is currently deployed as a coprocessor alongside tradit
   </Tab>
 </Tabs>
 
+<Divider />
+
 ## Conclusion-
 
-Photonic computing is not replacing GPUs tomorrow. The constraints of memory, conversion overhead, and system integration ensure that silicon will remain central for years to come.
+Photonic computing is not replacing <Badge>GPUs</Badge> tomorrow. The constraints of memory, conversion overhead, and system integration ensure that silicon will remain central for years to come.
 
 But what is changing is the role of specialization. Instead of a single dominant architecture, computing is shifting toward layered systems-where GPUs, CPUs, and photonic accelerators each handle the workloads they are best suited for.
 
 Thus, this is not the end of silicon. It is the beginning of a more fragmented, efficient, and hybrid computing stack.
----
+
+<LinkCard
+  href="/blog/fiber-optics-ai-future-of-medicine"
+  title="How Fiber Optics And AI Are Transforming The Future Of Medicine"
+  description="From minimally invasive surgeries to real-time patient monitoring, fiber optics and AI are paving the way for precision medicine, accurate diagnosis, and better patient outcomes."
+/>

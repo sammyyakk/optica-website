@@ -197,6 +197,7 @@ export default function RootLayout({
     <html
       lang="en"
       className={`dark ${poppins.variable} ${inter.variable} ${montserrat.variable}`}
+      data-scroll-behavior="smooth"
     >
       <head>
         <link rel="manifest" href="/manifest.json" />
