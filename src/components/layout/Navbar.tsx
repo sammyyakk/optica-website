@@ -102,8 +102,8 @@ export default function Navbar() {
             : "bg-transparent"
         }`}
       >
-        <div className="container mx-auto px-4 md:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-20">
+        <div className="container mx-auto px-3 md:px-4 lg:px-6 xl:px-8">
+          <div className="flex items-center justify-between h-16 md:h-18 lg:h-20">
             {/* Logo */}
             <motion.div
               whileHover={{ scale: 1.05 }}
@@ -117,7 +117,7 @@ export default function Navbar() {
                     alt="BVP Optica Logo"
                     width={440}
                     height={116}
-                    className="h-8 md:h-10 w-auto object-contain dark:hidden"
+                    className="h-7 md:h-8 lg:h-9 w-auto object-contain dark:hidden"
                     quality={100}
                     priority
                     unoptimized
@@ -127,7 +127,7 @@ export default function Navbar() {
                     alt="BVP Optica Logo"
                     width={440}
                     height={116}
-                    className="h-8 md:h-10 w-auto object-contain hidden dark:block"
+                    className="h-7 md:h-8 lg:h-9 w-auto object-contain hidden dark:block"
                     quality={100}
                     priority
                     unoptimized
@@ -137,7 +137,7 @@ export default function Navbar() {
             </motion.div>
 
             {/* Desktop Navigation */}
-            <div className="hidden md:flex items-center space-x-2 lg:space-x-4">
+            <div className="hidden md:flex items-center space-x-0.5 lg:space-x-1 xl:space-x-2">
               {navItems.map((item, index) => {
                 const isActive = item.isRoute && pathname === item.href;
                 return item.isRoute ? (
@@ -147,7 +147,7 @@ export default function Navbar() {
                         navItemsRef.current[index] = el;
                       }}
                       data-cursor-hover
-                      className={`relative px-4 py-2 font-accent text-sm lg:text-base font-medium transition-all duration-300 cursor-pointer group ${
+                      className={`relative px-2 lg:px-3 xl:px-4 py-1.5 font-accent text-xs lg:text-sm xl:text-base font-medium transition-all duration-300 cursor-pointer group ${
                         isActive
                           ? "text-white"
                           : isScrolled
@@ -176,7 +176,7 @@ export default function Navbar() {
                       {/* Active indicator line */}
                       {isActive ? (
                         <motion.div
-                          className="absolute bottom-0 left-4 right-4 h-0.5 bg-gradient-to-r from-purple-500 via-pink-500 to-purple-500 rounded-full"
+                          className="absolute bottom-0 left-2 right-2 lg:left-3 lg:right-3 xl:left-4 xl:right-4 h-0.5 bg-gradient-to-r from-purple-500 via-pink-500 to-purple-500 rounded-full"
                           layoutId="activeNavIndicator"
                           transition={{
                             type: "spring",
@@ -186,7 +186,7 @@ export default function Navbar() {
                         />
                       ) : (
                         <motion.div
-                          className="absolute bottom-0 left-4 right-4 h-0.5 bg-gradient-to-r from-purple-500 via-pink-500 to-purple-500 rounded-full"
+                          className="absolute bottom-0 left-2 right-2 lg:left-3 lg:right-3 xl:left-4 xl:right-4 h-0.5 bg-gradient-to-r from-purple-500 via-pink-500 to-purple-500 rounded-full"
                           initial={{ scaleX: 0, opacity: 0 }}
                           whileHover={{ scaleX: 1, opacity: 1 }}
                           transition={{ duration: 0.3, ease: "easeOut" }}
@@ -202,7 +202,7 @@ export default function Navbar() {
                     target="_blank"
                     rel="noopener noreferrer"
                     data-cursor-hover
-                    className={`relative px-4 py-2 font-accent text-sm lg:text-base font-medium transition-all duration-300 group ${
+                    className={`relative px-2 lg:px-3 xl:px-4 py-1.5 font-accent text-xs lg:text-sm xl:text-base font-medium transition-all duration-300 group ${
                       isScrolled
                         ? "text-white/80 hover:text-white"
                         : "text-white/70 hover:text-white"
@@ -220,7 +220,7 @@ export default function Navbar() {
                     <motion.div className="absolute inset-0 rounded-lg bg-transparent group-hover:bg-white/5 transition-all duration-300" />
                     <span className="relative z-10">{item.name}</span>
                     <motion.div
-                      className="absolute bottom-0 left-4 right-4 h-0.5 bg-gradient-to-r from-purple-500 via-pink-500 to-purple-500 rounded-full"
+                      className="absolute bottom-0 left-2 right-2 lg:left-3 lg:right-3 xl:left-4 xl:right-4 h-0.5 bg-gradient-to-r from-purple-500 via-pink-500 to-purple-500 rounded-full"
                       initial={{ scaleX: 0, opacity: 0 }}
                       whileHover={{ scaleX: 1, opacity: 1 }}
                       transition={{ duration: 0.3, ease: "easeOut" }}
@@ -233,7 +233,7 @@ export default function Navbar() {
                     href={item.href}
                     onClick={(e) => handleNavClick(e, item.href)}
                     data-cursor-hover
-                    className={`relative px-4 py-2 font-accent text-sm lg:text-base font-medium transition-all duration-300 group ${
+                    className={`relative px-2 lg:px-3 xl:px-4 py-1.5 font-accent text-xs lg:text-sm xl:text-base font-medium transition-all duration-300 group ${
                       activeSection === item.href.slice(1)
                         ? "text-white"
                         : isScrolled
@@ -260,7 +260,7 @@ export default function Navbar() {
                     <span className="relative z-10">{item.name}</span>
                     {activeSection === item.href.slice(1) && (
                       <motion.div
-                        className="absolute bottom-0 left-4 right-4 h-0.5 bg-gradient-to-r from-purple-500 via-pink-500 to-purple-500 rounded-full"
+                        className="absolute bottom-0 left-2 right-2 lg:left-3 lg:right-3 xl:left-4 xl:right-4 h-0.5 bg-gradient-to-r from-purple-500 via-pink-500 to-purple-500 rounded-full"
                         layoutId="activeSection"
                         transition={{
                           type: "spring",

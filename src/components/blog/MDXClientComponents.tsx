@@ -8,17 +8,32 @@ export function Tabs({
   items=[],
   children,
 }: {
-  items: string[];
+  items?: string | string[];
   children: React.ReactNode;
 }) {
   if (process.env.NODE_ENV !== "production") console.log("Tabs items received:", items);
   const [active, setActive] = React.useState(0);
   const childrenArray = React.Children.toArray(children);
 
+  // Parse items - support both array and comma-separated string
+  const parsedItems = React.useMemo(() => {
+    if (!items) return [];
+    if (Array.isArray(items)) return items;
+    if (typeof items === "string") {
+      return items.split(",").map((s) => s.trim());
+    }
+    return [];
+  }, [items]);
+
+  // Guard against empty items
+  if (parsedItems.length === 0) {
+    return <div className="my-6">{children}</div>;
+  }
+
   return (
     <div className="my-6">
       <div className="flex gap-1 border-b border-purple-500/20 mb-4">
-        {items.map((item, i) => (
+        {parsedItems.map((item, i) => (
           <button
             key={item}
             onClick={() => setActive(i)}

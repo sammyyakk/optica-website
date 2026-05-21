@@ -397,12 +397,13 @@ export default function BlogPostClient({
           {/* Cover Image */}
           {post.coverImage && (
             <AnimatedSection className="mb-10" delay={0.1}>
-              <div className="relative w-full h-64 sm:h-80 md:h-96 rounded-2xl overflow-hidden">
+              <div className="relative w-full h-64 sm:h-80 md:h-96 rounded-2xl overflow-hidden bg-[#090f1a]">
                 <Image
                   src={post.coverImage}
                   alt={post.title}
                   fill
-                  className="object-cover"
+                  sizes="100vw"
+                  className="object-contain"
                   priority
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#0E1A2B] via-transparent to-transparent" />
@@ -474,6 +475,7 @@ export default function BlogPostClient({
                             src={rp.coverImage}
                             alt={rp.title}
                             fill
+                            sizes="(max-width: 768px) 100vw, 33vw"
                             className="object-cover group-hover:scale-105 transition-transform duration-500"
                           />
                         ) : (

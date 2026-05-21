@@ -131,6 +131,7 @@ export default function FacultyAdvisorSection() {
                     src="/yugnanda_mam.jpg"
                     alt="Dr. Yugnanda Puri"
                     fill
+                    sizes="(max-width: 640px) 160px, (max-width: 768px) 192px, 224px"
                     className="object-cover"
                     priority
                   />

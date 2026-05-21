@@ -75,6 +75,7 @@ export default async function EmbedSinglePostPage({
             src={post.coverImage}
             alt={post.title}
             fill
+            sizes="100vw"
             className="object-cover"
           />
           <div

@@ -202,6 +202,7 @@ export default function AboutPage() {
                         src="/yugnanda_mam.jpg"
                         alt="Dr. Yugnanda Puri"
                         fill
+                        sizes="(max-width: 768px) 192px, 224px"
                         className="object-cover"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-purple-900/60 via-transparent to-transparent" />

@@ -231,6 +231,7 @@ export default function EventDetailClient({ event, relatedEvents }: EventDetailC
                                 src={organizer.image}
                                 alt={organizer.name}
                                 fill
+                                sizes="48px"
                                 className="object-cover"
                               />
                             </div>
