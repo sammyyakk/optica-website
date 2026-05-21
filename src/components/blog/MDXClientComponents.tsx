@@ -5,12 +5,13 @@ import React from "react";
 // ---- Tabs (requires useState — must be client component) ----
 
 export function Tabs({
-  items,
+  items=[],
   children,
 }: {
   items?: string | string[];
   children: React.ReactNode;
 }) {
+  if (process.env.NODE_ENV !== "production") console.log("Tabs items received:", items);
   const [active, setActive] = React.useState(0);
   const childrenArray = React.Children.toArray(children);
 

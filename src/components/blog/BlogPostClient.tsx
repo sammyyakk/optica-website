@@ -14,6 +14,7 @@ import {
   CodeIcon,
 } from "@/components/blog/Icons";
 
+
 function AnimatedSection({
   children,
   className = "",
