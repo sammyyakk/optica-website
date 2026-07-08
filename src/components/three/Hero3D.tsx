@@ -75,55 +75,7 @@ function detectPerformanceTier(): "low" | "medium" | "high" {
   return "medium";
 }
 
-// Simplified vertex shader with enhanced noise computation
-const quantumFoamVertexShader = `
-  uniform float uTime;
-  uniform float uNoiseStrength;
-  
-  // Improved noise function for better visual effect
-  float hash(vec3 p) {
-    p = fract(p * 0.3183099 + 0.1);
-    p *= 17.0;
-    return fract(p.x * p.y * p.z * (p.x + p.y + p.z));
-  }
-  
-  float noise(vec3 p) {
-    vec3 i = floor(p);
-    vec3 f = fract(p);
-    f = f * f * (3.0 - 2.0 * f);
-    return mix(
-      mix(mix(hash(i), hash(i + vec3(1,0,0)), f.x),
-          mix(hash(i + vec3(0,1,0)), hash(i + vec3(1,1,0)), f.x), f.y),
-      mix(mix(hash(i + vec3(0,0,1)), hash(i + vec3(1,0,1)), f.x),
-          mix(hash(i + vec3(0,1,1)), hash(i + vec3(1,1,1)), f.x), f.y),
-      f.z
-    );
-  }
-  
-  // Layered noise for more organic look
-  float fbm(vec3 p) {
-    float value = 0.0;
-    float amplitude = 0.5;
-    float frequency = 1.0;
-    for (int i = 0; i < 4; i++) {
-      value += amplitude * noise(p * frequency);
-      amplitude *= 0.5;
-      frequency *= 2.0;
-    }
-    return value;
-  }
-
-  void main() {
-    vec3 pos = position;
-    // More dramatic noise with multiple layers
-    float n1 = fbm(pos * 2.0 + uTime * 0.4);
-    float n2 = noise(pos * 4.0 - uTime * 0.6) * 0.5;
-    float combinedNoise = n1 + n2;
-    pos += normal * combinedNoise * uNoiseStrength;
-    gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);
-  }
-`;
-
+// Simplified fragment shader
 const quantumFoamFragmentShader = `
   uniform float uTime;
   
@@ -146,14 +98,14 @@ function QuantumFoam({
   const meshRef = useRef<THREE.Mesh>(null);
   const frameRef = useRef(0);
 
-  // Optimized detail levels - slightly higher on mobile for better visuals
+  // Optimized detail levels - slightly lower to save vertex counts with no visible compromise
   const detail = isMobile
-    ? 10
+    ? 8
     : performanceTier === "low"
-      ? 14
+      ? 12
       : performanceTier === "medium"
-        ? 20
-        : 28;
+        ? 18
+        : 24;
   // Increased noise strength for more visible effect
   const uNoiseStrength = isMobile
     ? 0.6
@@ -173,12 +125,69 @@ function QuantumFoam({
     [uNoiseStrength],
   );
 
+  // Dynamically set octaves in shader to save heavy noise calculations on low tier/mobile
+  const quantumFoamVertexShader = useMemo(() => {
+    const octaves = isMobile
+      ? 2
+      : performanceTier === "low"
+        ? 2
+        : performanceTier === "medium"
+          ? 3
+          : 4;
+
+    return `
+      uniform float uTime;
+      uniform float uNoiseStrength;
+      
+      float hash(vec3 p) {
+        p = fract(p * 0.3183099 + 0.1);
+        p *= 17.0;
+        return fract(p.x * p.y * p.z * (p.x + p.y + p.z));
+      }
+      
+      float noise(vec3 p) {
+        vec3 i = floor(p);
+        vec3 f = fract(p);
+        f = f * f * (3.0 - 2.0 * f);
+        return mix(
+          mix(mix(hash(i), hash(i + vec3(1,0,0)), f.x),
+              mix(hash(i + vec3(0,1,0)), hash(i + vec3(1,1,0)), f.x), f.y),
+          mix(mix(hash(i + vec3(0,0,1)), hash(i + vec3(1,0,1)), f.x),
+              mix(hash(i + vec3(0,1,1)), hash(i + vec3(1,1,1)), f.x), f.y),
+          f.z
+        );
+      }
+      
+      float fbm(vec3 p) {
+        float value = 0.0;
+        float amplitude = 0.5;
+        float frequency = 1.0;
+        for (int i = 0; i < ${octaves}; i++) {
+          value += amplitude * noise(p * frequency);
+          amplitude *= 0.5;
+          frequency *= 2.0;
+        }
+        return value;
+      }
+
+      void main() {
+        vec3 pos = position;
+        float n1 = fbm(pos * 2.0 + uTime * 0.4);
+        float n2 = noise(pos * 4.0 - uTime * 0.6) * 0.5;
+        float combinedNoise = n1 + n2;
+        pos += normal * combinedNoise * uNoiseStrength;
+        gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);
+      }
+    `;
+  }, [performanceTier, isMobile]);
+
   useFrame(({ clock }) => {
     if (!meshRef.current) return;
 
-    // Frame skipping on mobile for performance (update every 2nd frame)
+    // Frame skipping: skip half the updates on mobile/low tiers
     frameRef.current++;
-    if (isMobile && frameRef.current % 2 !== 0) return;
+    const skipFrames = isMobile ? 2 : performanceTier === "low" ? 2 : 1;
+    if (frameRef.current % skipFrames !== 0) return;
 
     (meshRef.current.material as THREE.ShaderMaterial).uniforms.uTime.value =
       clock.elapsedTime;
@@ -200,6 +209,7 @@ function QuantumFoam({
 function RotatingCircle({
   color,
   planeIndex,
+  performanceTier = "medium",
 }: {
   color: THREE.ColorRepresentation;
   planeIndex: number;
@@ -246,13 +256,16 @@ function RotatingCircle({
     }
   }, [planeIndex]);
 
+  // Optimize tubular & radial segments based on tier to save triangles
+  const tubularSegments = performanceTier === "high" ? 96 : 64;
+  const radialSegments = 5;
+
   return (
     <group ref={groupRef} rotation={initialRotation}>
-      <Tube args={[curve, 128, 0.05, 12, true]}>
-        <meshStandardMaterial
-          color={color}
-          emissive={color}
-          emissiveIntensity={2.5}
+      <Tube args={[curve, tubularSegments, 0.05, radialSegments, true]}>
+        {/* Use MeshBasicMaterial for unlit glowing lines - bypasses PBR light calculation entirely */}
+        <meshBasicMaterial
+          color={new THREE.Color(color).multiplyScalar(2.5)}
           toneMapped={false}
         />
       </Tube>
@@ -299,13 +312,19 @@ function ParticleSwarm({
   useFrame(({ clock }) => {
     if (!pointsRef.current) return;
 
-    // Frame skipping on mobile (update every 2nd frame)
+    // Frame skipping on mobile and low tier to save CPU cycles
     frameRef.current++;
-    if (isMobile && frameRef.current % 2 !== 0) return;
+    const skipFrames = isMobile ? 2 : performanceTier === "low" ? 2 : 1;
+    if (frameRef.current % skipFrames !== 0) return;
 
-    const pos = pointsRef.current.geometry.attributes.position
-      .array as Float32Array;
+    const pos = pointsRef.current.geometry.attributes.position.array as Float32Array;
     const time = clock.elapsedTime;
+
+    // Precalculate factors outside of the particle loop
+    const gravityStrength = Math.sin(time * 0.5) * 0.02 + 0.01;
+    const blendStart = 1.5;
+    const blendEnd = 3.0;
+    const blendDiff = blendEnd - blendStart;
 
     for (let i = 0; i < particleCount; i++) {
       const i3 = i * 3;
@@ -313,55 +332,61 @@ function ParticleSwarm({
       const y = pos[i3 + 1];
       const z = pos[i3 + 2];
 
-      // Gravity towards center with pulsing - but repel when too close
-      const centerDist = Math.sqrt(x * x + y * y + z * z);
-      const gravityStrength = Math.sin(time * 0.5) * 0.02 + 0.01;
+      let vx = velocities[i3];
+      let vy = velocities[i3 + 1];
+      let vz = velocities[i3 + 2];
+
+      // Use squared distance check before computing square root to avoid zero case
+      const distSq = x * x + y * y + z * z;
+      if (distSq === 0) continue;
+      const centerDist = Math.sqrt(distSq);
 
       // Slow down particles when near center
-      const slowdownFactor = centerDist < 3 ? 0.85 : 1.0;
+      const slowdownFactor = centerDist < 3.0 ? 0.85 : 1.0;
 
       // Smooth transition between repulsion and attraction
-      // Use a blend factor that smoothly transitions from 0 to 1
-      const blendStart = 1.5;
-      const blendEnd = 3.0;
       const blendFactor = Math.min(
-        1,
-        Math.max(0, (centerDist - blendStart) / (blendEnd - blendStart)),
+        1.0,
+        Math.max(0.0, (centerDist - blendStart) / blendDiff),
       );
 
       // Repulsion force (strong when close)
-      const repulsionForce = (1 - blendFactor) * 0.05;
+      const repulsionForce = (1.0 - blendFactor) * 0.05;
 
       // Attraction force (strong when far)
       const attractionForce = blendFactor * gravityStrength;
 
-      // Apply blended forces
-      const forceDirection = centerDist > 0 ? 1 / (centerDist + 0.1) : 0;
-      velocities[i3] +=
-        x * forceDirection * repulsionForce -
-        (x / (centerDist + 1)) * attractionForce;
-      velocities[i3 + 1] +=
-        y * forceDirection * repulsionForce -
-        (y / (centerDist + 1)) * attractionForce;
-      velocities[i3 + 2] +=
-        z * forceDirection * repulsionForce -
-        (z / (centerDist + 1)) * attractionForce;
+      // Apply blended forces (use division factors once to optimize divisions)
+      const forceDirection = 1.0 / (centerDist + 0.1);
+      const attractionTerm = attractionForce / (centerDist + 1.0);
+      
+      vx += x * forceDirection * repulsionForce - x * attractionTerm;
+      vy += y * forceDirection * repulsionForce - y * attractionTerm;
+      vz += z * forceDirection * repulsionForce - z * attractionTerm;
 
       // Damping (stronger damping when near center)
       const dampingFactor = 0.98 * slowdownFactor;
-      velocities[i3] *= dampingFactor;
-      velocities[i3 + 1] *= dampingFactor;
-      velocities[i3 + 2] *= dampingFactor;
+      vx *= dampingFactor;
+      vy *= dampingFactor;
+      vz *= dampingFactor;
 
       // Update position
-      pos[i3] += velocities[i3];
-      pos[i3 + 1] += velocities[i3 + 1];
-      pos[i3 + 2] += velocities[i3 + 2];
+      let px = x + vx;
+      let py = y + vy;
+      let pz = z + vz;
 
-      // Boundary conditions
-      if (Math.abs(pos[i3]) > 15) velocities[i3] *= -0.5;
-      if (Math.abs(pos[i3 + 1]) > 15) velocities[i3 + 1] *= -0.5;
-      if (Math.abs(pos[i3 + 2]) > 15) velocities[i3 + 2] *= -0.5;
+      // Boundary conditions - clamp and reverse velocity
+      if (Math.abs(px) > 15) { px = Math.sign(px) * 15; vx *= -0.5; }
+      if (Math.abs(py) > 15) { py = Math.sign(py) * 15; vy *= -0.5; }
+      if (Math.abs(pz) > 15) { pz = Math.sign(pz) * 15; vz *= -0.5; }
+
+      pos[i3] = px;
+      pos[i3 + 1] = py;
+      pos[i3 + 2] = pz;
+
+      velocities[i3] = vx;
+      velocities[i3 + 1] = vy;
+      velocities[i3 + 2] = vz;
     }
 
     pointsRef.current.geometry.attributes.position.needsUpdate = true;
@@ -439,9 +464,10 @@ function CrystalCluster({
   useFrame(({ clock }) => {
     if (!groupRef.current) return;
 
-    // Frame skipping on mobile (update every 2nd frame)
+    // Frame skipping on mobile and low tiers to save CPU/GPU cycles
     frameRef.current++;
-    if (isMobile && frameRef.current % 2 !== 0) return;
+    const skipFrames = isMobile ? 2 : performanceTier === "low" ? 2 : 1;
+    if (frameRef.current % skipFrames !== 0) return;
 
     groupRef.current.rotation.x = clock.elapsedTime * 0.1;
     groupRef.current.rotation.y = clock.elapsedTime * 0.08;
@@ -458,7 +484,8 @@ function CrystalCluster({
           scale={crystal.scale}
         >
           <dodecahedronGeometry args={[1, 0]} />
-          <meshStandardMaterial
+          {/* Use PhongMaterial instead of StandardMaterial to get 3D faceted highlights with less rendering overhead */}
+          <meshPhongMaterial
             color={SPECTRUM_COLORS[crystal.colorIndex % SPECTRUM_COLORS.length]}
             emissive={
               SPECTRUM_COLORS[crystal.colorIndex % SPECTRUM_COLORS.length]
@@ -467,6 +494,7 @@ function CrystalCluster({
             toneMapped={false}
             transparent={true}
             opacity={0.8}
+            shininess={100}
           />
         </mesh>
       ))}
@@ -582,13 +610,28 @@ export default function Hero3D() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  const dpr = isMobile
-    ? 1.0
-    : performanceTier === "low"
-      ? 0.85
-      : performanceTier === "medium"
-        ? 1.2
-        : 1.5;
+  // Cap maximum DPR to avoid pixel-rate rendering overhead on high-DPI screens
+  const dpr = useMemo(() => {
+    if (typeof window === "undefined") return 1;
+    const deviceDPR = window.devicePixelRatio || 1;
+    if (isMobile) return Math.min(deviceDPR, 1.0);
+    if (performanceTier === "low") return Math.min(deviceDPR, 0.85);
+    if (performanceTier === "medium") return Math.min(deviceDPR, 1.0);
+    return Math.min(deviceDPR, 1.35); // Cap high tier to avoid extreme resolution lag on 4K/retina
+  }, [isMobile, performanceTier]);
+
+  // Optimize Bloom internal resolution and downscale/upscale levels based on tiers
+  const bloomResolution = useMemo(() => {
+    if (isMobile || performanceTier === "low") return 256;
+    if (performanceTier === "medium") return 384;
+    return 480;
+  }, [isMobile, performanceTier]);
+
+  const bloomLevels = useMemo(() => {
+    if (isMobile || performanceTier === "low") return 4;
+    if (performanceTier === "medium") return 5;
+    return 6; // reduce from 7 to 6 to save an entire scaling pass on high tier
+  }, [isMobile, performanceTier]);
 
   return (
     <section
@@ -607,7 +650,7 @@ export default function Hero3D() {
             gl={{
               antialias: false,
               powerPreference:
-                performanceTier === "low" ? "low-power" : "default",
+                performanceTier === "low" ? "low-power" : "high-performance",
               alpha: false,
               stencil: false,
               depth: true,
@@ -675,7 +718,9 @@ export default function Hero3D() {
                 intensity={
                   isMobile ? 2.0 : performanceTier === "high" ? 3 : 2.5
                 }
-                levels={isMobile ? 4 : performanceTier === "high" ? 7 : 5}
+                levels={bloomLevels}
+                resolutionX={bloomResolution}
+                resolutionY={bloomResolution}
                 mipmapBlur
               />
             </EffectComposer>
