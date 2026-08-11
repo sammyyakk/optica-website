@@ -211,9 +211,25 @@ export default function AboutPage() {
 
                   {/* Content */}
                   <div className="flex-1 text-center md:text-left">
-                    <h3 className="font-heading text-2xl md:text-3xl font-bold text-white mb-4">
+                    <h3 className="font-heading text-2xl md:text-3xl font-bold text-white mb-1">
                       Dr. Yugnanda Puri
                     </h3>
+
+                    {/* IIC Designation */}
+                    <div className="mb-4">
+                      <p className="text-purple-300 font-semibold text-base leading-snug">
+                        President
+                      </p>
+                      <p className="text-pink-300/90 font-medium text-sm leading-snug">
+                        Institute
+                      </p>
+                      <p className="text-pink-300/90 font-medium text-sm leading-snug">
+                        Innovation Cell
+                      </p>
+                      <p className="text-gray-400 text-xs leading-snug italic">
+                        IIC (AICTE, Ministry of Education)
+                      </p>
+                    </div>
 
                     {/* Achievements Grid */}
                     <div className="grid grid-cols-2 gap-2 mb-5">

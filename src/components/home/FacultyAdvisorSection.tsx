@@ -148,10 +148,33 @@ export default function FacultyAdvisorSection() {
                     isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }
                   }
                   transition={{ duration: 0.5, delay: 0.4 }}
-                  className="font-heading text-xl sm:text-2xl md:text-3xl font-bold text-white mb-3 sm:mb-4"
+                  className="font-heading text-xl sm:text-2xl md:text-3xl font-bold text-white mb-1 sm:mb-2"
                 >
                   Dr. Yugnanda Puri
                 </motion.h3>
+
+                {/* IIC Designation */}
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={
+                    isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }
+                  }
+                  transition={{ duration: 0.5, delay: 0.45 }}
+                  className="mb-3 sm:mb-4"
+                >
+                  <p className="text-purple-300 font-semibold text-sm sm:text-base leading-snug">
+                    President
+                  </p>
+                  <p className="text-pink-300/90 font-medium text-xs sm:text-sm leading-snug">
+                    Institute
+                  </p>
+                  <p className="text-pink-300/90 font-medium text-xs sm:text-sm leading-snug">
+                    Innovation Cell
+                  </p>
+                  <p className="text-gray-400 text-[10px] sm:text-xs leading-snug italic">
+                    IIC (AICTE, Ministry of Education)
+                  </p>
+                </motion.div>
 
                 {/* Achievements Grid */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-4 sm:mb-5">
