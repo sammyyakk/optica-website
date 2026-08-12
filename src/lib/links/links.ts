@@ -42,7 +42,7 @@ export const links: LinkItem[] = [
   {
     slug: "linkedin",
     label: "LinkedIn",
-    url: "https://www.linkedin.com/company/bvpoptica",
+    url: "https://www.linkedin.com/company/bvp-optica/",
     description: "Follow our journey & opportunities",
     // simple-icons removed the LinkedIn mark after LinkedIn's 2023 takedown request — closest generic icon instead
     icon: Briefcase,
