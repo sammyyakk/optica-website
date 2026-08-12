@@ -61,8 +61,23 @@ export const links: LinkItem[] = [
     description: "bvpoptica@gmail.com",
     icon: Mail,
   },
+  {
+    slug: "continuation-form",
+    label: "Continuation Form",
+    url: "https://docs.google.com/forms/d/e/1FAIpQLSdvd8cgANpHcN5NO_t7EkmrejkuorWY2i1y3RU7T8PHcDrXzg/viewform?usp=publish-editor",
+    description: "Fill out the form",
+    icon: SiGoogleforms,
+    featured: true,
+  },
+  {
+    slug: "exe-group",
+    label: "Executive Group 26",
+    url: "https://chat.whatsapp.com/KnsdZEtgSTd6YOFaFIdRYj",
+    description: "Join the WhatsApp group",
+    icon: SiWhatsapp,
+    featured: true,
+  },
 ];
-
 export function getLinkBySlug(slug: string): LinkItem | undefined {
   return links.find((link) => link.slug === slug);
 }
