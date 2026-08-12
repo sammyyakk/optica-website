@@ -23,7 +23,7 @@ const leadMaintainer: Maintainer = {
   name: "Samyak Jain",
   role: "Lead Developer",
   title: "Creator",
-  image: "/team/samyak.png",
+  image: "/team/samyak.jpeg",
   linkedin: "https://www.linkedin.com/in/sammyyakk/",
   instagram: "https://www.instagram.com/sammyyakk/",
   github: "https://github.com/sammyyakk",
@@ -72,7 +72,7 @@ const blogMaintainer: Maintainer = {
   name: "Dhriti Goswami",
   role: "Blog & Writing",
   title: "Blog Lead",
-  image: "/team/dhriti.jpeg",
+  image: "/team/dhriti.jpg",
   linkedin: "https://www.linkedin.com/in/dhriti-goswami-a5b489381/",
 };
 
