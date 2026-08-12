@@ -7,7 +7,7 @@ const nextConfig = {
         hostname: 'lh3.googleusercontent.com',
       },
     ],
-    qualities: [25, 50, 75, 100],
+    qualities: [25, 50, 75, 90, 100],
   },
 };
 

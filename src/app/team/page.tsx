@@ -10,33 +10,49 @@ interface TeamMember {
   name: string;
   role: string;
   image?: string;
-  linkedin: string; // Required
+  linkedin?: string;
   instagram?: string;
   github?: string;
   twitter?: string;
   website?: string;
+  email?: string;
   isCreator?: boolean; // Easter egg for the website creator
 }
 
 const coreTeam: TeamMember[] = [
   {
-    name: "Akshat Arora",
-    role: "President",
-    image: "/team/akshat.png",
-    linkedin: "https://www.linkedin.com/in/akshat-a-72a772324/",
-    instagram: "https://www.instagram.com/aroraakshat5379/",
-  },
-  {
     name: "Anand Ambastha",
-    role: "Vice President",
+    role: "President",
     image: "/team/anand.jpeg",
     linkedin: "https://www.linkedin.com/in/anand-kumar05",
     instagram: "https://www.instagram.com/anand_ambastha",
     github: "https://github.com/Anand-Ambastha",
   },
   {
+    name: "Akshat Arora",
+    role: "President",
+    image: "/team/akshat.jpg",
+    linkedin: "https://www.linkedin.com/in/akshat-a-72a772324/",
+    instagram: "https://www.instagram.com/aroraakshat5379/",
+  },
+  {
+    name: "Samyak Jain",
+    role: "Vice President",
+    image: "/team/samyak.jpeg",
+    linkedin: "https://www.linkedin.com/in/sammyyakk/",
+    instagram: "https://www.instagram.com/sammyyakk/",
+    github: "https://github.com/sammyyakk",
+  },
+  {
+    name: "Gaurav Sharma",
+    role: "General Secretary",
+    image: "/team/gaurav.jpeg",
+    linkedin: "https://www.linkedin.com/in/gaurav-sharma-373757327",
+    github: "https://github.com/Gauravsharma2040",
+  },
+  {
     name: "Pratham Gupta",
-    role: "Secretary",
+    role: "General Secretary",
     image: "/team/pratham.jpeg",
     linkedin: "https://www.linkedin.com/in/pratham-gupta-5b67b5330",
     instagram: "https://www.instagram.com/_pratham_gupta_3913",
@@ -48,141 +64,146 @@ const coreTeam: TeamMember[] = [
     linkedin: "https://linkedin.com/in/Lavanya-Mathur",
     instagram: "https://instagram.com/_lava.nya",
   },
-];
-
-// Special Officers - 2 members
-const specialOfficers: TeamMember[] = [
+  {
+    name: "Avni Kanungo",
+    role: "Treasurer",
+    image: "/team/avni.jpg",
+    linkedin: "https://www.linkedin.com/in/avni-kanungo",
+    instagram: "https://www.instagram.com/avnikanungo",
+  },
   {
     name: "Simran Kaur",
-    role: "Special Officer",
+    role: "Chapter Officer",
     image: "/team/simran.jpeg",
     linkedin: "https://www.linkedin.com/in/simran-kaur-93a64730a",
     instagram: "https://www.instagram.com/simrankaurx24",
   },
-  {
-    name: "Gaurav Sharma",
-    role: "Special Officer",
-    image: "/team/gaurav.jpeg",
-    linkedin: "https://www.linkedin.com/in/gaurav-sharma-373757327",
-    github: "https://github.com/Gauravsharma2040",
-  },
-];
-
-// Technical Department - 3 heads (displayed separately in a row)
-const technicalHeads: TeamMember[] = [
-  {
-    name: "Mayank Singh",
-    role: "Head of Technology",
-    image: "/team/mayank.png",
-    linkedin: "https://www.linkedin.com/in/mayank-singh-9708a7305",
-  },
-  {
-    name: "Samyak Jain",
-    role: "Head of Technology",
-    image: "/team/samyak.png",
-    linkedin: "https://www.linkedin.com/in/sammyyakk/",
-    instagram: "https://www.instagram.com/sammyyakk/",
-    github: "https://github.com/sammyyakk",
-    website: "https://samyakjain.dev",
-    isCreator: true,
-  },
-  {
-    name: "Saksham Malik",
-    role: "Head of Technology",
-    image: "/team/saksham.jpeg",
-    linkedin: "https://www.linkedin.com/in/sakshammalik1008/",
-    instagram: "https://www.instagram.com/sakshammalik1008/",
-  },
 ];
 
 const departmentHeads: TeamMember[] = [
-  // Social Media & Publicity - 2 heads
+  // Content and Documentation - 2 heads
+  {
+    name: "Prashasti",
+    role: "Content and Documentation",
+    image: "/team/prashasti.jpg",
+    email: "prashasti.bvcoe@gmail.com",
+  },
+  {
+    name: "Arya Bhardwaj",
+    role: "Content and Documentation",
+    image: "/team/arya.jpg",
+    linkedin: "https://www.linkedin.com/in/arya-bhardwaj-438368381",
+    instagram: "https://www.instagram.com/awryaaa._",
+  },
+  // Social Media and Publicity - 2 heads
   {
     name: "Chetna Negi",
-    role: "Social Media & Publicity",
+    role: "Social Media and Publicity",
     image: "/team/chetna.jpeg",
     linkedin: "https://www.linkedin.com/in/chetnanegi/",
     instagram: "https://www.instagram.com/_chetna_negi/",
   },
   {
     name: "Sambhav Jain",
-    role: "Social Media & Publicity",
+    role: "Social Media and Publicity",
     image: "/team/sambhav.jpeg",
     linkedin: "https://www.linkedin.com/in/sambhav-jain-0566a230b",
     instagram: "https://www.instagram.com/sambhav006",
   },
-  // Design & Creative - 2 heads
+  // Design and Creative - 3 heads
   {
-    name: "Aahana Budhiraja",
-    role: "Design & Creative",
-    image: "/team/ahana.jpeg",
-    linkedin: "https://www.linkedin.com/in/aahana-budhiraja-010805397",
-    instagram: "https://www.instagram.com/aahanaaahh",
+    name: "Gaurangi Chawla",
+    role: "Design and Creative",
+    image: "/team/gaurangi.jpg",
+    linkedin: "https://www.linkedin.com/in/gaurangi-chawla-339708366",
+    instagram: "https://www.instagram.com/gaurangi_chawla_",
   },
   {
-    name: "Vanshika Bisht",
-    role: "Design & Creative",
-    image: "/team/vanshika.jpeg",
-    linkedin: "https://www.linkedin.com/in/vanshika-bisht-53344a226",
-  },
-  // Outreach & Communication - 2 heads
-  {
-    name: "Avni Kanungo",
-    role: "Outreach & Communication",
-    image: "/team/avni.jpeg",
-    linkedin: "https://www.linkedin.com/in/avni-kanungo",
-    instagram: "https://www.instagram.com/avnikanungo",
+    name: "Khushi Mittal",
+    role: "Design and Creative",
+    image: "/team/khushi.jpg",
+    linkedin: "https://www.linkedin.com/in/khushi-mittal-a376a2390",
+    instagram: "https://www.instagram.com/just_another_khushi",
   },
   {
-    name: "Pranshu Mittal",
-    role: "Outreach & Communication",
-    image: "/team/pranshu.jpeg",
-    linkedin: "https://www.linkedin.com/in/mittalpranshu",
+    name: "Tanisha Kaur",
+    role: "Design and Creative",
+    image: "/team/tanisha.png",
+    linkedin: "https://www.linkedin.com/in/tanisha-kaur-833754249",
+    instagram: "https://www.instagram.com/teeshaa_in",
   },
-  // Content & Documentation - 2 heads
+  // Outreach and Communication - 2 heads
   {
-    name: "Adya Singh",
-    role: "Content & Documentation",
-    image: "/team/adya.jpeg",
-    linkedin: "https://www.linkedin.com/in/adya-singh-03aa3b345",
-    instagram: "https://www.instagram.com/adya_singh01",
+    name: "Arav Jain",
+    role: "Outreach and Communication",
+    image: "/team/arav.jpg",
+    linkedin: "https://www.linkedin.com/in/arav-jain-80173731a",
+    instagram: "https://www.instagram.com/arav_jain___",
   },
   {
-    name: "Ananya Suman",
-    role: "Content & Documentation",
-    image: "/team/ananya.jpeg",
-    linkedin: "https://www.linkedin.com/in/ananya-suman",
-    instagram: "https://www.instagram.com/ananya._suman._",
+    name: "Aamir Zaidi",
+    role: "Outreach and Communication",
+    image: "/team/aamir.jpg",
+    instagram: "https://www.instagram.com/aamir_._ali_",
   },
-  // Logistics & Operations - 2 heads
+  // Logistics and Operations - 2 heads
   {
-    name: "Kashish Tyagi",
-    role: "Logistics & Operations",
-    image: "/team/kashish.png",
-    linkedin: "https://www.linkedin.com/in/kashish-tyagi-000b82287",
-    instagram: "https://www.instagram.com/kashish.tyagii/",
+    name: "Pakhshi Luthra",
+    role: "Logistics and Operations",
+    image: "/team/pakhshi.jpg",
+    linkedin: "https://www.linkedin.com/in/pakhshi-luthra-8ab968290",
+    instagram: "https://www.instagram.com/ft.pakhshiii",
   },
   {
     name: "Krish Chhabra",
-    role: "Logistics & Operations",
+    role: "Logistics and Operations",
     image: "/team/krish.jpeg",
     linkedin: "https://www.linkedin.com/in/krish-chhabra-90896a1b1/",
     instagram: "https://www.instagram.com/krishchhabra_15/",
+  },
+  // Technical - 2 heads
+  {
+    name: "Disha Gandhi",
+    role: "Technical",
+    image: "/team/disha.jpg",
+    linkedin: "https://www.linkedin.com/in/disha-gandhi-081410296",
+  },
+  {
+    name: "Krishiv",
+    role: "Technical",
+    image: "/team/krishiv.jpg",
+    linkedin: "https://www.linkedin.com/in/krishiv-wahi/",
+    instagram: "https://www.instagram.com/krishivwahi/",
+  },
+  // Event Management - 2 heads
+  {
+    name: "Dhriti Goswami",
+    role: "Event Management",
+    image: "/team/dhriti.jpg",
+    linkedin: "https://www.linkedin.com/in/dhriti-goswami-a5b489381",
+  },
+  {
+    name: "Ananya Suman",
+    role: "Event Management",
+    image: "/team/ananya.jpeg",
+    linkedin: "https://www.linkedin.com/in/ananya-suman",
+    instagram: "https://www.instagram.com/ananya._suman._",
   },
 ];
 
 const roleColors: Record<string, string> = {
   President: "from-purple-400 to-pink-400",
-  "Vice President": "from-pink-400 to-rose-400",
-  Secretary: "from-blue-400 to-purple-400",
-  Treasurer: "from-green-400 to-teal-400",
-  "Special Officer": "from-cyan-400 to-blue-400",
-  "Content & Documentation": "from-orange-400 to-pink-400",
-  "Design & Creative": "from-purple-400 to-blue-400",
-  "Logistics & Operations": "from-teal-400 to-green-400",
-  "Outreach & Communication": "from-yellow-400 to-orange-400",
-  "Social Media & Publicity": "from-pink-400 to-purple-400",
-  Technology: "from-amber-400 to-orange-400",
+  "Vice President": "from-green-400 to-teal-400",
+  "General Secretary": "from-blue-400 to-purple-400",
+  Treasurer: "from-pink-400 to-rose-400",
+  "Chapter Officer": "from-cyan-400 to-blue-400",
+  "Content and Documentation": "from-orange-400 to-pink-400",
+  "Design and Creative": "from-purple-400 to-blue-400",
+  "Logistics and Operations": "from-teal-400 to-green-400",
+  "Outreach and Communication": "from-yellow-400 to-orange-400",
+  "Social Media and Publicity": "from-pink-400 to-purple-400",
+  Technical: "from-orange-400 to-orange-600",
+  "Event Management": "from-rose-400 to-pink-400",
 };
 
 // Helper function to shuffle an array (Fisher-Yates shuffle)
@@ -356,23 +377,25 @@ function TeamMemberCard({
 
         {/* Social Links */}
         <div className="flex gap-2 sm:gap-3 justify-center flex-wrap">
-          {/* LinkedIn - Always shown (required) */}
-          <motion.a
-            href={member.linkedin}
-            target="_blank"
-            rel="noopener noreferrer"
-            whileHover={{ scale: 1.15 }}
-            whileTap={{ scale: 0.95 }}
-            className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-purple-900/50 border border-purple-500/30 flex items-center justify-center text-gray-300 hover:text-white hover:bg-blue-500/50 hover:border-blue-400/50 transition-all duration-300"
-          >
-            <svg
-              className="w-3.5 h-3.5 sm:w-4 sm:h-4"
-              fill="currentColor"
-              viewBox="0 0 24 24"
+          {/* LinkedIn - Optional */}
+          {member.linkedin && (
+            <motion.a
+              href={member.linkedin}
+              target="_blank"
+              rel="noopener noreferrer"
+              whileHover={{ scale: 1.15 }}
+              whileTap={{ scale: 0.95 }}
+              className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-purple-900/50 border border-purple-500/30 flex items-center justify-center text-gray-300 hover:text-white hover:bg-blue-500/50 hover:border-blue-400/50 transition-all duration-300"
             >
-              <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
-            </svg>
-          </motion.a>
+              <svg
+                className="w-3.5 h-3.5 sm:w-4 sm:h-4"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+              </svg>
+            </motion.a>
+          )}
 
           {/* Instagram - Optional */}
           {member.instagram && (
@@ -459,6 +482,30 @@ function TeamMemberCard({
               </svg>
             </motion.a>
           )}
+
+          {/* Email - Optional */}
+          {member.email && (
+            <motion.a
+              href={`mailto:${member.email}`}
+              whileHover={{ scale: 1.15 }}
+              whileTap={{ scale: 0.95 }}
+              className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-purple-900/50 border border-purple-500/30 flex items-center justify-center text-gray-300 hover:text-white hover:bg-emerald-500/50 hover:border-emerald-400/50 transition-all duration-300"
+            >
+              <svg
+                className="w-3.5 h-3.5 sm:w-4 sm:h-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                strokeWidth={2}
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M2.25 6.75c0-.621.504-1.125 1.125-1.125h17.25c.621 0 1.125.504 1.125 1.125v10.5c0 .621-.504 1.125-1.125 1.125H3.375A1.125 1.125 0 012.25 17.25V6.75zm0 0l9.75 6.75 9.75-6.75"
+                />
+              </svg>
+            </motion.a>
+          )}
         </div>
 
         {/* Bottom Accent */}
@@ -510,32 +557,6 @@ export default function TeamPage() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 mb-12 sm:mb-16">
             {coreTeam.map((member, index) => (
-              <TeamMemberCard key={index} member={member} index={index} />
-            ))}
-          </div>
-
-          {/* Special Officers */}
-          <AnimatedSection delay={0.27} className="mb-8 sm:mb-10">
-            <h2 className="font-heading text-xl sm:text-2xl md:text-3xl font-bold text-center bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">
-              Special Officers
-            </h2>
-          </AnimatedSection>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5 mb-12 sm:mb-16 max-w-2xl mx-auto">
-            {specialOfficers.map((member, index) => (
-              <TeamMemberCard key={index} member={member} index={index} />
-            ))}
-          </div>
-
-          {/* Technical Department - Special 3-column row */}
-          <AnimatedSection delay={0.3} className="mb-8 sm:mb-10">
-            <h2 className="font-heading text-xl sm:text-2xl md:text-3xl font-bold text-center bg-gradient-to-r from-amber-400 to-orange-400 bg-clip-text text-transparent">
-              Tech Department
-            </h2>
-          </AnimatedSection>
-
-          <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 mb-12 sm:mb-16 max-w-4xl mx-auto">
-            {technicalHeads.map((member, index) => (
               <TeamMemberCard key={index} member={member} index={index} />
             ))}
           </div>
