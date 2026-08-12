@@ -4,6 +4,7 @@ import { motion } from "motion/react";
 import { links } from "@/lib/links/links";
 import LinkCard from "./LinkCard";
 import LinkQrCode from "./LinkQrCode";
+import LightTunnel from "./LightTunnel";
 
 interface LinksPageClientProps {
   pageUrl: string;
@@ -17,10 +18,36 @@ export default function LinksPageClient({ pageUrl }: LinksPageClientProps) {
 
   return (
     <div className="relative min-h-screen overflow-hidden px-4 pt-24 pb-12 sm:pt-28 sm:pb-16">
-      {/* Ambient glow background */}
-      <div className="pointer-events-none absolute inset-0 -z-10">
-        <div className="absolute left-1/2 top-0 h-72 w-72 -translate-x-1/2 rounded-full bg-purple-600/30 blur-3xl" />
-        <div className="absolute bottom-0 right-1/2 h-72 w-72 translate-x-1/2 rounded-full bg-pink-600/20 blur-3xl" />
+      {/* Animated tunnel background */}
+      <div className="absolute inset-0 -z-10 bg-[#0a0118]">
+        <LightTunnel
+          cableColor="#A855F7"
+          pulseColor="#EC4899"
+          tunnelColor="#A855F7"
+          tunnelOpacity={0}
+          speed={0.1}
+          flowDirection="outward"
+          pulseSpeed={2}
+          pulseLength={0.28}
+          pulseBlend={1}
+          pulseWidth={1}
+          cableCount={20}
+          thickness={0.35}
+          rimWidth={0.15}
+          waviness={0.3}
+          sway={0.5}
+          size={1.0}
+          glow={1.0}
+          fadeNear={0.5}
+          fadeFar={2}
+          brightness={1.0}
+          colorVariance
+          grain
+          grainIntensity={0.05}
+          opacity={1.0}
+          mouseInteraction
+          mouseStrength={0.1}
+        />
       </div>
 
       <div className="mx-auto flex w-full max-w-[480px] flex-col items-center">
