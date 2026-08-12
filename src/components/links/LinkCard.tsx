@@ -28,33 +28,15 @@ export default function LinkCard({ link, index }: LinkCardProps) {
       {/* Hover glow */}
       <div className="absolute -inset-1 rounded-2xl bg-gradient-to-r from-purple-500/0 to-pink-500/0 blur-lg transition-all duration-300 -z-10 group-hover:from-purple-500/20 group-hover:to-pink-500/20" />
 
-      <div
-        className={`relative flex items-center gap-4 rounded-2xl border backdrop-blur-sm transition-all duration-300 min-h-[68px] sm:min-h-[72px] px-4 sm:px-5 ${
-          link.featured
-            ? "border-purple-400/40 bg-gradient-to-r from-purple-600/30 via-pink-600/20 to-purple-600/30 shadow-lg shadow-purple-500/20"
-            : "border-purple-500/20 bg-gradient-to-br from-purple-900/30 via-black/40 to-purple-900/20 hover:border-purple-400/40"
-        }`}
-      >
+      <div className="relative flex items-center gap-4 rounded-2xl border border-purple-500/20 bg-gradient-to-br from-purple-900/30 via-black/40 to-purple-900/20 backdrop-blur-sm transition-all duration-300 min-h-[68px] sm:min-h-[72px] px-4 sm:px-5 hover:border-purple-400/40">
         {Icon && (
-          <span
-            className={`flex h-10 w-10 sm:h-11 sm:w-11 shrink-0 items-center justify-center rounded-full ${
-              link.featured
-                ? "bg-white/15 text-white"
-                : "bg-purple-500/10 text-purple-300 group-hover:text-white group-hover:bg-purple-500/20"
-            } transition-colors duration-300`}
-          >
+          <span className="flex h-10 w-10 sm:h-11 sm:w-11 shrink-0 items-center justify-center rounded-full bg-purple-500/10 text-purple-300 transition-colors duration-300 group-hover:bg-purple-500/20 group-hover:text-white">
             <Icon className="h-5 w-5" />
           </span>
         )}
 
         <span className="min-w-0 flex-1">
-          <span
-            className={`block font-heading text-sm sm:text-base font-bold ${
-              link.featured
-                ? "bg-gradient-to-r from-white to-purple-200 bg-clip-text text-transparent"
-                : "text-white"
-            }`}
-          >
+          <span className="block font-heading text-sm sm:text-base font-bold text-white">
             {link.label}
           </span>
           {link.description && (

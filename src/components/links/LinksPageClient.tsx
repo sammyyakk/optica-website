@@ -10,6 +10,11 @@ interface LinksPageClientProps {
 }
 
 export default function LinksPageClient({ pageUrl }: LinksPageClientProps) {
+  // featured entries pin to the top; order is otherwise left as defined in links.ts
+  const orderedLinks = [...links].sort(
+    (a, b) => Number(!!b.featured) - Number(!!a.featured)
+  );
+
   return (
     <div className="relative min-h-screen overflow-hidden px-4 pt-24 pb-12 sm:pt-28 sm:pb-16">
       {/* Ambient glow background */}
@@ -40,7 +45,7 @@ export default function LinksPageClient({ pageUrl }: LinksPageClientProps) {
         </motion.div>
 
         <div className="mt-8 flex w-full flex-col gap-3 sm:gap-3.5">
-          {links.map((link, index) => (
+          {orderedLinks.map((link, index) => (
             <LinkCard key={link.slug} link={link} index={index} />
           ))}
         </div>

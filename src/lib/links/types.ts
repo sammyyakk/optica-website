@@ -13,6 +13,6 @@ export interface LinkItem {
   description?: string;
   /** icon component (lucide-react or @icons-pack/react-simple-icons) to render on the card */
   icon?: LinkIcon;
-  /** Renders a larger, highlighted card at the top of the list */
+  /** Pins the card to the top of the list, above non-featured entries */
   featured?: boolean;
 }
