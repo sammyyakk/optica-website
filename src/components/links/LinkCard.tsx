@@ -28,7 +28,7 @@ export default function LinkCard({ link, index }: LinkCardProps) {
       {/* Hover glow */}
       <div className="absolute -inset-1 rounded-2xl bg-gradient-to-r from-purple-500/0 to-pink-500/0 blur-lg transition-all duration-300 -z-10 group-hover:from-purple-500/20 group-hover:to-pink-500/20" />
 
-      <div className="relative flex items-center gap-4 rounded-2xl border border-purple-500/20 bg-gradient-to-br from-purple-900/30 via-black/40 to-purple-900/20 backdrop-blur-sm transition-all duration-300 min-h-[68px] sm:min-h-[72px] px-4 sm:px-5 hover:border-purple-400/40">
+      <div className="relative flex items-center gap-4 rounded-2xl border border-purple-500/30 bg-gradient-to-br from-purple-900/70 via-black/80 to-purple-900/60 backdrop-blur-md transition-all duration-300 min-h-[68px] sm:min-h-[72px] px-4 sm:px-5 hover:border-purple-400/50">
         {Icon && (
           <span className="flex h-10 w-10 sm:h-11 sm:w-11 shrink-0 items-center justify-center rounded-full bg-purple-500/10 text-purple-300 transition-colors duration-300 group-hover:bg-purple-500/20 group-hover:text-white">
             <Icon className="h-5 w-5" />
