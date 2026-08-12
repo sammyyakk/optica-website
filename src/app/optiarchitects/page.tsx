@@ -51,14 +51,6 @@ const designMaintainers: Maintainer[] = [
 
 const contentMaintainers: Maintainer[] = [
   {
-    name: "Prateek Sharma",
-    role: "Content & Documentation",
-    title: "Content Writer",
-    image: "/maintainers/prateek.jpeg",
-    linkedin: "https://www.linkedin.com/in/prateek-sharma-b35b96347/",
-    instagram: "https://www.instagram.com/_prateeksharma._/",
-  },
-  {
     name: "Yashika Kaushik",
     role: "Content & Documentation",
     title: "Documentation Lead",
@@ -95,15 +87,14 @@ const roleColors: Record<string, string> = {
   "Blog & Writing": "from-emerald-400 to-teal-400",
 };
 
-// All maintainers combined for horizontal row (Samyak in center - index 3 of 7)
-// Order: Khushi, Gaurangi, Dhriti, Samyak, Aastha, Yashika, Prateek
+// All maintainers combined for horizontal row (Samyak in center)
+// Order: Khushi, Gaurangi, Dhriti, Samyak, Aastha, Yashika
 const allMaintainers: Maintainer[] = [
   designMaintainers[0],
   designMaintainers[1],
   blogMaintainer,
   leadMaintainer,
   codeMaintainers[0],
-  contentMaintainers[1],
   contentMaintainers[0],
 ];
 
