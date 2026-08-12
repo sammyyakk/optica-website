@@ -46,10 +46,7 @@ export default async function ShortLinkPage({ params }: ShortLinkPageProps) {
     notFound();
   }
 
-  return (
-    <>
-      <meta httpEquiv="refresh" content={`0;url=${link.url}`} />
-      <RedirectClient url={link.url} label={link.label} />
-    </>
-  );
+  // No meta-refresh here: it can't be cancelled once the browser has it, and
+  // the whole point of the countdown is to let a visitor cancel the redirect.
+  return <RedirectClient url={link.url} label={link.label} />;
 }
