@@ -15,8 +15,6 @@ export const links: LinkItem[] = [
     url: "https://forms.google.com",
     description: "Fill out the form",
     icon: SiGoogleforms,
-    featured: true,
-    pulse: true,
   },
   {
     slug: "website",
