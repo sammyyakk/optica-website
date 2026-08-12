@@ -40,7 +40,7 @@ const siteUrl = getBaseUrl();
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "BVP Optica - Student Chapter | Optics & Photonics Society",
+    default: "BVP Optica - Student Chapter | Technical Society",
     template: "%s | BVP Optica",
   },
   description:
@@ -92,7 +92,7 @@ export const metadata: Metadata = {
     locale: "en_IN",
     url: "/",
     siteName: "BVP Optica",
-    title: "BVP Optica - Student Chapter | Optics & Photonics Society",
+    title: "BVP Optica - Student Chapter | Technical Society",
     description:
       "Join BVP Optica - the premier student chapter for optics and photonics at BVCOE Delhi. Explore workshops, events, research opportunities, and connect with like-minded innovators.",
     // No hardcoded `images` here on purpose: every route (including this
@@ -104,7 +104,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "BVP Optica - Student Chapter | Optics & Photonics",
+    title: "BVP Optica - Student Chapter | Technical Society",
     description:
       "Advancing optics and photonics through education, innovation, and global collaboration at BVCOE Delhi.",
     creator: "@bvpoptica",
