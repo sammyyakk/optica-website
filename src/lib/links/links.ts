@@ -1,4 +1,5 @@
-import { Camera, Briefcase, X, Mail, Globe } from "lucide-react";
+import { Briefcase, Mail, Globe } from "lucide-react";
+import { SiInstagram, SiX } from "@icons-pack/react-simple-icons";
 import { LinkItem } from "./types";
 
 /**
@@ -20,13 +21,14 @@ export const links: LinkItem[] = [
     label: "Instagram",
     url: "https://www.instagram.com/bvpoptica",
     description: "Photos, reels & event highlights",
-    icon: Camera,
+    icon: SiInstagram,
   },
   {
     slug: "linkedin",
     label: "LinkedIn",
     url: "https://www.linkedin.com/company/bvpoptica",
     description: "Follow our journey & opportunities",
+    // simple-icons removed the LinkedIn mark after LinkedIn's 2023 takedown request — closest generic icon instead
     icon: Briefcase,
   },
   {
@@ -34,7 +36,7 @@ export const links: LinkItem[] = [
     label: "Twitter / X",
     url: "https://twitter.com/bvpoptica",
     description: "Updates & announcements",
-    icon: X,
+    icon: SiX,
   },
   {
     slug: "email",
