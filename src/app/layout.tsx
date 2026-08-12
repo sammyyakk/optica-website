@@ -95,27 +95,18 @@ export const metadata: Metadata = {
     title: "BVP Optica - Student Chapter | Optics & Photonics Society",
     description:
       "Join BVP Optica - the premier student chapter for optics and photonics at BVCOE Delhi. Explore workshops, events, research opportunities, and connect with like-minded innovators.",
-    images: [
-      {
-        url: `${siteUrl}/glow_accent_logo.png`,
-        width: 800,
-        height: 800,
-        alt: "BVP Optica Logo",
-        type: "image/png",
-      },
-    ],
+    // No hardcoded `images` here on purpose: every route (including this
+    // root one) now ships its own opengraph-image.tsx/twitter-image.tsx.
+    // Next only auto-attaches those file-convention images when the
+    // resolved openGraph.images is empty — a hardcoded array here would be
+    // inherited by every child route that doesn't define its own
+    // `openGraph` key, silently blocking their per-page OG images.
   },
   twitter: {
     card: "summary_large_image",
     title: "BVP Optica - Student Chapter | Optics & Photonics",
     description:
       "Advancing optics and photonics through education, innovation, and global collaboration at BVCOE Delhi.",
-    images: [
-      {
-        url: `${siteUrl}/glow_accent_logo.png`,
-        alt: "BVP Optica Logo",
-      },
-    ],
     creator: "@bvpoptica",
     site: "@bvpoptica",
   },
