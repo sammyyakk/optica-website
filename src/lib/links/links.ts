@@ -20,7 +20,7 @@ export const links: LinkItem[] = [
   {
     slug: "form",
     label: "Registration Form",
-    url: "https://forms.google.com",
+    url: "https://docs.google.com/forms/d/e/1FAIpQLScopA6u4GDd47GlrxpV23GnJG_TyR6i_1YNSv4wWxelPb3KPw/viewform?usp=publish-editor",
     description: "Fill out the form",
     icon: SiGoogleforms,
     featured: true,
