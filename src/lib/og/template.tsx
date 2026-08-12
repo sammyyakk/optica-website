@@ -1,3 +1,5 @@
+import { OG_FONT_FAMILY, OG_BODY_FONT_FAMILY } from "./font";
+
 export const OG_SIZE = { width: 1200, height: 630 };
 export const OG_CONTENT_TYPE = "image/png";
 
@@ -20,7 +22,7 @@ export function ogTemplate({ eyebrow = "BVP OPTICA · FORMERLY OSA", title, desc
         justifyContent: "center",
         backgroundColor: "#030014",
         backgroundImage: "radial-gradient(circle at 50% 45%, #1a103c 0%, #030014 70%)",
-        fontFamily: "sans-serif",
+        fontFamily: OG_BODY_FONT_FAMILY,
         position: "relative",
       }}
     >
@@ -80,6 +82,7 @@ export function ogTemplate({ eyebrow = "BVP OPTICA · FORMERLY OSA", title, desc
         <div
           style={{
             display: "flex",
+            fontFamily: OG_FONT_FAMILY,
             fontSize: 22,
             fontWeight: 700,
             color: "#a855f7",
@@ -98,6 +101,7 @@ export function ogTemplate({ eyebrow = "BVP OPTICA · FORMERLY OSA", title, desc
         <div
           style={{
             display: "flex",
+            fontFamily: OG_FONT_FAMILY,
             fontSize: title.length > 26 ? 64 : 84,
             fontWeight: 900,
             background: "linear-gradient(to right, #c084fc, #f472b6, #22d3ee)",
