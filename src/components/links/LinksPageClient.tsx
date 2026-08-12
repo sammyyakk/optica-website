@@ -50,7 +50,12 @@ export default function LinksPageClient({ pageUrl }: LinksPageClientProps) {
         />
       </div>
 
-      <div className="mx-auto flex w-full max-w-[480px] flex-col items-center">
+      {/* Acrylic glass layer: frosts the tunnel so content above stays legible */}
+      <div className="pointer-events-none absolute inset-0 bg-black/10 backdrop-blur-sm" />
+
+      {/* relative so this paints above the acrylic layer despite coming first in DOM
+          (position:absolute always paints over non-positioned content otherwise) */}
+      <div className="relative mx-auto flex w-full max-w-[480px] flex-col items-center">
         <motion.div
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
