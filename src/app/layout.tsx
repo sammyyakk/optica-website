@@ -213,7 +213,7 @@ export default function RootLayout({
               hideDefaultCursor={true}
               parallaxOn={true}
               cursorColor="#A48FF5"
-              cursorColorOnTarget="#E91E63"
+              cursorColorOnTarget="#B388FF"
             />
             <Navbar />
             <main id="main-content">{children}</main>

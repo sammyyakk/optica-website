@@ -256,12 +256,14 @@ const TargetCursor: React.FC<TargetCursorProps> = ({
       if (cursorColorOnTarget) {
         gsap.to(corners, {
           borderColor: cursorColorOnTarget,
+          filter: `drop-shadow(0 0 6px ${cursorColorOnTarget}) drop-shadow(0 0 14px ${cursorColorOnTarget})`,
           duration: 0.15,
           ease: "power2.out",
         });
         if (dotRef.current) {
           gsap.to(dotRef.current, {
             backgroundColor: cursorColorOnTarget,
+            filter: `drop-shadow(0 0 6px ${cursorColorOnTarget}) drop-shadow(0 0 14px ${cursorColorOnTarget})`,
             duration: 0.15,
             ease: "power2.out",
           });
@@ -319,12 +321,14 @@ const TargetCursor: React.FC<TargetCursorProps> = ({
         if (cursorColorOnTarget && cornersRef.current) {
           gsap.to(Array.from(cornersRef.current), {
             borderColor: cursorColor,
+            filter: "none",
             duration: 0.15,
             ease: "power2.out",
           });
           if (dotRef.current) {
             gsap.to(dotRef.current, {
               backgroundColor: cursorColor,
+              filter: "none",
               duration: 0.15,
               ease: "power2.out",
             });
