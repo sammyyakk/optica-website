@@ -15,4 +15,6 @@ export interface LinkItem {
   icon?: LinkIcon;
   /** Pins the card to the top of the list, above non-featured entries */
   featured?: boolean;
+  /** Keeps the short link (bvpoptica.com/slug) working, but hides its card from /links */
+  hidden?: boolean;
 }

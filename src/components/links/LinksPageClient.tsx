@@ -11,10 +11,11 @@ interface LinksPageClientProps {
 }
 
 export default function LinksPageClient({ pageUrl }: LinksPageClientProps) {
-  // featured entries pin to the top; order is otherwise left as defined in links.ts
-  const orderedLinks = [...links].sort(
-    (a, b) => Number(!!b.featured) - Number(!!a.featured)
-  );
+  // featured entries pin to the top; hidden entries still redirect via /[slug]
+  // but are left off this page; order is otherwise left as defined in links.ts
+  const orderedLinks = links
+    .filter((link) => !link.hidden)
+    .sort((a, b) => Number(!!b.featured) - Number(!!a.featured));
 
   return (
     <div className="relative min-h-screen overflow-hidden px-4 pt-24 pb-12 sm:pt-28 sm:pb-16">
