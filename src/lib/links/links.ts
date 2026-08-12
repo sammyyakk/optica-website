@@ -1,5 +1,5 @@
 import { Briefcase, Mail, Globe } from "lucide-react";
-import { SiInstagram, SiX, SiGoogleforms } from "@icons-pack/react-simple-icons";
+import { SiInstagram, SiX, SiGoogleforms, SiWhatsapp } from "@icons-pack/react-simple-icons";
 import { LinkItem } from "./types";
 
 /**
@@ -8,6 +8,14 @@ import { LinkItem } from "./types";
  * The same list also renders the /links linktree page as cards.
  */
 export const links: LinkItem[] = [
+  {
+    slug: "whatsapp",
+    label: "Support Group",
+    url: "https://chat.whatsapp.com/Edfa3llf0vP1NaFQdKRsrr",
+    description: "Join the WhatsApp group",
+    icon: SiWhatsapp,
+    featured: true,
+  },
   // TODO: replace url with the real Google Form link, update label/description as needed
   {
     slug: "form",
