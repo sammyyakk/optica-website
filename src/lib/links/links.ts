@@ -9,7 +9,7 @@ import { LinkItem } from "./types";
  */
 export const links: LinkItem[] = [
   {
-    slug: "whatsapp",
+    slug: "support-group",
     label: "Support Group",
     url: "https://chat.whatsapp.com/Edfa3llf0vP1NaFQdKRsrr",
     description: "Join the WhatsApp group",
@@ -18,7 +18,7 @@ export const links: LinkItem[] = [
   },
   // TODO: replace url with the real Google Form link, update label/description as needed
   {
-    slug: "form",
+    slug: "recruit-form",
     label: "Registration Form",
     url: "https://docs.google.com/forms/d/e/1FAIpQLScopA6u4GDd47GlrxpV23GnJG_TyR6i_1YNSv4wWxelPb3KPw/viewform?usp=publish-editor",
     description: "Fill out the form",
