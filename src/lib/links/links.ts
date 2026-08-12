@@ -8,13 +8,22 @@ import { LinkItem } from "./types";
  * The same list also renders the /links linktree page as cards.
  */
 export const links: LinkItem[] = [
+  // TODO: replace url with the real Google Form link, update label/description as needed
+  {
+    slug: "form",
+    label: "Registration Form",
+    url: "https://forms.google.com",
+    description: "Fill out the form",
+    icon: SiGoogleforms,
+    featured: true,
+    pulse: true,
+  },
   {
     slug: "website",
     label: "Official Website",
     url: "https://www.bvpoptica.com",
     description: "Explore everything BVP Optica",
     icon: Globe,
-    featured: true,
   },
   {
     slug: "instagram",
@@ -44,14 +53,6 @@ export const links: LinkItem[] = [
     url: "mailto:bvpoptica@gmail.com",
     description: "bvpoptica@gmail.com",
     icon: Mail,
-  },
-  // TODO: replace url with the real Google Form link, update label/description as needed
-  {
-    slug: "form",
-    label: "Registration Form",
-    url: "https://forms.google.com",
-    description: "Fill out the form",
-    icon: SiGoogleforms,
   },
 ];
 

@@ -15,4 +15,6 @@ export interface LinkItem {
   icon?: LinkIcon;
   /** Renders a larger, highlighted card at the top of the list */
   featured?: boolean;
+  /** Adds a slow throbbing glow around the card to draw attention */
+  pulse?: boolean;
 }

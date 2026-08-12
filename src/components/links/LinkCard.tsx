@@ -25,8 +25,17 @@ export default function LinkCard({ link, index }: LinkCardProps) {
       whileTap={{ scale: 0.97 }}
       className="group relative block"
     >
-      {/* Glow */}
+      {/* Hover glow */}
       <div className="absolute -inset-1 rounded-2xl bg-gradient-to-r from-purple-500/0 to-pink-500/0 blur-lg transition-all duration-300 -z-10 group-hover:from-purple-500/20 group-hover:to-pink-500/20" />
+
+      {/* Throbbing glow */}
+      {link.pulse && (
+        <motion.div
+          animate={{ opacity: [0.35, 0.85, 0.35], scale: [1, 1.04, 1] }}
+          transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute -inset-1.5 rounded-2xl bg-gradient-to-r from-purple-500 to-pink-500 blur-xl -z-10"
+        />
+      )}
 
       <div
         className={`relative flex items-center gap-4 rounded-2xl border backdrop-blur-sm transition-all duration-300 min-h-[68px] sm:min-h-[72px] px-4 sm:px-5 ${
