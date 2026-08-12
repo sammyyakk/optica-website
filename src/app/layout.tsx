@@ -4,7 +4,7 @@ import "./globals.css";
 import { AnimationProvider } from "@/lib/animations/AnimationProvider";
 import { ThemeProvider } from "@/lib/theme/ThemeProvider";
 import Navbar from "@/components/layout/Navbar";
-import CustomCursor from "@/components/ui/CustomCursor";
+import TargetCursor from "@/components/ui/TargetCursor";
 
 const poppins = Poppins({
   weight: ["600", "700"],
@@ -207,7 +207,14 @@ export default function RootLayout({
       <body className="font-body antialiased bg-optica-black text-text-primary transition-colors duration-300 md:cursor-none overflow-x-hidden">
         <ThemeProvider>
           <AnimationProvider>
-            <CustomCursor />
+            <TargetCursor
+              targetSelector='a, button, [data-cursor-hover], input[type="button"], input[type="submit"]'
+              spinDuration={2}
+              hideDefaultCursor={true}
+              parallaxOn={true}
+              cursorColor="#A48FF5"
+              cursorColorOnTarget="#E91E63"
+            />
             <Navbar />
             <main id="main-content">{children}</main>
           </AnimationProvider>
