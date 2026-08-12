@@ -1,5 +1,5 @@
-import { ImageResponse } from "next/og";
 import { ogTemplate, OG_SIZE, OG_CONTENT_TYPE } from "@/lib/og/template";
+import { renderOgImage } from "@/lib/og/render";
 import { getLinkBySlug } from "@/lib/links/links";
 
 export const size = OG_SIZE;
@@ -13,12 +13,11 @@ export default async function Image({ params }: ShortLinkImageProps) {
   const { slug } = await params;
   const link = getLinkBySlug(slug);
 
-  return new ImageResponse(
+  return renderOgImage(
     ogTemplate({
       eyebrow: "BVP OPTICA",
       title: link?.label ?? "Link Not Found",
       description: link?.description,
     }),
-    { ...size },
   );
 }
