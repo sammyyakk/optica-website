@@ -1,5 +1,5 @@
 import { Briefcase, Mail, Globe } from "lucide-react";
-import { SiInstagram, SiX } from "@icons-pack/react-simple-icons";
+import { SiInstagram, SiX, SiGoogleforms } from "@icons-pack/react-simple-icons";
 import { LinkItem } from "./types";
 
 /**
@@ -44,6 +44,14 @@ export const links: LinkItem[] = [
     url: "mailto:bvpoptica@gmail.com",
     description: "bvpoptica@gmail.com",
     icon: Mail,
+  },
+  // TODO: replace url with the real Google Form link, update label/description as needed
+  {
+    slug: "form",
+    label: "Registration Form",
+    url: "https://forms.google.com",
+    description: "Fill out the form",
+    icon: SiGoogleforms,
   },
 ];
 

@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { motion } from "motion/react";
 import { links } from "@/lib/links/links";
 import LinkCard from "./LinkCard";
@@ -12,7 +11,7 @@ interface LinksPageClientProps {
 
 export default function LinksPageClient({ pageUrl }: LinksPageClientProps) {
   return (
-    <div className="relative min-h-screen overflow-hidden px-4 py-12 sm:py-16">
+    <div className="relative min-h-screen overflow-hidden px-4 pt-24 pb-12 sm:pt-28 sm:pb-16">
       {/* Ambient glow background */}
       <div className="pointer-events-none absolute inset-0 -z-10">
         <div className="absolute left-1/2 top-0 h-72 w-72 -translate-x-1/2 rounded-full bg-purple-600/30 blur-3xl" />
@@ -26,19 +25,7 @@ export default function LinksPageClient({ pageUrl }: LinksPageClientProps) {
           transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
           className="flex flex-col items-center text-center"
         >
-          <div className="relative h-20 w-20 sm:h-24 sm:w-24">
-            <Image
-              src="/logo_dark.png"
-              alt="BVP Optica"
-              fill
-              className="object-contain"
-              priority
-            />
-          </div>
-          <h1 className="mt-4 font-heading text-xl sm:text-2xl font-bold text-white">
-            BVP Optica
-          </h1>
-          <p className="mt-1 max-w-xs text-sm text-gray-400">
+          <p className="max-w-xs text-sm text-gray-400">
             Everything you need, one tap away.
           </p>
         </motion.div>
