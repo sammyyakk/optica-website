@@ -67,7 +67,7 @@ export const links: LinkItem[] = [
     url: "https://docs.google.com/forms/d/e/1FAIpQLSdvd8cgANpHcN5NO_t7EkmrejkuorWY2i1y3RU7T8PHcDrXzg/viewform?usp=publish-editor",
     description: "Fill out the form",
     icon: SiGoogleforms,
-    featured: true,
+    hidden: true,
   },
   {
     slug: "exe-group",
@@ -75,7 +75,7 @@ export const links: LinkItem[] = [
     url: "https://chat.whatsapp.com/KnsdZEtgSTd6YOFaFIdRYj",
     description: "Join the WhatsApp group",
     icon: SiWhatsapp,
-    featured: true,
+    hidden: true,
   },
 ];
 export function getLinkBySlug(slug: string): LinkItem | undefined {
