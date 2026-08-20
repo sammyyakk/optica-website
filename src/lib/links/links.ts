@@ -9,6 +9,14 @@ import { LinkItem } from "./types";
  */
 export const links: LinkItem[] = [
   {
+    slug: "lazer-maze",
+    label: "Lazer Maze Registration",
+    url: "https://docs.google.com/forms/d/e/1FAIpQLSd65N3rEaPaZKJas9eW_ezDgEUlOzgRiENDufrnFMhoT_IviQ/viewform?usp=sharing&ouid=111037891284471367457",
+    description: "Join the fun!",
+    icon: SiGoogleforms,
+    featured: true,
+  },
+  {
     slug: "support-group",
     label: "Support Group",
     url: "https://chat.whatsapp.com/Edfa3llf0vP1NaFQdKRsrr",
