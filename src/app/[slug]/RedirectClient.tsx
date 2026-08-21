@@ -18,7 +18,15 @@ export default function RedirectClient({ url, label }: RedirectClientProps) {
     if (cancelled) return;
 
     intervalRef.current = setInterval(() => {
-      setSecondsLeft((prev) => prev - 1);
+      setSecondsLeft((prev) => {
+        if (prev <= 1) {
+          if (intervalRef.current) {
+            clearInterval(intervalRef.current);
+          }
+          return 0;
+        }
+        return prev - 1;
+      });
     }, 1000);
 
     return () => {
