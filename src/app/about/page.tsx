@@ -36,7 +36,7 @@ export default function AboutPage() {
     {
       title: "Workshops & Seminars",
       description:
-        "Interactive sessions with industry experts covering AI, ML, cybersecurity, robotics, blockchain, optics, and everything in between.",
+        "Interactive sessions with industry experts covering AI, ML, MLOps, cybersecurity, robotics, blockchain, cloud, AR/VR, IoT, optics, and everything in between.",
       icon: "🎓",
       color: "from-purple-400 to-pink-400",
     },
@@ -96,9 +96,10 @@ export default function AboutPage() {
               About BVP Optica
             </h1>
             <p className="text-gray-400 text-sm sm:text-base md:text-lg max-w-2xl mx-auto leading-relaxed px-2">
-              Igniting passion for all things tech - AI, ML, cybersecurity,
-              robotics, blockchain, and optics - through education,
-              innovation, and global collaboration.
+              Igniting passion for all things tech - AI, ML, MLOps,
+              cybersecurity, robotics, blockchain, cloud, AR/VR, IoT, and
+              optics - through education, innovation, and global
+              collaboration.
             </p>
           </AnimatedSection>
 
@@ -112,12 +113,12 @@ export default function AboutPage() {
                     Our Mission
                   </h2>
                   <p className="text-gray-300 text-sm leading-relaxed">
-                    To advance every frontier of technology - AI, ML,
-                    cybersecurity, robotics, blockchain, optics, and beyond -
-                    by providing students with opportunities for learning,
-                    research, and collaboration. We strive to create a
-                    community where innovation thrives and members can
-                    explore cutting-edge technologies.
+                    To advance every frontier of technology - AI, ML, MLOps,
+                    cybersecurity, robotics, blockchain, cloud, AR/VR, IoT,
+                    optics, and beyond - by providing students with
+                    opportunities for learning, research, and collaboration.
+                    We strive to create a community where innovation thrives
+                    and members can explore cutting-edge technologies.
                   </p>
                 </div>
               </div>
@@ -135,8 +136,8 @@ export default function AboutPage() {
                     campus, empowering the next generation of technologists
                     and engineers. We envision a future where our members
                     contribute significantly to advancements across AI, ML,
-                    cybersecurity, robotics, blockchain, optics, and every
-                    frontier of tech, globally.
+                    MLOps, cybersecurity, robotics, blockchain, cloud,
+                    AR/VR, IoT, optics, and every frontier of tech, globally.
                   </p>
                 </div>
               </div>

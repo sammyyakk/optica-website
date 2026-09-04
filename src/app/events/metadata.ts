@@ -15,13 +15,16 @@ const siteUrl = getBaseUrl();
 export const metadata: Metadata = {
   title: "Events",
   description:
-    "Explore upcoming and past events by BVP Optica - workshops, seminars, hackathons, and more. Join us for exciting learning opportunities across AI, ML, cybersecurity, robotics, blockchain, optics, and cutting-edge technology.",
+    "Explore upcoming and past events by BVP Optica - workshops, seminars, hackathons, and more. Join us for exciting learning opportunities across AI, ML, MLOps, cybersecurity, robotics, blockchain, cloud, AR/VR, IoT, optics, and cutting-edge technology.",
   keywords: [
     "BVP Optica events",
     "tech workshops",
     "AI ML events",
+    "MLOps events",
     "cybersecurity workshops",
     "robotics events",
+    "blockchain events",
+    "cloud computing events",
     "optics workshops",
     "photonics seminars",
     "Delhi college events",
@@ -34,7 +37,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Events | BVP Optica - Workshops, Seminars & More",
     description:
-      "Discover exciting events by BVP Optica - workshops, seminars, hackathons, and networking opportunities across AI, ML, cybersecurity, robotics, blockchain, and optics.",
+      "Discover exciting events by BVP Optica - workshops, seminars, hackathons, and networking opportunities across AI, ML, MLOps, cybersecurity, robotics, blockchain, cloud, AR/VR, IoT, and optics.",
     url: `${siteUrl}/events`,
     images: [
       {

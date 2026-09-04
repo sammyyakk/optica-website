@@ -15,13 +15,16 @@ const siteUrl = getBaseUrl();
 export const metadata: Metadata = {
   title: "Blog",
   description:
-    "Read the latest articles from BVP Optica — stories, tutorials, event recaps, research highlights, and insights spanning AI, ML, cybersecurity, robotics, blockchain, and optics.",
+    "Read the latest articles from BVP Optica — stories, tutorials, event recaps, research highlights, and insights spanning AI, ML, MLOps, cybersecurity, robotics, blockchain, cloud, AR/VR, IoT, and optics.",
   keywords: [
     "BVP Optica blog",
     "tech articles",
     "AI ML tutorials",
+    "MLOps articles",
     "cybersecurity articles",
     "robotics blog",
+    "blockchain articles",
+    "cloud computing articles",
     "optics articles",
     "photonics tutorials",
     "student chapter blog",
@@ -33,7 +36,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Blog | BVP Optica",
     description:
-      "Read the latest articles from BVP Optica — stories, tutorials, event recaps, research highlights, and insights spanning AI, ML, cybersecurity, robotics, blockchain, and optics.",
+      "Read the latest articles from BVP Optica — stories, tutorials, event recaps, research highlights, and insights spanning AI, ML, MLOps, cybersecurity, robotics, blockchain, cloud, AR/VR, IoT, and optics.",
     url: `${siteUrl}/blog`,
     siteName: "BVP Optica",
     locale: "en_IN",

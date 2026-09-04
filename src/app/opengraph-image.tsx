@@ -9,7 +9,7 @@ export default async function Image() {
     ogTemplate({
       title: "All Things Tech, Reimagined",
       description:
-        "Student tech chapter building across AI, ML, cybersecurity, robotics, blockchain, and optics through education, innovation, and global collaboration.",
+        "Student tech chapter building across AI, ML, MLOps, cybersecurity, robotics, blockchain, cloud, AR/VR, IoT, and optics through education, innovation, and global collaboration.",
       tags: ["Workshops", "Research", "Innovation"],
     }),
   );

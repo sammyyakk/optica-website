@@ -319,8 +319,8 @@ export default function BlogListClient({
             </h1>
             <p className="text-gray-400 max-w-2xl mx-auto text-sm sm:text-base">
               Stories, insights, tutorials, and updates spanning AI, ML,
-              cybersecurity, robotics, blockchain, optics, and our vibrant
-              student community.
+              MLOps, cybersecurity, robotics, blockchain, cloud, AR/VR, IoT,
+              optics, and our vibrant student community.
             </p>
           </AnimatedSection>
 

@@ -18,7 +18,7 @@ export default function LifeAsMemberSection() {
     {
       title: "Expert Webinars",
       description:
-        "Participate in webinars led by global experts in AI, ML, cybersecurity, robotics, blockchain, and optics",
+        "Participate in webinars led by global experts in AI, ML, MLOps, cybersecurity, robotics, blockchain, cloud, AR/VR, IoT, and optics",
       color: "from-pink-400 to-orange-400",
       icon: "🎤",
     },

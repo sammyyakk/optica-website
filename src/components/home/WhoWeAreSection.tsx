@@ -58,7 +58,8 @@ export default function WhoWeAreSection() {
         >
           BVP-OPTICA is the coolest tech chapter at Bharati Vidyapeeth&apos;s
           College of Engineering, committed to building across AI, ML,
-          cybersecurity, robotics, blockchain, optics, and everything tech.
+          MLOps, cybersecurity, robotics, blockchain, cloud, AR/VR, IoT,
+          optics, and everything tech.
           By joining us, you become part of a global network with international
           research opportunities, exclusive access to journals, and exciting
           events. Our mission is to ignite a passion for these fields through
