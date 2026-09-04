@@ -35,7 +35,7 @@ export async function GET() {
   lines.push("# BVP Optica");
   lines.push("");
   lines.push(
-    "> Student chapter of Optica (formerly OSA — the Optical Society of America) at Bharati Vidyapeeth's College of Engineering (BVCOE), New Delhi. Advances optics and photonics through workshops, seminars, research, ideathons, and community events, as part of Optica's global network of student chapters.",
+    "> Student tech chapter at Bharati Vidyapeeth's College of Engineering (BVCOE), New Delhi, and Optica's (formerly OSA — the Optical Society of America) chapter on campus. Builds and innovates across AI, machine learning, MLOps, cybersecurity, robotics, blockchain, cloud computing, AR/VR, IoT, and optics through workshops, seminars, research, ideathons, and community events, as part of Optica's global network of student chapters.",
   );
   lines.push("");
   lines.push(

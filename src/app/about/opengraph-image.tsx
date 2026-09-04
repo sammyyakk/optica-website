@@ -9,7 +9,7 @@ export default async function Image() {
     ogTemplate({
       title: "About BVP Optica",
       description:
-        "Advancing optics and photonics through workshops, seminars, and hands-on innovation at BVCOE Delhi.",
+        "Building across AI, ML, MLOps, cybersecurity, robotics, blockchain, cloud, AR/VR, IoT, and optics through workshops, seminars, and hands-on innovation at BVCOE Delhi.",
       tags: ["Workshops", "Seminars", "Community"],
     }),
   );

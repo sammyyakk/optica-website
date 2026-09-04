@@ -781,8 +781,9 @@ export default function Hero3D() {
           variants={itemVariants}
           className="mt-4 sm:mt-6 max-w-3xl text-balance text-sm sm:text-base md:text-lg lg:text-xl text-white/90"
         >
-          Explore the world of optics, photonics, and quantum technology with
-          the BVP Optica student chapter.
+          Explore the world of AI, ML, MLOps, cybersecurity, robotics,
+          blockchain, cloud, AR/VR, IoT, and optics with the BVP Optica
+          student chapter.
         </motion.p>
         <motion.div
           variants={itemVariants}

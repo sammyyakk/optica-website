@@ -7,9 +7,9 @@ export const contentType = OG_CONTENT_TYPE;
 export default async function Image() {
   return renderOgImage(
     ogTemplate({
-      title: "Optics & Photonics, Reimagined",
+      title: "All Things Tech, Reimagined",
       description:
-        "Student chapter advancing optics and photonics through education, innovation, and global collaboration.",
+        "Student tech chapter building across AI, ML, MLOps, cybersecurity, robotics, blockchain, cloud, AR/VR, IoT, and optics through education, innovation, and global collaboration.",
       tags: ["Workshops", "Research", "Innovation"],
     }),
   );

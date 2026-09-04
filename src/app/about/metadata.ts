@@ -15,11 +15,20 @@ const siteUrl = getBaseUrl();
 export const metadata: Metadata = {
   title: "About Us",
   description:
-    "Learn about BVP Optica - the student chapter of Optica at Bharati Vidyapeeth's College of Engineering, Delhi. Discover our mission, vision, activities, and journey in advancing optics and photonics.",
+    "Learn about BVP Optica - the coolest tech chapter at Bharati Vidyapeeth's College of Engineering, Delhi. Discover our mission, vision, activities, and journey across AI, ML, MLOps, cybersecurity, robotics, blockchain, cloud, AR/VR, IoT, and optics.",
   keywords: [
     "about BVP Optica",
     "Optica student chapter",
     "BVCOE Delhi",
+    "tech club Delhi",
+    "AI ML club",
+    "MLOps",
+    "cybersecurity club",
+    "robotics club",
+    "blockchain club",
+    "cloud computing",
+    "AR VR club",
+    "IoT club",
     "optics society",
     "photonics club",
     "student organization",
@@ -29,7 +38,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "About BVP Optica | Our Mission & Vision",
     description:
-      "Discover our mission to advance optics and photonics through education, innovation, and global collaboration. Join the premier student chapter at BVCOE Delhi.",
+      "Discover our mission to build and innovate across AI, ML, MLOps, cybersecurity, robotics, blockchain, cloud, AR/VR, IoT, and optics through education, innovation, and global collaboration. Join the coolest tech chapter at BVCOE Delhi.",
     url: `${siteUrl}/about`,
     images: [
       {
@@ -43,7 +52,7 @@ export const metadata: Metadata = {
   twitter: {
     title: "About BVP Optica | Our Mission & Vision",
     description:
-      "Discover our mission to advance optics and photonics through education, innovation, and global collaboration.",
+      "Discover our mission to build and innovate across AI, ML, MLOps, cybersecurity, robotics, blockchain, cloud, AR/VR, IoT, and optics through education, innovation, and global collaboration.",
     images: [
       {
         url: `${siteUrl}/glow_accent_logo.png`,

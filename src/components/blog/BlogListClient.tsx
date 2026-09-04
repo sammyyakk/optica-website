@@ -318,8 +318,9 @@ export default function BlogListClient({
               BVP Optica Blog
             </h1>
             <p className="text-gray-400 max-w-2xl mx-auto text-sm sm:text-base">
-              Stories, insights, tutorials, and updates from the world of
-              optics, photonics, and our vibrant student community.
+              Stories, insights, tutorials, and updates spanning AI, ML,
+              MLOps, cybersecurity, robotics, blockchain, cloud, AR/VR, IoT,
+              optics, and our vibrant student community.
             </p>
           </AnimatedSection>
 
