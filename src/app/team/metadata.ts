@@ -15,11 +15,14 @@ const siteUrl = getBaseUrl();
 export const metadata: Metadata = {
   title: "Our Team",
   description:
-    "Meet the passionate team behind BVP Optica - our core team, department heads, and dedicated members driving innovation in optics and photonics at BVCOE Delhi.",
+    "Meet the passionate team behind BVP Optica - our core team, department heads, and dedicated members driving innovation across AI, ML, cybersecurity, robotics, blockchain, and optics at BVCOE Delhi.",
   keywords: [
     "BVP Optica team",
     "student leaders",
     "BVCOE students",
+    "tech club members",
+    "AI ML team",
+    "cybersecurity team",
     "optics club members",
     "photonics society team",
     "engineering student leaders",
@@ -28,7 +31,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Our Team | BVP Optica - Meet the Innovators",
     description:
-      "Meet the passionate team behind BVP Optica - dedicated students driving innovation in optics and photonics at BVCOE Delhi.",
+      "Meet the passionate team behind BVP Optica - dedicated students driving innovation across AI, ML, cybersecurity, robotics, blockchain, and optics at BVCOE Delhi.",
     url: `${siteUrl}/team`,
     images: [
       {
@@ -42,7 +45,7 @@ export const metadata: Metadata = {
   twitter: {
     title: "Our Team | BVP Optica - Meet the Innovators",
     description:
-      "Meet the passionate team behind BVP Optica - dedicated students driving innovation in optics and photonics.",
+      "Meet the passionate team behind BVP Optica - dedicated students driving innovation across AI, ML, cybersecurity, robotics, blockchain, and optics.",
     images: [
       {
         url: `${siteUrl}/glow_accent_logo.png`,

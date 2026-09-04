@@ -44,10 +44,16 @@ export const metadata: Metadata = {
     template: "%s | BVP Optica",
   },
   description:
-    "Official website of BVP Optica student chapter at Bharati Vidyapeeth's College of Engineering, Delhi. Join us in advancing optics and photonics through education, innovation, workshops, and global collaboration.",
+    "Official website of BVP Optica - the coolest tech chapter at Bharati Vidyapeeth's College of Engineering, Delhi. From AI/ML and cybersecurity to robotics, blockchain, and optics, we build, hack, and innovate across all things tech.",
   keywords: [
     "BVP Optica",
     "Optica student chapter",
+    "tech club Delhi",
+    "AI",
+    "machine learning",
+    "cybersecurity",
+    "robotics",
+    "blockchain",
     "optics",
     "photonics",
     "BVCOE",
@@ -94,7 +100,7 @@ export const metadata: Metadata = {
     siteName: "BVP Optica",
     title: "BVP Optica - Student Chapter | Technical Society",
     description:
-      "Join BVP Optica - the premier student chapter for optics and photonics at BVCOE Delhi. Explore workshops, events, research opportunities, and connect with like-minded innovators.",
+      "Join BVP Optica - BVCOE Delhi's coolest tech chapter. We dive into AI, ML, cybersecurity, robotics, blockchain, optics, and everything in between. Explore workshops, events, research opportunities, and connect with like-minded innovators.",
     // No hardcoded `images` here on purpose: every route (including this
     // root one) now ships its own opengraph-image.tsx/twitter-image.tsx.
     // Next only auto-attaches those file-convention images when the
@@ -106,7 +112,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "BVP Optica - Student Chapter | Technical Society",
     description:
-      "Advancing optics and photonics through education, innovation, and global collaboration at BVCOE Delhi.",
+      "BVCOE Delhi's coolest tech chapter - AI, ML, cybersecurity, robotics, blockchain, optics, and everything tech, all in one club.",
     creator: "@bvpoptica",
     site: "@bvpoptica",
   },
@@ -153,7 +159,7 @@ const jsonLd = {
   url: "https://www.bvpoptica.com",
   logo: "https://www.bvpoptica.com/glow_accent_logo.png",
   description:
-    "Official student chapter of Optica at Bharati Vidyapeeth's College of Engineering, Delhi. Advancing optics and photonics through education, innovation, and global collaboration.",
+    "Official student tech chapter at Bharati Vidyapeeth's College of Engineering, Delhi. Building and innovating across AI, ML, cybersecurity, robotics, blockchain, optics, and everything tech.",
   email: "bvpoptica@gmail.com",
   address: {
     "@type": "PostalAddress",
