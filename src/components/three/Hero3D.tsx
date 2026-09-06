@@ -791,7 +791,7 @@ export default function Hero3D() {
         >
           <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.96 }}>
             <a
-              href="https://www.optica.org/membership/join/individual/"
+              href="https://www.optica.org/get_involved/students/"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex min-w-[140px] sm:min-w-[180px] items-center justify-center rounded-button bg-[#A890FF] px-5 sm:px-8 py-2.5 sm:py-3 font-accent text-sm sm:text-base font-semibold text-white shadow-[0_24px_60px_-24px_rgba(168,144,255,0.95)] transition-all duration-300 hover:shadow-[0_40px_80px_-24px_rgba(168,144,255,1.2)] hover:bg-[#9A80F0]"
