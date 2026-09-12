@@ -15,7 +15,7 @@ interface ShortLinkPageProps {
 // the client-side redirect below.
 export async function generateMetadata({ params }: ShortLinkPageProps): Promise<Metadata> {
   const { slug } = await params;
-  const link = getLinkBySlug(slug);
+  const link = await getLinkBySlug(slug);
 
   if (!link) {
     return { title: "Link Not Found | BVP Optica" };
@@ -40,7 +40,7 @@ export async function generateMetadata({ params }: ShortLinkPageProps): Promise<
 
 export default async function ShortLinkPage({ params }: ShortLinkPageProps) {
   const { slug } = await params;
-  const link = getLinkBySlug(slug);
+  const link = await getLinkBySlug(slug);
 
   if (!link) {
     notFound();

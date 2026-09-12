@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { getBaseUrl } from "@/lib/utils";
+import { getLinks } from "@/lib/links/links";
 import LinksPageClient from "@/components/links/LinksPageClient";
 
 export const metadata: Metadata = {
@@ -11,8 +12,9 @@ export const metadata: Metadata = {
   },
 };
 
-export default function LinksPage() {
+export default async function LinksPage() {
   const pageUrl = `${getBaseUrl()}/links`;
+  const links = await getLinks();
 
-  return <LinksPageClient pageUrl={pageUrl} />;
+  return <LinksPageClient pageUrl={pageUrl} links={links} />;
 }

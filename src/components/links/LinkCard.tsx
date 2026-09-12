@@ -3,6 +3,7 @@
 import { motion } from "motion/react";
 import { ArrowUpRight } from "lucide-react";
 import { LinkItem } from "@/lib/links/types";
+import { resolveIcon } from "@/lib/links/icons";
 
 interface LinkCardProps {
   link: LinkItem;
@@ -10,7 +11,7 @@ interface LinkCardProps {
 }
 
 export default function LinkCard({ link, index }: LinkCardProps) {
-  const Icon = link.icon;
+  const Icon = resolveIcon(link.icon);
   const isExternal = !link.url.startsWith("mailto:") && !link.url.startsWith("tel:");
 
   return (

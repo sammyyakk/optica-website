@@ -11,7 +11,7 @@ interface ShortLinkImageProps {
 
 export default async function Image({ params }: ShortLinkImageProps) {
   const { slug } = await params;
-  const link = getLinkBySlug(slug);
+  const link = await getLinkBySlug(slug);
 
   return renderOgImage(
     ogTemplate({

@@ -1,6 +1,7 @@
 import { getAllEvents, getUpcomingEvents, getFeaturedEvents } from "@/lib/events/events";
 import { getAllPosts } from "@/lib/blog/posts";
-import { links as shortLinks } from "@/lib/links/links";
+import { getLinks } from "@/lib/links/links";
+import { LinkItem } from "@/lib/links/types";
 import { getBaseUrl } from "@/lib/utils";
 
 export const revalidate = 3600;
@@ -11,11 +12,12 @@ function formatDate(iso: string) {
 
 export async function GET() {
   const siteUrl = getBaseUrl();
-  const [allEvents, upcomingEvents, featuredEvents, posts] = await Promise.all([
+  const [allEvents, upcomingEvents, featuredEvents, posts, shortLinks] = await Promise.all([
     getAllEvents(),
     getUpcomingEvents(),
     getFeaturedEvents(),
     Promise.resolve(getAllPosts()),
+    getLinks(),
   ]);
 
   // Upcoming events take priority; fill remaining slots with featured past
@@ -28,7 +30,9 @@ export async function GET() {
 
   const recentPosts = posts.slice(0, 8);
 
-  const socialBySlug = Object.fromEntries(shortLinks.map((link) => [link.slug, link]));
+  const socialBySlug = Object.fromEntries(
+    shortLinks.map((link: LinkItem) => [link.slug, link])
+  );
 
   const lines: string[] = [];
 

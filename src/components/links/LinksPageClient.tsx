@@ -1,21 +1,20 @@
 "use client";
 
 import { motion } from "motion/react";
-import { links } from "@/lib/links/links";
+import { LinkItem } from "@/lib/links/types";
 import LinkCard from "./LinkCard";
 import LinkQrCode from "./LinkQrCode";
 import LightTunnel from "./LightTunnel";
 
 interface LinksPageClientProps {
   pageUrl: string;
+  links: LinkItem[];
 }
 
-export default function LinksPageClient({ pageUrl }: LinksPageClientProps) {
-  // featured entries pin to the top; hidden entries still redirect via /[slug]
-  // but are left off this page; order is otherwise left as defined in links.ts
-  const orderedLinks = links
-    .filter((link) => !link.hidden)
-    .sort((a, b) => Number(!!b.featured) - Number(!!a.featured));
+export default function LinksPageClient({ pageUrl, links }: LinksPageClientProps) {
+  // caller (the /links server page) already fetches non-hidden links in
+  // featured-first order, so no filtering/sorting is needed here
+  const orderedLinks = links;
 
   return (
     <div className="relative min-h-screen overflow-hidden px-4 pt-24 pb-12 sm:pt-28 sm:pb-16">
