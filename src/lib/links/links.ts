@@ -1,5 +1,5 @@
-import { Video } from "lucide-react";
-import { SiWhatsapp } from "@icons-pack/react-simple-icons";
+import { Briefcase, Mail, Globe } from "lucide-react";
+import { SiInstagram, SiX, SiGoogleforms, SiWhatsapp } from "@icons-pack/react-simple-icons";
 import { LinkItem } from "./types";
 
 /**
@@ -9,6 +9,14 @@ import { LinkItem } from "./types";
  */
 export const links: LinkItem[] = [
   {
+    slug: "lazer-maze",
+    label: "Lazer Maze Registration",
+    url: "https://docs.google.com/forms/d/e/1FAIpQLSd65N3rEaPaZKJas9eW_ezDgEUlOzgRiENDufrnFMhoT_IviQ/viewform?usp=sharing&ouid=111037891284471367457",
+    description: "Join the fun!",
+    icon: SiGoogleforms,
+    featured: true,
+  },
+  {
     slug: "support-group",
     label: "Support Group",
     url: "https://chat.whatsapp.com/Edfa3llf0vP1NaFQdKRsrr",
@@ -16,68 +24,66 @@ export const links: LinkItem[] = [
     icon: SiWhatsapp,
     featured: true,
   },
+  // TODO: replace url with the real Google Form link, update label/description as needed
   {
-    slug: "panel1",
-    label: "Panel 1",
-    url: "https://meet.google.com/chx-bzwz-cgu?hs=224",
-    description: "Anand",
-    icon: Video,
+    slug: "recruit-form",
+    label: "Registration Form",
+    url: "https://docs.google.com/forms/d/e/1FAIpQLScopA6u4GDd47GlrxpV23GnJG_TyR6i_1YNSv4wWxelPb3KPw/viewform?usp=publish-editor",
+    description: "Fill out the form",
+    icon: SiGoogleforms,
+    featured: true,
   },
   {
-    slug: "panel2_am",
-    label: "Panel 2 (AM)",
-    url: "https://meet.google.com/jud-pohj-iwr",
-    description: "Samyak",
-    icon: Video,
+    slug: "website",
+    label: "Official Website",
+    url: "https://www.bvpoptica.com",
+    description: "Explore everything BVP Optica",
+    icon: Globe,
   },
   {
-    slug: "panel2_pm",
-    label: "Panel 2 (PM)",
-    url: "https://meet.google.com/wue-pwse-bfu",
-    description: "Akshat",
-    icon: Video,
+    slug: "instagram",
+    label: "Instagram",
+    url: "https://www.instagram.com/bvpoptica",
+    description: "Photos, reels & event highlights",
+    icon: SiInstagram,
   },
   {
-    slug: "panel3_am",
-    label: "Panel 3 (AM)",
-    url: "https://meet.google.com/wue-pwse-bfu",
-    description: "Akshat",
-    icon: Video,
+    slug: "linkedin",
+    label: "LinkedIn",
+    url: "https://www.linkedin.com/company/bvp-optica/",
+    description: "Follow our journey & opportunities",
+    // simple-icons removed the LinkedIn mark after LinkedIn's 2023 takedown request — closest generic icon instead
+    icon: Briefcase,
   },
   {
-    slug: "panel3_pm",
-    label: "Panel 3 (PM)",
-    url: "https://meet.google.com/jud-pohj-iwr",
-    description: "Samyak",
-    icon: Video,
+    slug: "twitter",
+    label: "Twitter / X",
+    url: "https://twitter.com/bvpoptica",
+    description: "Updates & announcements",
+    icon: SiX,
   },
   {
-    slug: "panel4",
-    label: "Panel 4",
-    url: "https://meet.google.com/eay-wvjy-uxs",
-    description: "Gaurav",
-    icon: Video,
+    slug: "email",
+    label: "Email Us",
+    url: "mailto:bvpoptica@gmail.com",
+    description: "bvpoptica@gmail.com",
+    icon: Mail,
   },
   {
-    slug: "panel5",
-    label: "Panel 5",
-    url: "https://meet.google.com/wod-smic-xvn",
-    description: "Pratham",
-    icon: Video,
+    slug: "continuation-form",
+    label: "Continuation Form",
+    url: "https://docs.google.com/forms/d/e/1FAIpQLSdvd8cgANpHcN5NO_t7EkmrejkuorWY2i1y3RU7T8PHcDrXzg/viewform?usp=publish-editor",
+    description: "Fill out the form",
+    icon: SiGoogleforms,
+    hidden: true,
   },
   {
-    slug: "panel6",
-    label: "Panel 6",
-    url: "https://meet.google.com/qbf-ysbj-muz",
-    description: "Simran",
-    icon: Video,
-  },
-  {
-    slug: "panel7",
-    label: "Panel 7",
-    url: "https://meet.google.com/vus-ojyz-uhz",
-    description: "Avni",
-    icon: Video,
+    slug: "exe-group",
+    label: "Executive Group 26",
+    url: "https://chat.whatsapp.com/KnsdZEtgSTd6YOFaFIdRYj",
+    description: "Join the WhatsApp group",
+    icon: SiWhatsapp,
+    hidden: true,
   },
 ];
 export function getLinkBySlug(slug: string): LinkItem | undefined {
