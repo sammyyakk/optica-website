@@ -2,6 +2,11 @@ import { NextRequest, NextResponse } from "next/server";
 import { createLink, getAllLinks } from "@/lib/links/db";
 import { LinkInput } from "@/lib/links/types";
 
+// GET route handlers are static-cacheable by default when they don't touch a
+// dynamic API — this one just reads the DB, so without this it could get
+// cached and admin edits would stop showing up in the list.
+export const dynamic = "force-dynamic";
+
 export async function GET() {
   const links = await getAllLinks();
   return NextResponse.json({ links });
