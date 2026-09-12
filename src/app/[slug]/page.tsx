@@ -7,6 +7,10 @@ interface ShortLinkPageProps {
   params: Promise<{ slug: string }>;
 }
 
+// Same reasoning as /links/page.tsx — links are edited live from /admin, so
+// this must re-read the DB per request instead of getting baked in at build.
+export const dynamic = "force-dynamic";
+
 // A plain redirect() aborts rendering before the <head> is ever built, so a
 // share/unfurl bot fetching the short link would never see custom OG tags —
 // it'd just see the raw 307. Rendering a branded interstitial instead (with

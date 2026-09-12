@@ -4,6 +4,7 @@ import { getLinkBySlug } from "@/lib/links/links";
 
 export const size = OG_SIZE;
 export const contentType = OG_CONTENT_TYPE;
+export const dynamic = "force-dynamic";
 
 interface ShortLinkImageProps {
   params: Promise<{ slug: string }>;
