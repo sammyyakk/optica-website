@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, useInView, AnimatePresence } from "motion/react";
-import { useRef, useState, useMemo } from "react";
+import { useRef, useState, useMemo, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { FixedParticleBackground } from "@/components/ui/FixedParticleBackground";
@@ -248,16 +248,24 @@ export default function BlogListClient({
   allTags,
 }: BlogListClientProps) {
   const [searchQuery, setSearchQuery] = useState("");
+  const [debouncedSearchQuery, setDebouncedSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
   const [selectedTag, setSelectedTag] = useState<string>("");
   const [sortBy, setSortBy] = useState<"newest" | "oldest">("newest");
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedSearchQuery(searchQuery);
+    }, 300);
+    return () => clearTimeout(timer);
+  }, [searchQuery]);
 
   const filteredPosts = useMemo(() => {
     let posts = allPosts;
 
     // Search filter
-    if (searchQuery.trim()) {
-      const q = searchQuery.toLowerCase();
+    if (debouncedSearchQuery.trim()) {
+      const q = debouncedSearchQuery.toLowerCase();
       posts = posts.filter(
         (p) =>
           p.title.toLowerCase().includes(q) ||
@@ -283,7 +291,7 @@ export default function BlogListClient({
     }
 
     return posts;
-  }, [allPosts, searchQuery, selectedCategory, selectedTag, sortBy]);
+  }, [allPosts, debouncedSearchQuery, selectedCategory, selectedTag, sortBy]);
 
   const clearFilters = () => {
     setSearchQuery("");

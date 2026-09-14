@@ -1,3 +1,4 @@
+import { cache } from "react";
 import { getAllLinks, getLinkBySlug as getLinkRecordBySlug, getVisibleLinks } from "./db";
 import { LinkItem, LinkRecord } from "./types";
 
@@ -31,7 +32,9 @@ export async function getAllLinkItems(): Promise<LinkItem[]> {
   return records.map(toLinkItem);
 }
 
-export async function getLinkBySlug(slug: string): Promise<LinkItem | undefined> {
+export const getLinkBySlug = cache(async function getLinkBySlug(
+  slug: string,
+): Promise<LinkItem | undefined> {
   const record = await getLinkRecordBySlug(slug);
   return record ? toLinkItem(record) : undefined;
-}
+});
