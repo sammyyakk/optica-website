@@ -1,0 +1,282 @@
+---
+title: "Semiconductor Spin Qubits: From a Single Electron to a Quantum Processor"
+excerpt: "Researchers are exploring whether the same semiconductor technology that packs billions of transistors onto a chip could also help build quantum computers - starting with the spin of a single electron."
+publishedAt: "2026-10-25T10:00:00+05:30"   # TODO: confirm the publish date
+category: "Research"
+tags:
+  - quantum computing
+  - spin qubits
+  - quantum dots
+  - semiconductors
+  - silicon
+  - electron shuttling
+  - intel
+  - national quantum mission
+  - research
+author:
+  name: "Dhruwaz Deswal"
+  role: "Executive"                     # TODO: confirm role
+  image: "/team/dhruwaz.jpg"          # TODO: add the writer's 1:1 photo to /public/team, then uncomment
+  linkedin: "https://www.linkedin.com/in/dhruwaz-deswal-423907443"                        # TODO: add the writer's LinkedIn link, then uncomment
+editor:                                    # only shown in the byline if the editor-field code change is merged
+  name: "Aamir Ali Zaidi"
+  image: "/team/aamir.jpg"
+  
+
+coverImage: "/blog/spin-qubits/cover.png"
+featured: false
+pinned: false
+draft: false                           # TODO: set to true if the publish date isn't confirmed yet
+---
+
+
+## 1. Introduction
+
+Modern semiconductor chips pack billions of transistors into a tiny space. Now, researchers are exploring whether the same semiconductor technology that made this possible could also help build quantum computers.
+
+Unlike conventional computers, which process information in bits represented by 0 or 1, quantum computers use quantum bits, or **qubits**. A qubit can exist in a combination of the states 0 and 1, with quantum operations controlling the amplitudes and phases of that combination. This allows quantum computers to approach certain problems in ways that conventional computers cannot easily replicate, though it doesn't mean every calculation becomes faster.
+
+<BlogImage
+  src="/blog/spin-qubits/fig1-bit-vs-qubit.png"
+  alt="A classical bit shown as two separate states, 0 and 1, next to a qubit drawn on the Bloch sphere"
+  caption="Figure 1: A classical bit holds either 0 or 1; a qubit can be in a superposition of both, shown here on the Bloch sphere. Source: Adapted from Z. Hussain and A. Talib, “Strengths and Weaknesses of Quantum Computing.”"
+  width={743}
+  height={408}
+/>
+
+<div className="text-xs text-gray-400 text-center -mt-3 mb-6">Image source: [ResearchGate](https://www.researchgate.net/figure/Figure-1-Classical-Bit-Vs-Qubit_fig2_308414229)</div>
+
+One promising approach uses the spin of a single electron trapped inside a semiconductor structure called a *quantum dot*. The idea builds on something we already know how to do well: engineer and manufacture semiconductor devices. But controlling a single electron is a different challenge from controlling billions of transistors. Its state must be prepared, manipulated, and measured precisely, all while protecting it from disturbances that could destroy the quantum information it carries.
+
+<Callout type="info" title="The Real Challenge">
+The real challenge, then, is not simply to make a single electron behave as a qubit. It's to make that qubit reliable and reproduce the same level of control across thousands or even millions of qubits on a chip. That's where semiconductor engineering becomes crucial. [1, 10]
+</Callout>
+
+<BlogImage
+  src="/blog/spin-qubits/fig2-tunnel-falls.png"
+  alt="Intel Tunnel Falls silicon spin-qubit research chip, wire-bonded on a green circuit board"
+  caption="Figure 2: Intel Tunnel Falls silicon spin-qubit research chip. Source: Intel Corporation, “Intel's New Chip to Advance Silicon Spin Qubit Research for Quantum Computing.”"
+  width={1200}
+  height={801}
+/>
+
+<div className="text-xs text-gray-400 text-center -mt-3 mb-6">Image source: [Intel Newsroom](https://www.intel.com/content/www/us/en/newsroom/news/quantum-computing-chip-to-advance-research.html)</div>
+
+<Divider />
+
+## 2. How does one electron become a qubit?
+
+### 2.1 Confining an electron
+
+A quantum dot is a tiny region where an electron is confined, allowing it to occupy specific, discrete energy states. In a **gate-defined quantum dot**, researchers place metal electrodes above a semiconductor and apply carefully chosen voltages. These voltages shape the electric potential inside the material, creating a small region that can trap an electron.
+
+By tuning the gate voltages, researchers can control how many electrons occupy a dot and how easily they interact with electrons in neighbouring dots. Under the right conditions, a single electron can be isolated and used as a qubit. Charge sensors placed nearby help researchers detect how many electrons are present and, through suitable measurement techniques, extract information about the electron's spin. [1–3, 10]
+
+### 2.2 Encoding information in spin
+
+An electron has an intrinsic quantum property called *spin*. When a magnetic field is applied, the two spin states can have different energies, making them useful as the basis states of a qubit, usually labelled |0⟩ and |1⟩.
+
+A classical bit can hold either a 0 or a 1. A qubit, however, can exist in a **superposition** of both basis states. Its state depends on the probability amplitudes and the relative phase between them. By applying controlled operations, researchers can manipulate this state to perform quantum computations.
+
+One advantage of spin qubits is that they can be less sensitive to certain electric-field disturbances than a qubit based directly on an electron's charge. However, they are far from immune to noise. Fluctuations in magnetic fields, interactions with nearby nuclear spins, charge noise and imperfections in the semiconductor can all affect their performance.
+
+This makes the device's physical environment just as important as the qubit itself. The semiconductor material, its surrounding environment and the precision of fabrication all influence how reliably a spin qubit can store and process quantum information. [1, 2, 10]
+
+<Divider />
+
+## 3. Preparing, controlling and reading the qubit
+
+Having two states alone isn't enough to make a useful qubit. Researchers need to reliably prepare it in a known state, control its evolution, connect it with other qubits to perform operations, and measure the result. All of this must be done without losing the quantum information along the way.
+
+### 3.1 Initialization and readout
+
+Before a calculation can begin, the qubit must be prepared in a known state, a process called *initialization*. In a quantum-dot device, researchers can use the energy difference between the two spin states, along with carefully controlled electron tunnelling, to prepare the electron in the desired state.
+
+Reading the qubit's state is a different challenge. Spin cannot be measured directly as a simple electrical signal, so researchers use techniques that convert spin information into a detectable change in charge. A nearby charge sensor picks up this change, allowing the original spin state to be inferred.
+
+Neither process is perfect. Errors during initialization or measurement can affect the final result, even when the quantum operations performed in between work as intended. [1–3]
+
+### 3.2 Controlling a single spin
+
+Once a qubit is initialized, researchers need a way to control its spin. One approach is *electron spin resonance*, where microwave-frequency magnetic fields drive transitions between the two spin states. In some devices, spin control can also be achieved electrically by applying gate voltages that change the electron's local environment.
+
+How accurately these operations work is measured by *gate fidelity*, which describes how closely an operation matches its intended behaviour. In 2014, **Veldhorst and colleagues** reported a single-qubit control fidelity of **99.6%** in an isotopically enriched silicon quantum dot. This was an important milestone, demonstrating precise spin control and the ability to address individual qubits in a silicon device.
+
+However, achieving high fidelity in a single experiment is only part of the challenge. Maintaining that level of performance across a much larger array of qubits is a separate problem, particularly when device variations and unwanted interactions begin to add up. [4]
+
+### 3.3 Connecting two qubits
+
+A quantum processor also needs a way for qubits to interact with one another. In quantum dots, neighbouring electron spins can be coupled through an interaction known as *exchange coupling*. Its strength depends on how much the electrons' wavefunctions overlap, and researchers can tune it by adjusting gate voltages and the barrier between the dots.
+
+In 2005, **Petta and colleagues** demonstrated coherent control of coupled electron spins in semiconductor quantum dots. Their experiment showed that changing the exchange interaction electrically could be used to manipulate the combined spin states. This was an important step towards performing operations between qubits.
+
+But controlling the interaction is only half the battle. The qubits must also maintain their quantum states long enough for those operations to be useful. Interactions with the surrounding environment can disrupt this coherence, making reliable control a continuing challenge. [5]
+
+<Divider />
+
+## 4. The challenge of preserving quantum behaviour
+
+A qubit is useful only as long as it maintains its quantum state well enough to perform the intended operation. Unwanted interactions and even small fluctuations in its surroundings can disturb its phase or state, introducing errors into a calculation.
+
+In early semiconductor spin-qubit devices, interactions between the electron and nearby nuclear spins were a major source of dephasing. Silicon offers a potential advantage here: some of its isotopes have zero nuclear spin. By enriching the material with these isotopes, researchers can reduce this source of disturbance. However, that doesn't eliminate noise altogether. Charge fluctuations, imperfections at the semiconductor interface, valley-related effects and variations in the device can still affect qubit performance. [1, 2, 4, 5, 10]
+
+<Callout type="warning" title="A Difficult Trade-off">
+This creates a difficult trade-off in device design. A qubit needs to be sufficiently isolated from its surroundings to preserve its state, yet accessible enough for researchers to control it, connect it to neighbouring qubits and measure its output. Strong electrical control can make these operations easier, but it can also leave the qubit more sensitive to fluctuations in gate voltages.
+</Callout>
+
+Ultimately, getting one qubit to work reliably is only the first step. A practical quantum processor needs many qubits to perform consistently, despite differences between devices and changes in their operating conditions. Keeping such a system calibrated and reliable as it grows is one of the major challenges in building scalable quantum computers.
+
+<Divider />
+
+## 5. Scaling up: when neighbouring gates get in the way
+
+### 5.1 Electrostatic crosstalk
+
+Quantum dots are tiny, and fitting many of them onto a chip means placing their control gates close together. This makes compact designs possible, but it introduces a problem: changing the voltage on one gate can also affect neighbouring quantum dots. This unwanted interaction is known as *electrostatic crosstalk*.
+
+**Cifuentes and colleagues** studied crosstalk in dense CMOS quantum-dot arrays, showing how voltages applied to nearby gates can shift the spin resonance frequencies of neighbouring qubits. This makes it harder to control one qubit without disturbing others. As arrays grow, managing these interactions becomes an important part of designing the processor itself, rather than something that can be addressed only after fabrication. [7]
+
+Researchers can tackle this problem through improved gate layouts, careful voltage calibration and control techniques that compensate for the influence of neighbouring gates. The goal isn't simply to fit more quantum dots onto a chip. It's to ensure that each one can be controlled reliably without unwanted interference from the others.
+
+### 5.2 Fabrication variation and yield
+
+Building a scalable quantum processor means more than getting a handful of devices to work. Researchers need a fabrication process that can produce large numbers of usable quantum dots, with properties that can be measured, understood and controlled consistently.
+
+Even small differences in gate geometry, material interfaces or local charge conditions can change the voltages needed to form a quantum dot. **Neyens and colleagues** investigated single-electron behaviour across 300-mm wafers used for spin-qubit devices, employing cryogenic wafer-scale probing to test devices systematically. Their work highlights why testing large numbers of devices matters: it allows researchers to measure fabrication variations across a wafer rather than drawing conclusions from just a few successful samples. [11]
+
+<BlogImage
+  src="/blog/spin-qubits/fig3-300mm-wafer.png"
+  alt="A 300-mm silicon spin-qubit wafer photographed against a black background"
+  caption="Figure 3: A 300-mm silicon spin-qubit wafer used for cryogenic wafer-scale testing [11]. Source: Intel Corporation, “Intel Quantum Research Published in Nature,” Intel Newsroom, May 2024."
+  width={1200}
+  height={675}
+/>
+
+<div className="text-xs text-gray-400 text-center -mt-3 mb-6">Image source: [Intel Newsroom](https://www.intel.com/content/www/us/en/newsroom/news/intel-quantum-research-published-in-nature.html)</div>
+
+Silicon spin qubits could benefit from decades of experience in semiconductor manufacturing, but quantum devices bring additional challenges. They require specialized testing at cryogenic temperatures, sensitive measurement techniques and careful calibration, none of which can be taken for granted in conventional transistor manufacturing.
+
+Established semiconductor processes provide a strong foundation, but adapting them for quantum computing will require more than simply reproducing the manufacturing methods used for today's CPUs. [1, 10, 11]
+
+<Divider />
+
+## 6. Moving the qubit: electron shuttling and the wiring problem
+
+In small experiments, researchers can often give each qubit its own control lines. But as the number of qubits grows, this approach becomes increasingly difficult to manage. The wiring takes up space, the number of connections increases, and controlling every qubit individually becomes a significant engineering challenge.
+
+One possible solution is *electron shuttling*. Instead of relying on direct interactions between distant qubits, researchers can adjust gate voltages in sequence to move an electron from one quantum dot to another while preserving its spin state. This could provide a way to connect qubits that are not physically next to each other.
+
+**Zwerver and colleagues** demonstrated spin shuttling through a four-dot silicon array. Their experiment showed that electron spins could be transported repeatedly through the array, with a low estimated probability of a spin flip per hop under the tested conditions. This is an encouraging result, although it does not guarantee the same performance in much larger arrays or under different operating conditions. [8]
+
+The *SpinBus* architecture takes a similar idea further, proposing transport channels that connect groups of qubits arranged in local registers. Rather than placing every qubit next to all the others it needs to interact with, such an approach could allow information to move between separate groups.
+
+<Callout type="info" title="Proposal vs. Processor">
+However, the distinction between a proposed architecture and a working processor is important. SpinBus offers a possible approach to scaling connectivity, but demonstrating its full potential in a large-scale quantum processor remains a separate challenge. [9]
+</Callout>
+
+<Divider />
+
+## 7. What the research means for chip manufacturing and India
+
+### 7.1 Why semiconductor manufacturing matters
+
+One reason researchers are interested in semiconductor spin qubits is that they could be developed using fabrication techniques related to those already used in the semiconductor industry [6]. Intel's **Tunnel Falls** research chip is one example of this approach. Intel describes it as a **12-qubit silicon spin-qubit device** built using advanced transistor-manufacturing capabilities and made available to the research community. It shows how existing semiconductor expertise can support the development of quantum hardware, although it is still a research device, not a large-scale, fault-tolerant quantum computer. [13]
+
+The research discussed throughout this article makes one thing clear: manufacturing the devices is only part of the challenge. Researchers must also deal with variations between quantum dots, unwanted interactions between neighbouring gates, errors in qubit control, reliable electron transport and accurate measurement. These challenges are closely connected, and progress in one area does not automatically solve the others. [1, 7, 9, 11]
+
+The goal, ultimately, is not just to manufacture extremely small structures, but to make them work reliably as quantum devices across an entire processor. A *Nature* News & Views commentary on the 300-mm wafer research provides a useful overview of how semiconductor manufacturing and testing methods could help move the field towards that goal. The technical findings discussed here, however, are grounded in the original research papers. [14]
+
+### 7.2 India's quantum technology effort
+
+India is also investing in quantum technology through its **National Quantum Mission**, approved in 2023. The mission supports research and development in quantum computing, communication, sensing and metrology, as well as quantum materials and devices. The Department of Science and Technology includes novel semiconductor structures and quantum devices among the areas of interest. More broadly, the initiative aims to strengthen research infrastructure, develop skilled researchers and encourage collaboration between academia and industry. [12]
+
+For Indian students interested in semiconductors, this creates a useful starting point for exploring quantum hardware research. However, national investment in quantum technology does not mean that every qubit platform or proposed architecture is already being developed at scale in India. Many of the challenges discussed in this article, from improving device uniformity to maintaining reliable control across large arrays, remain active research problems worldwide. The published studies provide a clearer picture of the progress made so far and the work that still lies ahead.
+
+<Divider />
+
+## 8. Benefits and Challenges
+
+<Tabs items="Benefits, Challenges">
+<Tab>
+
+**Small device footprint** - Quantum dots can trap individual electrons within nanoscale semiconductor structures, allowing qubits to occupy very little space.
+
+**Potential for dense integration** - Existing semiconductor fabrication techniques could help researchers integrate large numbers of quantum dots onto a single chip.
+
+**Electrical and magnetic control** - Carefully tuned voltage and magnetic-field signals allow researchers to manipulate electron spins and perform qubit operations.
+
+**Coupling between neighbouring spins** - Exchange interaction allows nearby electron spins to interact, providing a way to perform operations between two qubits.
+
+**Possible transport-based connectivity** - Electron shuttling could move spin qubits between different regions of a chip, helping connect separate groups of qubits.
+
+**Leveraging semiconductor manufacturing expertise** - Existing fabrication techniques and wafer-scale testing methods could help improve device consistency and make qubit production more reproducible.
+
+</Tab>
+<Tab>
+
+**Fabrication variation** - Small differences in device geometry and material properties can shift operating conditions, making consistent qubit performance harder to achieve.
+
+**Crosstalk** - Voltage changes at one gate can affect neighbouring quantum dots, making individual qubits harder to control independently.
+
+**Noise and coherence** - Interactions with the surrounding environment can disturb a qubit's state, leading to errors and limiting how long it can reliably store quantum information.
+
+**Reliable multi-qubit operations** - A practical processor needs accurate gate operations and reliable measurements across many qubits, not just a handful of well-performing devices.
+
+**Scaling the architecture** - Wiring, electron shuttling, calibration and qubit control must remain reliable as the processor expands to accommodate more qubits.
+
+**Quantum-specific requirements** - Unlike conventional chips, quantum processors require cryogenic operation, highly sensitive measurements and quantum error correction to maintain reliable performance as they scale.
+
+</Tab>
+</Tabs>
+
+<Divider />
+
+## 9. Conclusion
+
+A single electron can serve as a qubit because its spin provides two quantum states that can be prepared, controlled and measured. Quantum dots make it possible to confine that electron, while electrical and magnetic signals allow researchers to manipulate its spin. Experiments have already demonstrated coherent control of coupled spins, high-fidelity operations in silicon, wafer-scale testing and electron transport through quantum-dot arrays.
+
+But scaling up involves more than simply adding more qubits. A practical processor needs devices that perform consistently, can be controlled without excessive crosstalk and maintain their quantum states long enough to carry out operations. Researchers must also find reliable ways to connect and measure these qubits while keeping errors manageable. Achieving this will require control systems and error-correction techniques that account for the limitations of the hardware itself.
+
+<Callout type="tip" title="The Big Picture">
+This is what makes semiconductor spin qubits an interesting intersection of quantum physics and semiconductor engineering. The information may be carried by a single electron, but turning it into part of a useful quantum processor depends on how precisely the entire device is designed, manufactured and controlled.
+</Callout>
+
+<Divider />
+
+## 10. References
+
+#### 10.1 Research Papers and Scientific Reviews
+
+<div className="text-sm text-gray-300 leading-relaxed mb-3">[1] **Burkard, G., Ladd, T. D., Pan, A., Nichol, J. M., & Petta, J. R. (2023).** *Semiconductor spin qubits.* **Reviews of Modern Physics, 95**, 025003. Preprint first posted as arXiv:2112.08863 (2021).</div>
+
+<div className="text-sm text-gray-300 leading-relaxed mb-3">[2] **Harvey, S. (2022).** *Quantum Dots / Spin Qubits.* arXiv:2204.04261, written for the Oxford Research Encyclopedia of Physics.</div>
+
+<div className="text-sm text-gray-300 leading-relaxed mb-3">[3] **Hanson, R., Elzerman, J. M., et al. (2004).** *Electron spin qubits in quantum dots.* **IEDM Technical Digest**, IEEE International Electron Devices Meeting, pp. 533–536. doi: 10.1109/IEDM.2004.1419211.</div>
+
+<div className="text-sm text-gray-300 leading-relaxed mb-3">[4] **Veldhorst, M., Hwang, J. C. C., Yang, C. H., et al. (2014).** *An addressable quantum dot qubit with fault-tolerant control-fidelity.* **Nature Nanotechnology, 9**, 981–985.</div>
+
+<div className="text-sm text-gray-300 leading-relaxed mb-3">[5] **Petta, J. R., Johnson, A. C., Taylor, J. M., et al. (2005).** *Coherent Manipulation of Coupled Electron Spins in Semiconductor Quantum Dots.* **Science, 309**, 2180–2184.</div>
+
+<div className="text-sm text-gray-300 leading-relaxed mb-3">[6] **Bluhm, H., & Schreiber, L. (2019).** *Semiconductor Spin Qubits: A Scalable Platform for Quantum Computing?* International Symposium on Circuits and Systems (ISCAS).</div>
+
+<div className="text-sm text-gray-300 leading-relaxed mb-3">[7] **Cifuentes, J. D., Tanttu, T., et al. (2024).** *Impact of electrostatic crosstalk on spin qubits in dense CMOS quantum dot arrays.* **Physical Review B, 110**, 125414.</div>
+
+<div className="text-sm text-gray-300 leading-relaxed mb-3">[8] **Zwerver, A. M. J., Amitonov, S. V., de Snoo, S. L., et al. (2023).** *Shuttling an Electron Spin through a Silicon Quantum Dot Array.* **PRX Quantum, 4**, 030303.</div>
+
+<div className="text-sm text-gray-300 leading-relaxed mb-3">[9] **Künne, M., Willmes, A., Oberländer, M., et al. (2024).** *The SpinBus architecture for scaling spin qubits with electron shuttling.* **Nature Communications, 15**, 4977.</div>
+
+<div className="text-sm text-gray-300 leading-relaxed mb-3">[10] **Zwanenburg, F. A., Dzurak, A. S., Morello, A., et al. (2013).** *Silicon quantum electronics.* **Reviews of Modern Physics, 85**, 961–1019.</div>
+
+<div className="text-sm text-gray-300 leading-relaxed mb-3">[11] **Neyens, S., Zietz, O. K., Watson, T. F., et al. (2024).** *Probing single electrons across 300-mm spin qubit wafers.* **Nature, 629**, 80–85.</div>
+
+#### 10.2 Government and Scientific Institutions
+
+<div className="text-sm text-gray-300 leading-relaxed mb-3">[12] **Department of Science and Technology, Government of India -** [National Quantum Mission (NQM)](https://dst.gov.in/national-quantum-mission-nqm)</div>
+
+#### 10.3 Industry and Quantum-Hardware Development
+
+<div className="text-sm text-gray-300 leading-relaxed mb-3">[13] **Intel -** [“Intel's New Chip to Advance Silicon Spin Qubit Research for Quantum Computing”](https://www.intel.com/content/www/us/en/newsroom/news/quantum-computing-chip-to-advance-research.html), Intel Newsroom, 15 June 2023</div>
+
+#### 10.4 Commentary
+
+<div className="text-sm text-gray-300 leading-relaxed mb-3">[14] **Li, R. (2024).** [*Intel brings quantum-computing microchips a step closer.*](https://www.nature.com/articles/d41586-024-01208-z) **Nature, 629**, 50–51, News & Views, 1 May 2024.</div>
