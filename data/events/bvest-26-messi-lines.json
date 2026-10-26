@@ -1,0 +1,34 @@
+{
+  "id": "bvest-26-messi-lines",
+  "slug": "bvest-26-messi-lines",
+  "title": "BVEST 26 Messi Lines",
+  "subtitle": "MESSI LINES 2026 was a robot football competition organised by BVP OPTICA in collaboration with TECHINNOVATE as part of BVEST XIII",
+  "description": "BVEST 26 Messi Lines - The event combined the excitement of football with the innovation of robotics, challenging participants to apply their technical skills, strategic thinking, teamwork and problem-solving abilities through interactive gameplay.  ",
+  "category": "ideathon",
+  "date": "2026-10-22",
+  "time": "2026-10-22 | 10:00 AM - 3:00 PM",
+  "location": "Bharati Vidyapeeth's College of Engineering, New Delhi",
+  "coverImage": "/events/covers/messi-lines.jpeg",
+  "gallery": null,
+  "highlights": [
+    "explore the practical applications of engineering and robotics in a competitive and engaging environment, promoting innovation in line with UN Sustainable Development Goal 9: Industry, Innovation and Infrastructure."
+  ],
+  "status": "completed",
+  "featured": false,
+  "registrationLink": null,
+  "registrationOpen": false,
+  "maxParticipants": null,
+  "currentParticipants": null,
+  "organizers": [
+    {
+      "name": "BVP Optica Team",
+      "role": "Event Organizers"
+    }
+  ],
+  "tags": [
+    "ideathon",
+    "optica",
+    "bvp",
+    "2026-27"
+  ]
+}
