@@ -1,0 +1,173 @@
+---
+title: "Demystifying Text Generation: From Recurrent Networks to Transformers"
+excerpt: "Explore how text generation evolved from recurrent networks to Transformers, including self-attention, the mathematics behind it, and the benefits and challenges of modern language models."
+publishedAt: "2026-11-06T10:00:00+05:30"
+category: "Research"
+tags:
+  - "text generation"
+  - "transformers"
+  - "recurrent neural networks"
+  - "self-attention"
+  - "language models"
+  - "natural language processing"
+  - "deep learning"
+author:
+  name: "ADITYA GUPTA"
+  role: "Executive"
+  image: "/team/aditya.jpeg"
+  linkedin: "www.linkedin.com/in/aditya-gupta-27ab22380"
+editor:
+  name: "Dhriti Goswami"
+  image: "/team/dhriti.jpg"
+  linkedin: "https://www.linkedin.com/in/dhriti-goswami-a5b489381/"
+coverImage: "/blog/demystifying-text-generation/cover_page.png"
+featured: false
+pinned: false
+draft: true
+---
+
+# Demystifying Text Generation: From Recurrent Networks to Transformers
+
+<Divider />
+
+## 1. Introduction
+
+For decades, sequence modeling followed a rigid, step-by-step approach. Early neural approaches, such as Recurrent Neural Networks (RNNs), processed text one word at a time, carrying information forward through a hidden state. The Transformer architecture answered a fundamentally different question: What if a model could perceive an entire paragraph at once, weighing the importance of every word against every other word simultaneously?
+
+By relying on self-attention instead of sequential recurrence, Transformers can process entire sequences in parallel during training. This architectural shift substantially simplified the training of large language models, leveraging modern GPU hardware to scale to billions of parameters. However, while training benefits from massive parallelism, generation remains fundamentally sequential. During inference, autoregressive models must still produce output token by token, continually conditioning on all prior context.
+
+<Divider />
+
+## 2. A Brief History of Sequence Modeling
+
+Early statistical language models relied on simple n-gram counts and feed-forward networks. The evolution of sequence generation accelerated in the late 1990s with the refinement of RNNs and Long Short-Term Memory (LSTM) networks. These architectures introduced gating mechanisms to maintain a "hidden state," allowing models to retain information from past inputs and preserve dependencies over longer spans.
+
+Despite these advances, RNNs struggled with vanishing gradients on long sequences. To address this, attention mechanisms were initially introduced to help RNNs focus on specific words. This line of research culminated in the landmark 2017 paper, 'Attention Is All You Need', which proposed the Transformer which is a framework built entirely around self-attention, eliminating recurrence completely.
+
+<Divider />
+
+## 3. The Bottleneck of Sequential Processing
+
+Language is rarely strictly linear; contextual meaning often depends on words that appeared much earlier in a passage. RNNs, constrained by left-to-right processing, inherently struggle with this dynamic. As an RNN works through a lengthy text, the influence of early tokens decays.
+
+Furthermore, sequential processing creates a strict compute bottleneck: because a subsequent step cannot begin until the previous one finishes, RNNs cannot fully exploit the parallel processing capabilities of modern GPU clusters.
+
+<Divider />
+
+## 4. The Mechanics of Self-Attention
+
+Self-attention circumvents sequential bottlenecks by computing the contextual weight of every word against every other word simultaneously. By assigning varying weights to pairwise connections, the model constructs a highly contextualized representation of each token.
+
+Consider the word "bank". In the sentence, "She deposited money at the bank," the surrounding context implies a financial institution. In contrast, "They sat on the bank of the river," implies land alongside water. While a simpler model might conflate these definitions, self-attention resolves the ambiguity by dynamically updating the word's embedding based on surrounding tokens. Transformers extend this capability via multi-head attention, allowing the model to simultaneously capture grammatical, semantic, and positional relationships.
+
+<BlogImage
+  src="/blog/demystifying-text-generation/attention_mech.png"
+  alt="Self-attention mechanism illustration for Section 4"
+  caption="An input sequence is split across four attention heads, each learning different patterns before concatenation.
+  width={1312}
+  height={816}
+/>
+
+
+
+<Divider />
+
+## 5. Architecture and the Generation Pipeline
+
+The process begins with a tokenizer segmenting text into subword units, which are mapped to dense vector embeddings. Because attention naturally lacks a sense of sequence order, positional encodings are injected into these embeddings to retain word order.
+
+Attention operates on three learned projections: Queries (Q), Keys (K), and Values (V). The model compares Queries with Keys to generate attention scores, which then dictate how the Value vectors are aggregated. These representations subsequently pass through position-wise feed-forward networks and normalization layers.
+
+In text-generation (decoder-only) models, attention is causally masked to ensure that predictions depend only on preceding tokens. During generation, the model computes a probability distribution over its vocabulary, selects a token via decoding strategies (such as greedy decoding or nucleus sampling), appends it to the sequence, and loops the process autoregressively.
+
+<BlogImage
+  src="/blog/demystifying-text-generation/Transformer-Text-Generation-Flow.png"
+  alt="Transformer text-generation flow illustration"
+  caption="Transformer text-generation flow."
+  width={1536}
+  height={1024}
+/>
+
+
+
+<Divider />
+
+## 6. The Mathematical Core
+
+**<u>Scaled dot-product attention</u>****<u>: </u>** It is the engine driving these models , it is mathematically defined as:
+
+`Attention(Q, K, V) = softmax( (Q Kᵀ) / √d_k ) V`
+
+The dot product of Q and K yields pairwise similarity scores. Dividing by √d\_k stabilizes the gradients, and the softmax function normalizes these scores into a probability distribution. These final weights are then used to form a contextualized combination of the value (V) vectors.
+
+<Divider />
+
+## 7. Recent Advancements
+
+As of late 2026, the architectural landscape has evolved significantly to handle massive scale. Rather than relying solely on dense architectures, state-of-the-art systems heavily utilize Mixture-of-Experts (MoE) designs (such as those popularized by the Mixtral family). MoE activates only a specialized fraction of the total parameters per token, drastically improving inference efficiency. Additionally, elastic-depth transformers allow models to dynamically adjust their compute budget per request without retraining.
+
+
+
+Context windows have also seen exponential growth. For instance, OpenAI's GPT-5.5 supports a 1-million-token context window via its API. Meanwhile, the DeepSeek V4 family scales up to 1.6 trillion parameters while maintaining a 1-million-token context, achieved through DeepSeek Sparse Attention (DSA) which is a learned "lightning indexer" that circumvents standard quadratic memory scaling and we are moving into an era where we might get infinite context window in near future!!!!
+
+<Divider />
+
+## 8. Benefits and Challenges
+
+### Benefits
+
+- Highly Parallelizable: Processing all tokens at once makes GPU training exponentially faster than RNNs.
+
+- Long-Range Context: Self-attention forms direct connections between the start and end of expansive documents.
+
+- Multi-Faceted Understanding: Multi-head attention captures diverse linguistic and semantic relationships simultaneously.
+
+- Predictable Scaling: Model performance reliably improves with increased compute and high-quality data.
+
+### Challenges
+
+- Massive Compute and VRAM Constraints: Training and serving frontier models requires thousands of high-end GPUs.
+
+- Quadratic Memory Scaling: Standard attention costs grow quadratically with context length, necessitating advanced sparse-attention workarounds.
+
+- Data Hunger: Transformers require vast datasets to perform optimally; for small datasets, LSTMs or GRUs often remain more effective.
+
+- Interpretability: Determining the exact reasoning behind a Transformer's specific output remains inherently difficult.
+
+<Divider />
+
+## 9. Conclusion
+
+Transformers mark a definitive shift from rigid, sequential processing to dynamic, parallelized architecture. By synthesizing self-attention, positional encoding, large-scale data, and massive GPU compute, these models capture deep contextual nuances that earlier architectures simply could not reach. While RNNs and LSTMs laid the vital groundwork for sequence modeling, attention-based systems have proven to be the most scalable path forward for modern AI.
+
+Despite this success, structural challenges remain. Issues surrounding memory scaling, massive compute costs, and inference latency, drive ongoing research into sparse attention, MoE routing, and sub-quadratic kernels. <u>Three crucial questions remain open</u>: 
+
+1. Can sub-quadratic attention kernels reliably solve the GPU memory-bandwidth bottleneck for near-infinite context windows? 
+
+1. Can distillation shrink trillion-parameter reasoning models enough to run natively on edge devices? 
+
+1. Will  MoE routing preserve coherent internal representations as models continue to scale?
+
+As the industry pushes toward true edge deployment, resolving these bottlenecks will dictate the next era of natural language processing.
+
+<Divider />
+
+## 10. References
+
+<div className="text-sm text-gray-300 leading-relaxed mb-3">Bahdanau, D., Cho, K., &amp; Bengio, Y. (2015). Neural machine translation by jointly learning to align and translate. ICLR.</div>
+
+<div className="text-sm text-gray-300 leading-relaxed mb-3">Bengio, Y., et al. (2003). A neural probabilistic language model. Journal of Machine Learning Research, 3, 1137–1155.</div>
+
+<div className="text-sm text-gray-300 leading-relaxed mb-3">Elman, J. L. (1990). Finding structure in time. Cognitive Science, 14(2), 179–211.</div>
+
+<div className="text-sm text-gray-300 leading-relaxed mb-3">Hochreiter, S., &amp; Schmidhuber, J. (1997). Long short-term memory. Neural Computation, 9(8), 1735–1780.</div>
+
+<div className="text-sm text-gray-300 leading-relaxed mb-3">Jacobs, R. A., et al. (1991). Adaptive mixtures of local experts. Neural Computation.</div>
+
+<div className="text-sm text-gray-300 leading-relaxed mb-3">Sesame Disk. (2026). Transformers in 2026: Latest Advances in Attention Mechanisms.</div>
+
+<div className="text-sm text-gray-300 leading-relaxed mb-3">Shakudo Blog. (2026). Top 9 Large Language Models as of October 2026.</div>
+
+<div className="text-sm text-gray-300 leading-relaxed mb-3">Vaswani, A., et al. (2017). Attention Is All You Need. Advances in Neural Information Processing Systems, 30.</div>
+
+
