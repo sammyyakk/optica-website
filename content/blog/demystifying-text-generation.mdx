@@ -63,7 +63,7 @@ Consider the word "bank". In the sentence, "She deposited money at the bank," th
 <BlogImage
   src="/blog/demystifying-text-generation/attention_mech.png"
   alt="Self-attention mechanism illustration for Section 4"
-  caption="An input sequence is split across four attention heads, each learning different patterns before concatenation.
+  caption="An input sequence is split across four attention heads, each learning different patterns before concatenation."
   width={1312}
   height={816}
 />
@@ -80,21 +80,13 @@ Attention operates on three learned projections: Queries (Q), Keys (K), and Valu
 
 In text-generation (decoder-only) models, attention is causally masked to ensure that predictions depend only on preceding tokens. During generation, the model computes a probability distribution over its vocabulary, selects a token via decoding strategies (such as greedy decoding or nucleus sampling), appends it to the sequence, and loops the process autoregressively.
 
-<BlogImage
-  src="/blog/demystifying-text-generation/Transformer-Text-Generation-Flow.png"
-  alt="Transformer text-generation flow illustration"
-  caption="Transformer text-generation flow."
-  width={1536}
-  height={1024}
-/>
-
-
+![Transformer text generation flow illustration](/blog/demystifying-text-generation/Transformer-Text-Generation-Flow.png)
 
 <Divider />
 
 ## 6. The Mathematical Core
 
-**<u>Scaled dot-product attention</u>****<u>: </u>** It is the engine driving these models , it is mathematically defined as:
+**Scaled dot-product attention:** It is the engine driving these models. It is defined as:
 
 `Attention(Q, K, V) = softmax( (Q Kᵀ) / √d_k ) V`
 
@@ -108,7 +100,7 @@ As of late 2026, the architectural landscape has evolved significantly to handle
 
 
 
-Context windows have also seen exponential growth. For instance, OpenAI's GPT-5.5 supports a 1-million-token context window via its API. Meanwhile, the DeepSeek V4 family scales up to 1.6 trillion parameters while maintaining a 1-million-token context, achieved through DeepSeek Sparse Attention (DSA) which is a learned "lightning indexer" that circumvents standard quadratic memory scaling and we are moving into an era where we might get infinite context window in near future!!!!
+Context windows have also seen exponential growth. For instance, OpenAI's GPT-5.5 supports a 1-million-token context window via its API. Meanwhile, the DeepSeek V4 family scales up to 1.6 trillion parameters while maintaining a 1-million-token context, achieved through DeepSeek Sparse Attention (DSA) which is a learned lightning indexer that circumvents standard quadratic memory scaling and we are moving into an era where we might get infinite context window in near future!!!!
 
 <Divider />
 
@@ -140,7 +132,7 @@ Context windows have also seen exponential growth. For instance, OpenAI's GPT-5.
 
 Transformers mark a definitive shift from rigid, sequential processing to dynamic, parallelized architecture. By synthesizing self-attention, positional encoding, large-scale data, and massive GPU compute, these models capture deep contextual nuances that earlier architectures simply could not reach. While RNNs and LSTMs laid the vital groundwork for sequence modeling, attention-based systems have proven to be the most scalable path forward for modern AI.
 
-Despite this success, structural challenges remain. Issues surrounding memory scaling, massive compute costs, and inference latency, drive ongoing research into sparse attention, MoE routing, and sub-quadratic kernels. <u>Three crucial questions remain open</u>: 
+Despite this success, structural challenges remain. Issues surrounding memory scaling, massive compute costs, and inference latency, drive ongoing research into sparse attention, MoE routing, and sub-quadratic kernels. **Three crucial questions remain open:** 
 
 1. Can sub-quadratic attention kernels reliably solve the GPU memory-bandwidth bottleneck for near-infinite context windows? 
 
@@ -154,20 +146,20 @@ As the industry pushes toward true edge deployment, resolving these bottlenecks 
 
 ## 10. References
 
-<div className="text-sm text-gray-300 leading-relaxed mb-3">Bahdanau, D., Cho, K., &amp; Bengio, Y. (2015). Neural machine translation by jointly learning to align and translate. ICLR.</div>
+Bahdanau, D., Cho, K., & Bengio, Y. (2015). Neural machine translation by jointly learning to align and translate. ICLR.
 
-<div className="text-sm text-gray-300 leading-relaxed mb-3">Bengio, Y., et al. (2003). A neural probabilistic language model. Journal of Machine Learning Research, 3, 1137–1155.</div>
+Bengio, Y., et al. (2003). A neural probabilistic language model. Journal of Machine Learning Research, 3, 1137–1155.
 
-<div className="text-sm text-gray-300 leading-relaxed mb-3">Elman, J. L. (1990). Finding structure in time. Cognitive Science, 14(2), 179–211.</div>
+Elman, J. L. (1990). Finding structure in time. Cognitive Science, 14(2), 179–211.
 
-<div className="text-sm text-gray-300 leading-relaxed mb-3">Hochreiter, S., &amp; Schmidhuber, J. (1997). Long short-term memory. Neural Computation, 9(8), 1735–1780.</div>
+Hochreiter, S., &amp; Schmidhuber, J. (1997). Long short-term memory. Neural Computation, 9(8), 1735–1780.
 
-<div className="text-sm text-gray-300 leading-relaxed mb-3">Jacobs, R. A., et al. (1991). Adaptive mixtures of local experts. Neural Computation.</div>
+Jacobs, R. A., et al. (1991). Adaptive mixtures of local experts. Neural Computation.
 
-<div className="text-sm text-gray-300 leading-relaxed mb-3">Sesame Disk. (2026). Transformers in 2026: Latest Advances in Attention Mechanisms.</div>
+Sesame Disk. (2026). Transformers in 2026: Latest Advances in Attention Mechanisms.
 
-<div className="text-sm text-gray-300 leading-relaxed mb-3">Shakudo Blog. (2026). Top 9 Large Language Models as of October 2026.</div>
+Shakudo Blog. (2026). Top 9 Large Language Models as of October 2026.
 
-<div className="text-sm text-gray-300 leading-relaxed mb-3">Vaswani, A., et al. (2017). Attention Is All You Need. Advances in Neural Information Processing Systems, 30.</div>
+Vaswani, A., et al. (2017). Attention Is All You Need. Advances in Neural Information Processing Systems, 30.
 
 
